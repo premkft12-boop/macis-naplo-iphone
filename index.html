@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Macis Pelenkás Napló</title>
 <style>
-:root{--navy:#24466b;--blue:#dcecff;--pink:#ffe5ef;--lav:#eee8ff;--paper:#fffafd;--ink:#29364a;--muted:#64748b;--red:#b83245;--green:#28734d;--line:#d8e2f0}*{box-sizing:border-box}body{margin:0;color:var(--ink);font-family:Arial,sans-serif;background:linear-gradient(135deg,#e7f2ff,#fff0f6 55%,#f0ebff);min-height:100vh}header{padding:20px clamp(12px,3vw,32px);background:linear-gradient(110deg,#24466b,#617da7);color:#fff;box-shadow:0 3px 14px #344b6b22}header h1{margin:0;font-size:clamp(22px,4vw,32px)}header p{margin:7px 0 0;color:#edf4ff}.bear{font-size:28px}main{max-width:1500px;margin:auto;padding:18px}nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}.tab{border:1px solid #c7d7eb;background:#fff9;border-radius:12px;padding:10px 13px;font-weight:700;color:var(--navy);cursor:pointer}.tab.active{background:var(--navy);color:white}.panel{display:none;background:#ffffffd9;border:1px solid #d9e3f0;border-radius:18px;padding:18px;box-shadow:0 8px 28px #4d658018}.panel.active{display:block}h2{margin:0 0 12px;color:var(--navy)}h3{color:var(--navy)}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>*{max-width:100%}label{font-size:13px;font-weight:700;color:#52637a;display:block;margin-bottom:4px}input,select,textarea,button{font:inherit}input,select,textarea{border:1px solid #cbd7e6;border-radius:8px;padding:8px;background:white;color:var(--ink);width:100%}textarea{min-height:72px;resize:vertical}.field{min-width:140px;flex:1}.btn{border:0;border-radius:9px;padding:9px 13px;font-weight:700;cursor:pointer;background:#dceaff;color:#254c7e}.btn.primary{background:#2e5b91;color:white}.btn.good{background:#d8f3e2;color:#1c6741}.btn.danger{background:#ffe0e4;color:#9b2335}.btn.small{padding:6px 9px;font-size:13px}.hint{color:var(--muted);font-size:13px}.tablewrap{overflow:auto;margin-top:12px}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1040px;background:white;border-radius:12px;overflow:hidden}th,td{border-bottom:1px solid #e2e9f2;padding:8px;text-align:left;vertical-align:top}th{background:#e7f0ff;color:#274a77;position:sticky;top:0}td input,td select{min-width:85px}.status{display:inline-block;padding:4px 8px;border-radius:99px;font-size:12px;font-weight:bold;background:#eef2f7}.status.done{background:#d9f4e3;color:#206943}.status.missed{background:#ffe0e4;color:#a32336}.status.live{background:#fff0c9;color:#835b00}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px}.card h3{margin:0 0 10px}.event{border-left:4px solid #e3a7c3;background:#fff7fb;padding:10px 12px;border-radius:7px;margin:8px 0}.event.error{border-color:#c83248;background:#fff0f2}.empty{padding:22px;text-align:center;color:var(--muted)}.modal{position:fixed;inset:0;background:#15253b99;display:none;align-items:center;justify-content:center;z-index:100;padding:16px}.modal.show{display:flex}.modalbox{width:min(520px,100%);background:linear-gradient(150deg,#f2f7ff,#fff0f6);border:2px solid #adc6e8;border-radius:22px;padding:24px;text-align:center;box-shadow:0 18px 60px #0004}.modalbox h2{font-size:clamp(23px,4vw,32px)}.count{font-size:clamp(38px,8vw,62px);font-weight:800;color:#244e83;margin:8px 0}.dock{position:fixed;left:12px;bottom:12px;width:min(340px,calc(100vw - 24px));z-index:90;background:#fff;border:2px solid #8eaed8;border-radius:14px;padding:12px;box-shadow:0 7px 30px #263e5d35;display:none}.dock.show{display:block}.dock h4{margin:0 0 4px;color:#24466b}.docktime{font-size:24px;font-weight:800;color:#2c568b}.dock .row{margin-top:8px}.dangertext{color:#ad263b;font-weight:bold}.smalltext{font-size:12px;color:#64748b}.pill{border-radius:20px;padding:4px 8px;background:#f0eaff;font-size:12px;font-weight:bold}.footer{margin-top:20px;text-align:center;color:#728097;font-size:12px}.missed-banner{display:none;position:fixed;top:10px;left:50%;translate:-50% 0;transform:none;width:min(900px,calc(100vw - 24px));max-height:35vh;overflow:auto;z-index:99999;background:#fff5c2;border:3px solid #f0b900;border-radius:12px;box-shadow:0 5px 22px #0004;padding:10px 16px;text-align:center;margin:0;animation:none;transition:none;}.missed-banner.show{display:block}.missed-banner .mb-title{font-size:clamp(19px,3vw,28px);font-weight:900;color:#c00020;line-height:1.2}.missed-banner .mb-time{font-size:clamp(14px,2vw,18px);font-weight:800;color:#6b4b00;margin-top:4px}.missed-banner .mb-detail{font-size:14px;font-weight:700;color:#8f1024;margin-top:4px}@media(max-width:650px){main{padding:10px}.panel{padding:12px}.tab{flex:1}.field{min-width:125px}}
+:root{--navy:#24466b;--blue:#dcecff;--pink:#ffe5ef;--lav:#eee8ff;--paper:#fffafd;--ink:#29364a;--muted:#64748b;--red:#b83245;--green:#28734d;--line:#d8e2f0}*{box-sizing:border-box}body{margin:0;color:var(--ink);font-family:Arial,sans-serif;background:linear-gradient(160deg,#fce7f3 0%,#e0f2fe 40%,#f3e8ff 70%,#fef3c7 100%);min-height:100vh;background-attachment:fixed}header{padding:18px clamp(12px,3vw,32px);background:linear-gradient(110deg,#9d4e87,#6b8cce 55%,#e8a0bf);color:#fff;box-shadow:0 4px 18px #9d4e8733}header h1{margin:0;font-size:clamp(22px,4vw,32px)}header p{margin:7px 0 0;color:#edf4ff}.bear{font-size:28px}main{max-width:1500px;margin:auto;padding:18px}nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}.tab{border:1px solid #c7d7eb;background:#fff9;border-radius:12px;padding:10px 13px;font-weight:700;color:var(--navy);cursor:pointer}.tab.active{background:var(--navy);color:white}.panel{display:none;background:#ffffffd9;border:1px solid #d9e3f0;border-radius:18px;padding:18px;box-shadow:0 8px 28px #4d658018}.panel.active{display:block}h2{margin:0 0 12px;color:var(--navy)}h3{color:var(--navy)}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>*{max-width:100%}label{font-size:13px;font-weight:700;color:#52637a;display:block;margin-bottom:4px}input,select,textarea,button{font:inherit}input,select,textarea{border:1px solid #cbd7e6;border-radius:8px;padding:8px;background:white;color:var(--ink);width:100%}textarea{min-height:72px;resize:vertical}.field{min-width:140px;flex:1}.btn{border:0;border-radius:9px;padding:9px 13px;font-weight:700;cursor:pointer;background:#dceaff;color:#254c7e}.btn.primary{background:#2e5b91;color:white}.btn.good{background:#d8f3e2;color:#1c6741}.btn.danger{background:#ffe0e4;color:#9b2335}.btn.small{padding:6px 9px;font-size:13px}.hint{color:var(--muted);font-size:13px}.tablewrap{overflow:auto;margin-top:12px}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1040px;background:white;border-radius:12px;overflow:hidden}th,td{border-bottom:1px solid #e2e9f2;padding:8px;text-align:left;vertical-align:top}th{background:#e7f0ff;color:#274a77;position:sticky;top:0}td input,td select{min-width:85px}.status{display:inline-block;padding:4px 8px;border-radius:99px;font-size:12px;font-weight:bold;background:#eef2f7}.status.done{background:#d9f4e3;color:#206943}.status.missed{background:#ffe0e4;color:#a32336}.status.live{background:#fff0c9;color:#835b00}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px}.card h3{margin:0 0 10px}.event{border-left:4px solid #e3a7c3;background:#fff7fb;padding:10px 12px;border-radius:7px;margin:8px 0}.event.error{border-color:#c83248;background:#fff0f2}.empty{padding:22px;text-align:center;color:var(--muted)}.modal{position:fixed;inset:0;background:#15253b99;display:none;align-items:center;justify-content:center;z-index:100;padding:16px}.modal.show{display:flex}.modalbox{width:min(520px,100%);background:linear-gradient(150deg,#f2f7ff,#fff0f6);border:2px solid #adc6e8;border-radius:22px;padding:24px;text-align:center;box-shadow:0 18px 60px #0004}.modalbox h2{font-size:clamp(23px,4vw,32px)}.count{font-size:clamp(38px,8vw,62px);font-weight:800;color:#244e83;margin:8px 0}.dock{position:fixed;left:12px;bottom:12px;width:min(340px,calc(100vw - 24px));z-index:90;background:#fff;border:2px solid #8eaed8;border-radius:14px;padding:12px;box-shadow:0 7px 30px #263e5d35;display:none}.dock.show{display:block}.dock h4{margin:0 0 4px;color:#24466b}.docktime{font-size:24px;font-weight:800;color:#2c568b}.dock .row{margin-top:8px}.dangertext{color:#ad263b;font-weight:bold}.smalltext{font-size:12px;color:#64748b}.pill{border-radius:20px;padding:4px 8px;background:#f0eaff;font-size:12px;font-weight:bold}.footer{margin-top:20px;text-align:center;color:#728097;font-size:12px}.missed-banner{display:none;position:fixed;top:10px;left:50%;translate:-50% 0;transform:none;width:min(900px,calc(100vw - 24px));max-height:35vh;overflow:auto;z-index:99999;background:#fff5c2;border:3px solid #f0b900;border-radius:12px;box-shadow:0 5px 22px #0004;padding:10px 16px;text-align:center;margin:0;animation:none;transition:none;}.missed-banner.show{display:block}.missed-banner .mb-title{font-size:clamp(19px,3vw,28px);font-weight:900;color:#c00020;line-height:1.2}.missed-banner .mb-time{font-size:clamp(14px,2vw,18px);font-weight:800;color:#6b4b00;margin-top:4px}.missed-banner .mb-detail{font-size:14px;font-weight:700;color:#8f1024;margin-top:4px}@media(max-width:650px){main{padding:10px}.panel{padding:12px}.tab{flex:1}.field{min-width:125px}}
 .dd-calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin:12px 0}
 .dd-weekday{text-align:center;font-weight:bold;padding:8px 2px;background:#e7f0ff;border-radius:6px;font-size:.85em}
 .dd-day{min-width:0;min-height:70px;padding:5px 2px;border:1px solid #dfe2ed;border-radius:8px;background:#fff;cursor:pointer;text-align:center;overflow-wrap:anywhere;color:#25324a}
@@ -67,6 +67,94 @@ img,video,canvas{max-width:100%;height:auto}
 @media(prefers-reduced-motion:reduce){.abdl-badge::before{animation:none}}
 @media(max-width:650px){.abdl-badge{margin-left:0;padding:15px 23px;letter-spacing:2px}}
 
+
+#mainCats .tab{background:#e8f0fa;font-size:14px}
+#mainCats .tab.active{background:var(--navy);color:#fff}
+#tabs .tab{font-size:13px;padding:8px 11px}
+#tabs .tab.active{background:#3a6ea5;color:#fff}
+@media(max-width:650px){
+  #mainCats{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px}
+  #mainCats .tab{flex:0 0 auto;white-space:nowrap}
+}
+
+body{background-image:radial-gradient(circle at 20% 20%,#fce7f380 0%,transparent 40%),radial-gradient(circle at 80% 60%,#e0f2fe80 0%,transparent 45%),linear-gradient(160deg,#fdf2f8 0%,#e0f2fe 40%,#f3e8ff 70%,#fef3c7 100%)!important}
+.panel{border-radius:20px!important;box-shadow:0 10px 32px #9d4e8720!important}
+.card{border-radius:16px!important;transition:transform .15s ease,box-shadow .15s}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 18px #0001}
+#langSwitch{position:fixed;top:12px;right:14px;z-index:1000;display:flex;gap:4px}
+#langSwitch button{border:0;border-radius:8px;padding:6px 10px;font-weight:700;cursor:pointer;background:#fff9;color:#5a3a6a;font-size:13px}
+#langSwitch button.active{background:#9d4e87;color:#fff}
+
+#topBar{position:sticky;top:0;z-index:50}
+.panel h2{position:relative;padding-left:8px}
+.panel h2::before{content:"🧸";margin-right:6px}
+#liveClock{text-shadow:0 1px 0 #fff}
+/* Creative panel accents */
+.panel{background:linear-gradient(180deg,#ffffffee,#fff9fcf0)!important;border:1px solid #f0d0e4!important}
+#mainCats .tab{border-radius:14px;box-shadow:0 2px 8px #9d4e8715}
+#tabs .tab{border-radius:12px;background:#fff6fb;border:1px solid #f0c4e0}
+#tabs .tab.active{background:linear-gradient(135deg,#9d4e87,#c06a9e);color:#fff;border-color:transparent}
+
+/* ===== Kategóriánkénti egyedi ABDL kinézet ===== */
+.panel{position:relative;overflow:hidden}
+.panel::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;border-radius:20px 20px 0 0}
+
+/* Napi */
+#hub.panel, #daily.panel, #notices.panel, #planner.panel, #timeline.panel, #workmode.panel, #dailyChallenges.panel{
+  background:linear-gradient(180deg,#fff9fc,#f0f7ff)!important;border-color:#e8b4d4!important}
+#hub.panel::before, #daily.panel::before, #notices.panel::before, #planner.panel::before, #timeline.panel::before, #workmode.panel::before, #dailyChallenges.panel::before{
+  background:linear-gradient(90deg,#f9a8d4,#93c5fd)}
+
+/* Pelenka */
+#lateDiaper.panel, #stock.panel, #diaperCalendar.panel, #smart.panel, #trips.panel, #compare.panel, #shops.panel{
+  background:linear-gradient(180deg,#f0f9ff,#e0f2fe)!important;border-color:#7dd3fc!important}
+#lateDiaper.panel::before, #stock.panel::before, #diaperCalendar.panel::before, #smart.panel::before, #trips.panel::before, #compare.panel::before, #shops.panel::before{
+  background:linear-gradient(90deg,#38bdf8,#818cf8)}
+
+/* Napló */
+#punishments.panel, #events.panel, #reports.panel, #review.panel, #rules.panel, #history.panel{
+  background:linear-gradient(180deg,#fff1f2,#ffe4e6)!important;border-color:#fda4af!important}
+#punishments.panel::before, #events.panel::before, #reports.panel::before, #review.panel::before, #rules.panel::before, #history.panel::before{
+  background:linear-gradient(90deg,#fb7185,#f472b6)}
+
+/* Ruházat */
+#clothing.panel, #wardrobe.panel, #outfits.panel{
+  background:linear-gradient(180deg,#fff7ed,#ffedd5)!important;border-color:#fdba74!important}
+#clothing.panel::before, #wardrobe.panel::before, #outfits.panel::before{
+  background:linear-gradient(90deg,#fb923c,#fbbf24)}
+
+/* Egészség */
+#medical.panel, #healthcheck.panel, #comfort.panel{
+  background:linear-gradient(180deg,#f0fdf4,#dcfce7)!important;border-color:#86efac!important}
+#medical.panel::before, #healthcheck.panel::before, #comfort.panel::before{
+  background:linear-gradient(90deg,#4ade80,#2dd4bf)}
+
+/* Babás világ */
+#food4.panel, #toys4.panel, #gear4.panel, #room4.panel, #wish4.panel, #story4.panel, #qr4.panel{
+  background:linear-gradient(180deg,#faf5ff,#f3e8ff)!important;border-color:#d8b4fe!important}
+#food4.panel::before, #toys4.panel::before, #gear4.panel::before, #room4.panel::before, #wish4.panel::before, #story4.panel::before, #qr4.panel::before{
+  background:linear-gradient(90deg,#c084fc,#f0abfc)}
+
+/* Beállítások */
+#studio4.panel, #themes.panel, #budget.panel, #exports.panel, #voicecontrol.panel, #install.panel, #cloud.panel, #backup.panel, #monthly.panel{
+  background:linear-gradient(180deg,#f8fafc,#e2e8f0)!important;border-color:#94a3b8!important}
+#studio4.panel::before, #themes.panel::before, #budget.panel::before, #exports.panel::before, #voicecontrol.panel::before, #install.panel::before, #cloud.panel::before, #backup.panel::before, #monthly.panel::before{
+  background:linear-gradient(90deg,#64748b,#94a3b8)}
+
+/* Szebb kártyák mindenhol */
+.panel .card{background:#ffffffcc;backdrop-filter:blur(4px);border-radius:16px;border:1px solid #00000008;box-shadow:0 4px 14px #00000008}
+.panel h2{color:#5b3a6e;font-size:clamp(20px,4vw,28px)}
+.panel .hint{color:#6b5b7a}
+
+/* Fő kategória gombok még barátságosabbak */
+#mainCats .tab{background:#fff;border:2px solid #f0d0e4;box-shadow:0 2px 10px #9d4e8712;transition:all .18s}
+#mainCats .tab:hover{transform:translateY(-2px);box-shadow:0 6px 16px #9d4e8725}
+#mainCats .tab.active{background:linear-gradient(135deg,#9d4e87,#c06a9e);color:#fff;border-color:transparent;box-shadow:0 4px 16px #9d4e8740}
+
+/* Alfülek */
+#tabs .tab{background:#fffafd;border:1px solid #f0c4e0;transition:all .15s}
+#tabs .tab:hover{background:#fff0f7}
+#tabs .tab.active{background:linear-gradient(135deg,#9d4e87,#c06a9e);color:#fff;border-color:transparent}
 </style><style>
 /* Az elmulasztott feladat jelzése a fejléc alatt, nem követi a görgetést */
 #missedBanner{position:relative!important;top:auto!important;left:auto!important;translate:none!important;transform:none!important;margin:10px auto!important;max-height:none!important;width:min(900px,calc(100% - 20px))!important;animation:none!important;box-shadow:0 4px 0 #9c7400,0 8px 15px #0002!important;border:6px ridge #e3b500!important}
@@ -87,12 +175,109 @@ body.v4-themed{transition:background-color .35s ease}
 @media print{#v4Bear{display:none}}
 </style><style>.dd-day.rule-active{border:2px solid #b83245!important;background:#ffe4e8!important}.dd-day.rule-active .dd-num{color:#a01b34;font-weight:900}</style>
 </head><body>
-<header><div class="row"><span class="bear">🧸</span><div><h1>Macis Pelenkás Napló</h1><p>Napi feladatok · külön időzítők · automatikus pelenkakészlet-levonás · eseménynapló · jelentések</p></div><span class="abdl-badge" aria-label="ABDL 3D felirat, színes 3D-ben mozgó képkerettel"><span>ABDL</span></span></div></header>
+<div id="topBar" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 14px;background:linear-gradient(90deg,#fce7f3,#e0f2fe);border-bottom:2px solid #f0c4e0;flex-wrap:wrap">
+  <div id="liveClock" style="font-weight:800;color:#9d4e87;font-size:15px;min-width:160px;line-height:1.3">
+    <div id="liveDate">—</div>
+    <div id="liveTime" style="font-size:22px">—</div>
+  </div>
+  <div style="flex:1;min-width:260px;max-width:480px">
+    <div style="font-size:12px;font-weight:700;color:#7a4a6a;margin-bottom:3px">🎵 ABDL zene (csak némítás)</div>
+    <div style="position:relative;border-radius:12px;overflow:hidden;border:2px solid #e8a0bf;background:#1a1a2e">
+      <iframe id="abdlPlayer" width="100%" height="80" src="https://www.youtube.com/embed/videoseries?list=PLn1ukdqc7iPGXGM7tWJtX7z6ZSteNWWl2&index=9&autoplay=0&loop=1&playlist=PLn1ukdqc7iPGXGM7tWJtX7z6ZSteNWWl2&controls=1&modestbranding=1&rel=0" title="ABDL Playlist" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="display:block"></iframe>
+    </div>
+    <div style="margin-top:4px;display:flex;gap:8px;align-items:center">
+      <button type="button" id="ytMuteBtn" class="btn small" style="background:#fce7f3;color:#9d4e87">🔇 Némítás</button>
+      <span class="hint" style="font-size:11px">A lejátszó a megadott ABDL listáról megy, végén ismétlődik.</span>
+    </div>
+  </div>
+</div>
+
+<header><div class="row"><span class="bear">🧸</span><div><h1 id="siteTitle">Macis Pelenkás Napló</h1><p id="siteSubtitle">Napi feladatok · külön időzítők · automatikus pelenkakészlet-levonás · eseménynapló · jelentések</p></div>
+<div id="langSwitch"><button type="button" data-lang="hu" class="active">HU</button><button type="button" data-lang="en">EN</button></div><span class="abdl-badge" aria-label="ABDL 3D felirat, színes 3D-ben mozgó képkerettel"><span>ABDL</span></span></div></header>
 <div id="missedBanner" class="missed-banner" role="alert" aria-live="assertive"><div class="mb-title">⚠️ FIGYELEM – EL NEM VÉGZETT FELADAT</div><div id="missedBannerTime" class="mb-time"></div><div id="missedBannerDetail" class="mb-detail"></div></div>
 <main>
-<nav id="tabs"><button class="tab" data-tab="studio4">🎨 4.0 Stúdió</button><button class="tab" data-tab="food4">🥣 Étkezés</button><button class="tab" data-tab="toys4">🧸 Játékok</button><button class="tab" data-tab="gear4">🍼 Kellékek</button><button class="tab" data-tab="room4">🏠 Babaszoba</button><button class="tab" data-tab="wish4">🛍️ Kívánságlista</button><button class="tab" data-tab="story4">📖 Napi történet</button><button class="tab" data-tab="qr4">🔳 QR-kódok</button><button class="tab" data-tab="hub">🏠 Főoldal</button><button class="tab" data-tab="notices">🔔 Értesítések</button><button class="tab" data-tab="outfits">🧥 Öltöztető</button><button class="tab" data-tab="compare">🧷 Összehasonlító</button><button class="tab" data-tab="timeline">⏱️ Idővonal</button><button class="tab" data-tab="budget">💰 Költségtervező</button><button class="tab" data-tab="planner">🗓️ Időbeosztás</button><button class="tab" data-tab="healthcheck">🩹 Egészségügyi ellenőrző</button><button class="tab" data-tab="exports">📄 PDF / Excel</button><button class="tab" data-tab="themes">🎨 Témák</button><button class="tab" data-tab="voicecontrol">🎤 Beszédvezérlés</button><button class="tab" data-tab="install">📱 Telefonos mód</button><button class="tab active" data-tab="daily">🐻 Napi táblázat</button><button class="tab" data-tab="lateDiaper">🧷 Utólagos pelenka felhelyezés</button><button class="tab" data-tab="reports">📋 Jelentések</button><button class="tab" data-tab="punishments">📝 Büntetésnapló</button><button class="tab" data-tab="events">📔 Eseménynapló</button><button class="tab" data-tab="stock">📦 Készlet</button><button class="tab" data-tab="diaperCalendar">📅 Pelenkanaptár</button><button class="tab" data-tab="medical">🩺 Orvosi napló</button><button class="tab" data-tab="history">🗂️ Előzmények</button><button class="tab" data-tab="clothing">👕 Ruházati napló</button><button class="tab" data-tab="wardrobe">👗 Ruhásszekrény</button><button class="tab" data-tab="smart">📊 Okos készlet</button><button class="tab" data-tab="monthly">📈 Statisztika</button><button class="tab" data-tab="workmode">🗓️ Munka / szabadnap</button><button class="tab" data-tab="review">⚠️ Szabályzat-ellenőrzés</button><button class="tab" data-tab="comfort">💗 Komfortnapló</button><button class="tab" data-tab="shops">🛒 Pelenkaboltok</button><button class="tab" data-tab="dailyChallenges">🎲 Napi kihívások</button><button class="tab" data-tab="trips">🚶 Kimenők / Boltba indulás</button><button class="tab" data-tab="cloud">☁️ Felhő és védelem</button><button class="tab" data-tab="backup">💾 Mentés</button><button class="tab" data-tab="rules">📜 Szabályzat</button></nav>
 
-<section class="panel" id="hub"><h2>🏠 Személyes vezérlőközpont</h2><div class="cards" id="hubCards"></div><button class="btn" id="hubRefresh">Frissítés</button></section>
+<nav id="mainCats" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+  <button class="tab maincat active" data-cat="napi">🐻 Napi</button>
+  <button class="tab maincat" data-cat="pelenka">🧷 Pelenka</button>
+  <button class="tab maincat" data-cat="naplo">📝 Napló</button>
+  <button class="tab maincat" data-cat="ruhazat">👕 Ruházat</button>
+  <button class="tab maincat" data-cat="egeszseg">🩺 Egészség</button>
+  <button class="tab maincat" data-cat="babas">🧸 Babás világ</button>
+  <button class="tab maincat" data-cat="beallitasok">⚙️ Beállítások</button>
+</nav>
+<nav id="tabs" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;min-height:42px">
+  <!-- Alfülek ide töltődnek -->
+</nav>
+
+
+<section class="panel" id="hub">
+<div style="text-align:center;padding:16px 10px 20px;background:linear-gradient(145deg,#fff0f7,#e8f4ff);border-radius:20px;border:2px solid #f0c4e0;margin-bottom:18px;box-shadow:0 8px 28px #e8b4d440">
+  <div style="font-size:58px;line-height:1.1;margin-bottom:8px">🧸👶🍼</div>
+  <h2 style="margin:0 0 8px;font-size:clamp(24px,5vw,34px);color:#9d4e87">Macis Baba ABDL Napló</h2>
+  <p style="margin:0 auto;color:#6b5b7a;font-size:15px;max-width:440px;line-height:1.45">Üdv a saját kis világodban. Itt minden pelus, ruha, szabály és emlék egy helyen van – tisztán, rendben, macisan.</p>
+</div>
+
+<div class="cards">
+  <div class="card" style="text-align:center;background:#fff9fc;border:1px solid #f3cce3">
+    <div style="font-size:34px">🐻</div>
+    <h3 style="margin:8px 0 4px">Napi táblázat</h3>
+    <p class="hint">Mai feladatok, cserék, ellenőrzések</p>
+    <button class="btn primary" onclick="document.querySelector('[data-cat=napi]')?.click();setTimeout(()=>document.querySelector('[data-tab=daily]')?.click(),60)">Megnyitás</button>
+  </div>
+  <div class="card" style="text-align:center;background:#f8fbff;border:1px solid #c5d9f5">
+    <div style="font-size:34px">🧷</div>
+    <h3 style="margin:8px 0 4px">Pelenka &amp; Készlet</h3>
+    <p class="hint">Készlet, naptár, kimenők</p>
+    <button class="btn primary" onclick="document.querySelector('[data-cat=pelenka]')?.click()">Megnyitás</button>
+  </div>
+  <div class="card" style="text-align:center;background:#fff8f0;border:1px solid #f5d9b8">
+    <div style="font-size:34px">👕</div>
+    <h3 style="margin:8px 0 4px">Ruházat</h3>
+    <p class="hint">Ruházati napló, szekrény, öltöztető</p>
+    <button class="btn primary" onclick="document.querySelector('[data-cat=ruhazat]')?.click()">Megnyitás</button>
+  </div>
+  <div class="card" style="text-align:center;background:#f5fff8;border:1px solid #b8e0c8">
+    <div style="font-size:34px">🩺</div>
+    <h3 style="margin:8px 0 4px">Egészség</h3>
+    <p class="hint">Orvosi napló, komfort, ellenőrző</p>
+    <button class="btn primary" onclick="document.querySelector('[data-cat=egeszseg]')?.click()">Megnyitás</button>
+  </div>
+  <div class="card" style="text-align:center;background:#faf5ff;border:1px solid #d9c5f0">
+    <div style="font-size:34px">🧸</div>
+    <h3 style="margin:8px 0 4px">Babás világ</h3>
+    <p class="hint">Játékok, kellékek, szoba, történet</p>
+    <button class="btn primary" onclick="document.querySelector('[data-cat=babas]')?.click()">Megnyitás</button>
+  </div>
+  <div class="card" style="text-align:center;background:#fff5f5;border:1px solid #f0c5c5">
+    <div style="font-size:34px">📜</div>
+    <h3 style="margin:8px 0 4px">Szabályzat</h3>
+    <p class="hint">Enyhe / Közepes / Durva szintek</p>
+    <button class="btn primary" onclick="document.querySelector('[data-cat=naplo]')?.click();setTimeout(()=>document.querySelector('[data-tab=rules]')?.click(),60)">Megnyitás</button>
+  </div>
+</div>
+
+
+<div class="card" style="margin-top:18px;border:2px solid #c45a7a;background:linear-gradient(145deg,#fff5f8,#fff);">
+  <h3 style="margin-top:0">📜 Szabályzat 2.0 – röviden</h3>
+  <p style="font-size:14px;line-height:1.5">
+    <strong>🟢 Enyhe:</strong> 15–45 perc késés → extra ellenőrzés / rövid beszámoló<br>
+    <strong>🟡 Közepes:</strong> 45–90 perc vagy látható tele pelus → 2–3 óra extra viselés<br>
+    <strong>🔴 Durva:</strong> 90+ perc / szándékos → több órás viselés, szigorúbb rend
+  </p>
+  <p class="hint">Egészség mindig elsőbbséget élvez. Részletes szabályzat a Napló → Szabályzat fülön.</p>
+  <div class="row">
+    <button class="btn primary" onclick="document.querySelector('[data-cat=naplo]')?.click();setTimeout(()=>document.querySelector('[data-tab=rules]')?.click(),60)">📜 Teljes szabályzat</button>
+    <button class="btn" onclick="document.querySelector('[data-cat=naplo]')?.click();setTimeout(()=>document.querySelector('[data-tab=punishments]')?.click(),60)">📝 Büntetésnapló</button>
+  </div>
+</div>
+
+<div style="margin-top:20px;text-align:center">
+  <button class="btn" id="hubRefresh">🔄 Frissítés</button>
+</div>
+
+<div class="cards" id="hubCards" style="margin-top:14px"></div>
+</section>
 <section class="panel" id="notices"><h2>🔔 Értesítési központ</h2><p class="hint">A jelzések csak a naplóban láthatók. Bármikor némíthatók vagy tudomásul vehetők; nem akadályozzák a szükséges cserét.</p><div class="row"><button class="btn" id="noticeRefresh">Frissítés</button><button class="btn" id="noticeMute">Értesítések némítása</button></div><div id="noticeList"></div></section>
 <section class="panel" id="outfits"><h2>🧥 Virtuális öltöztető</h2><p class="hint">A ruhásszekrényben mentett ruhákból válassz kombinációt.</p><div class="cards"><div class="card"><label>Dátum</label><input type="date" id="outfitDate"><label>Felsőruházat</label><select id="outfitTop"></select><label>Nadrág / szoknya</label><select id="outfitBottom"></select><label>Kiegészítő</label><select id="outfitExtra"></select><label>Láthatóság</label><select id="outfitVisibility"><option>Nem látszott</option><option>Alig látszott</option><option>Közepesen</option><option>Erősen</option></select><label>Komfort</label><select id="outfitComfort"><option>Kényelmes</option><option>Elfogadható</option><option>Kényelmetlen</option></select><button class="btn primary" id="outfitSave">Öltözék mentése</button></div><div class="card"><h3>Korábbi öltözékek</h3><div id="outfitList"></div></div></div></section>
 <section class="panel" id="compare"><h2>🧷 Pelenkák összehasonlítása</h2><p class="hint">Saját terméklista és saját értékelés; az árak nem élő bolti árak.</p><div class="cards"><div class="card"><label>Márka és típus</label><input id="cmpName" placeholder="pl. Seni Classic Plus"><label>Méret</label><input id="cmpSize" value="M"><label>Csomagár (Ft)</label><input id="cmpPrice" type="number" min="0"><label>Darabszám / csomag</label><input id="cmpQty" type="number" min="1" value="30"><label>Kényelem (1–5)</label><input id="cmpComfort" type="number" min="1" max="5" value="3"><label>Nedvszívás / megjegyzés</label><input id="cmpNotes"><button class="btn primary" id="cmpSave">Termék hozzáadása</button></div><div class="card"><div id="cmpList"></div></div></div></section>
@@ -162,6 +347,22 @@ body.v4-themed{transition:background-color .35s ease}
 <section id="comfort" class="panel"><h2>💗 Komfort- és bőrápolási napló</h2><label>Dátum</label><input id="cfDate" type="date"><label>Közérzet</label><select id="cfFeel"><option>Kényelmes</option><option>Enyhe kellemetlenség</option><option>Erős kellemetlenség</option></select><label>Bőr állapota</label><select id="cfSkin"><option>Rendben</option><option>Pirosság</option><option>Irritáció</option><option>Fájdalom / sérülés</option></select><label>Ápolás / csere</label><textarea id="cfCare" placeholder="Milyen ápolás vagy csere történt?"></textarea><label>Megjegyzés</label><textarea id="cfNote"></textarea><button class="btn primary" id="cfSave">Bejegyzés mentése</button><div id="cfList"></div></section>
 <section id="shops" class="panel"><h2>🛒 Felnőttpelenka-boltok és árkereső</h2><p class="hint">A kínálat, ár és nyitvatartás változik. Ez a rész keresési linkeket és budapesti térképet ad, nem állít teljes magyarországi terméklistát vagy ellenőrzött aktuális árakat. Internetkapcsolat kell hozzá.</p><div class="cards"><div class="card"><h3>Termékek és árak keresése</h3><p><a href="https://www.google.com/search?q=Seni+Classic+Plus+M+%C3%A1r" target="_blank" rel="noopener">Seni Classic Plus – aktuális árak</a></p><p><a href="https://www.google.com/search?q=TENA+Slip+feln%C5%91ttpelenka+%C3%A1r" target="_blank" rel="noopener">TENA Slip – árak</a></p><p><a href="https://www.google.com/search?q=Abena+Abri-Form+feln%C5%91ttpelenka+%C3%A1r" target="_blank" rel="noopener">Abena – árak</a></p><p><a href="https://www.google.com/search?q=MoliCare+feln%C5%91ttpelenka+%C3%A1r" target="_blank" rel="noopener">MoliCare – árak</a></p><p><a href="https://www.google.com/search?q=Dailee+feln%C5%91ttpelenka+%C3%A1r" target="_blank" rel="noopener">Dailee – árak</a></p><p><a href="https://www.google.com/search?q=ID+Slip+feln%C5%91ttpelenka+%C3%A1r" target="_blank" rel="noopener">iD Slip – árak</a></p></div><div class="card"><h3>Budapest – boltok, nyitvatartás</h3><p><a href="https://www.google.com/maps/search/gy%C3%B3gy%C3%A1szati+seg%C3%A9deszk%C3%B6z+feln%C5%91ttpelenka+Budapest/" target="_blank" rel="noopener">Bolttérkép megnyitása, nyitvatartás és útvonal</a></p><iframe title="Budapesti térkép" loading="lazy" style="width:100%;height:330px;border:1px solid #ccd6e3;border-radius:10px" src="https://www.openstreetmap.org/export/embed.html?bbox=18.99%2C47.43%2C19.17%2C47.58&amp;layer=mapnik"></iframe><p class="hint">A térkép Budapestet mutatja; a boltokat és az aktuális nyitvatartást a fenti keresőlinken ellenőrizd.</p></div></div></section>
 <section id="dailyChallenges" class="panel"><h2>🎲 Napi véletlenszerű kihívások</h2><p class="hint">Válassz helyszínt és nehézséget. A rendszer naponta 12–14 feladatot sorsol, amelyeket elfogadhatsz vagy elutasíthatsz. Az elutasítás nem szabályszegés. Az elmaradt feladatot később javíthatod, a korábbi állapot megőrzésével. A feladatokat bármikor megszakíthatod.</p><div class="row"><div class="field"><label>Helyszín</label><select id="chPlace"><option value="home">🏠 Otthon</option><option value="street">🚶 Utca / vásárlás</option></select></div><div class="field"><label>Nehézség</label><select id="chLevel"><option value="easy">Könnyű</option><option value="medium">Közepes</option><option value="hard">Erős</option></select></div><div class="field"><label>Dátum</label><input id="chDate" type="date"></div></div><div class="row"><button class="btn primary" id="chGenerate">🎲 Mai feladatok megjelenítése</button><button class="btn" id="chHistoryBtn">📔 Előzmények</button></div><p class="hint">Könnyű utcai feladatnál a pelenka nem látható; közepesnél választható részleges, erősnél teljesebb láthatóság megfelelő ruházattal. Nyilvános helyen is maradjon meg a megfelelő takarás. Otthoni feladatokhoz tiszta, száraz pelenkát használj.</p><div id="chTasks" class="cards" style="margin-top:12px"></div><h3>🗂️ Teljesítési napló</h3><div id="chHistory"></div></section><section id="cloud" class="panel"><h2>☁️ Supabase felhőszinkronizálás</h2><p>A helyi napló továbbra is működik. A PC és iPhone között a mentést a feltöltés és letöltés gombbal viheted át.</p><div class="card"><label>E-mail</label><input id="sbEmail" type="email"><label>Jelszó</label><input id="sbPassword" type="password"><div class="row"><button class="btn primary" id="sbSignup">Regisztráció</button><button class="btn primary" id="sbLogin">Belépés</button><button class="btn" id="sbLogout">Kilépés</button></div><p id="sbStatus" role="status">Nincs bejelentkezve.</p></div><div class="card"><button class="btn good" id="sbUpload">⬆️ Teljes napló feltöltése</button><button class="btn" id="sbDownload">⬇️ Felhőadatok letöltése</button><button class="btn" id="sbBackup">💾 Biztonsági mentés letöltése</button><p class="hint">Mindkét irányban felülírás történhet. Mindig készíts mentést! A felhőadatok felhasználónként elkülönítése Supabase RLS szabályokat igényel.</p></div><p class="hint">A Supabase macis_naplo tábláját használja. A hozzáférést a korábban beállított felhasználónkénti RLS védi.</p></section>
+
+
+<section class="panel" id="aiChat">
+  <h2>🧸💬 Macis AI Asszisztens</h2>
+  <p class="hint">Sorban kérdezek – mindig megvárom a válaszod, utána jön a következő kérdés.</p>
+  <div id="aiChatBox" style="background:linear-gradient(180deg,#fff9fc,#f3e8ff);border:2px solid #e9d5ff;border-radius:18px;padding:14px;min-height:320px;max-height:55vh;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:12px">
+  </div>
+  <div class="row">
+    <input id="aiChatInput" placeholder="Írd ide a válaszod..." style="flex:1;border-radius:12px;padding:12px;border:1.5px solid #e9d5ff">
+    <button type="button" class="btn primary" id="aiChatSend">Válasz küldése</button>
+  </div>
+  <div class="row" style="margin-top:8px">
+    <button type="button" class="btn" id="aiChatRestart">🔄 Új beszélgetés</button>
+  </div>
+</section>
+
 <section id="backup" class="panel"><h2>Mentés és visszaállítás</h2><div class="card"><h3>🧳 Kibővített teljes mentés</h3><p class="hint">A napló, a ruházat, a ruhásszekrény képei, a munkanapok, a komfortnapló és a helyi beállítások egy JSON-fájlban. A képek miatt nagy lehet a fájl.</p><button class="btn good" id="fullBackup">Teljes mentés (minden rész)</button><label>Teljes mentés visszatöltése</label><input type="file" id="fullBackupFile" accept=".json,application/json"><button class="btn" id="fullRestore">Teljes visszaállítás</button></div><p class="hint">Az adatok ebben a böngészőben, ezen az eszközön tárolódnak. Rendszeres biztonsági mentést érdemes letölteni.</p><div class="row"><button class="btn primary" id="backupDownload">Teljes biztonsági mentés letöltése (JSON)</button><div class="field"><label>Biztonsági mentés visszatöltése</label><input type="file" id="backupFile" accept="application/json,.json"></div><button class="btn" id="restoreBackup">Visszaállítás</button></div><p><button class="btn danger" id="clearAll">Minden helyi adat törlése</button></p></section>
 <section id="rules" class="panel"><h2>📜 Szabályzat és naplózási rend</h2><div class="card" style="border:3px solid #b83245;background:#fff3f3;margin-bottom:14px">
 <h3>🧸 MACIS PELENKÁS NAPLÓ – SZABÁLYZAT 2.0</h3>
@@ -223,7 +424,32 @@ body.v4-themed{transition:background-color .35s ease}
 <li>Részletes büntetésnapló-bejegyzés + esetleg fotós dokumentálás</li>
 </ul>
 
-<p><strong>Rögzítési kötelezettség:</strong> Minden szabályszegést be kell írni a napi táblázatba, az Eseménynaplóba, a Büntetésnaplóba, és ha kimenő volt, a Kimenők részbe is.</p>
+<p><strong>
+Rögzítési kötelezettség:</strong> Minden szabályszegést be kell írni a napi táblázatba, az Eseménynaplóba, a Büntetésnaplóba, és ha kimenő volt, a Kimenők részbe is.</p>
+
+<div class="card" style="border:2px solid #c45a7a;background:#fff8fb;margin-top:16px">
+  <h3>⚖️ Büntetés kiosztása (szabályszegés alapján)</h3>
+  <p class="hint">Válaszd ki a szintet, írd be az indokot – automatikusan bekerül a Büntetésnaplóba és az Eseménynaplóba.</p>
+  <div class="row">
+    <div class="field"><label>Dátum</label><input type="date" id="rulePunishDate"></div>
+    <div class="field"><label>Szint</label>
+      <select id="rulePunishLevel">
+        <option value="enyhe">🟢 Enyhe</option>
+        <option value="kozepes">🟡 Közepes</option>
+        <option value="durva">🔴 Durva</option>
+      </select>
+    </div>
+  </div>
+  <label>Szabályszegés rövid leírása</label>
+  <input id="rulePunishReason" placeholder="pl. 70 perc késés a cserénél, tele pelussal ment ki">
+  <label>Kiosztott büntetés</label>
+  <textarea id="rulePunishDetails" placeholder="pl. 2 óra extra viselés + beszámoló"></textarea>
+  <div class="row" style="margin-top:10px">
+    <button class="btn primary" id="rulePunishSave">⚖️ Büntetés kiosztása és naplózás</button>
+  </div>
+  <p id="rulePunishMsg" class="hint" style="margin-top:8px"></p>
+</div>
+
 <p class="hint">Az automatikus határidőfigyelés akkor működik, amikor az oldal fut. Egészségügyi kivétel mindig elsőbbséget élvez.</p>
 </div>
 <p><strong>⚠️ SZABÁLYSZEGÉS JELZÉSE:</strong> Ha az utólagos felhelyezésnél boxeralsó-viselést jelölsz, a napló figyelmeztet, és automatikus feljegyzést készít a Büntetésnaplóban és a Pelenkanaptárban. A feljegyzés nem jelent kötelező büntetést.</p><p class="hint">Ez a rész a napló használatának és az emlékeztetőknek a szabályait tartalmazza. A napló nem helyettesíti az egészségügyi tanácsot; kényelmetlenség, bőrirritáció vagy más egészségügyi probléma esetén a szükséges csere/ellátás nem halasztható a táblázat időpontja miatt.</p>
@@ -310,7 +536,108 @@ function renderLateDiaperLogs(){const list=$('lateDiaperList');if(!list)return;c
 function renderAll(){renderTasks();renderEvents();renderPunishments();renderMedical();renderStock();renderDiaperCalendar();renderMissedBanner();renderLateDiaperLogs()}
 $('tripDate').value=today();$('tripTime').value=nowTime().slice(0,5);
 $('tripSave').addEventListener('click',()=>{const date=$('tripDate').value||today(),time=$('tripTime').value,place=$('tripPlace').value,destination=$('tripDestination').value.trim(),diaper=$('tripDiaper').value,visibility=$('tripVisibility').value,note=$('tripNote').value.trim();if(!time){alert('Add meg az indulás időpontját.');return}const msg=`🚶 Kimenő: ${place}${destination?' – '+destination:''}. Pelenka: ${diaper}. Láthatóság: ${visibility}.${note?' Megjegyzés: '+note:''}`;data.events.unshift({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random()),date,time,message:msg,kind:'info',tripEntry:true,tripPlace:place,createdAt:stamp()});save();renderEvents();renderTrips();renderDiaperCalendar();$('tripNote').value='';alert('A kimenő mentve az Eseménynaplóba és a Pelenkanaptárba.');});
-$('tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(!b)return;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===b.dataset.tab));if(b.dataset.tab==='events')renderEvents();if(b.dataset.tab==='trips')renderTrips();if(b.dataset.tab==='punishments')renderPunishments();if(b.dataset.tab==='medical')renderMedical();if(b.dataset.tab==='stock')renderStock();if(b.dataset.tab==='diaperCalendar')renderDiaperCalendar();if(b.dataset.tab==='lateDiaper')renderLateDiaperLogs()});
+
+/* ===== Hierarchikus menü ===== */
+const CAT_MAP = {
+  napi: [
+    {id:'hub', label:'🏠 Főoldal'},
+    {id:'daily', label:'🐻 Napi táblázat'},
+    {id:'aiChat', label:'🧸💬 AI Asszisztens'},
+    {id:'planner', label:'🗓️ Időbeosztás'},
+    {id:'dailyChallenges', label:'🎲 Napi kihívások'},
+    {id:'notices', label:'🔔 Értesítések'}
+  ],
+  pelenka: [
+    {id:'diaperCalendar', label:'📅 Pelenkanaptár'},
+    {id:'lateDiaper', label:'🧷 Utólagos felhelyezés'},
+    {id:'stock', label:'📦 Készlet'},
+    {id:'trips', label:'🚶 Kimenők'},
+    {id:'shops', label:'🛒 Pelenkaboltok'}
+  ],
+  naplo: [
+    {id:'events', label:'📔 Eseménynapló'},
+    {id:'punishments', label:'📝 Büntetésnapló'},
+    {id:'rules', label:'📜 Szabályzat'},
+    {id:'reports', label:'📋 Jelentések'},
+    {id:'review', label:'⚠️ Szabályzat-ellenőrzés'}
+  ],
+  ruhazat: [
+    {id:'clothing', label:'👕 Ruházati napló'},
+    {id:'wardrobe', label:'👗 Ruhásszekrény'},
+    {id:'outfits', label:'🧥 Öltöztető'}
+  ],
+  egeszseg: [
+    {id:'medical', label:'🩺 Orvosi napló'},
+    {id:'healthcheck', label:'🩹 Egészségügyi ellenőrző'},
+    {id:'comfort', label:'💗 Komfortnapló'}
+  ],
+  babas: [
+    {id:'toys4', label:'🧸 Játékok'},
+    {id:'gear4', label:'🍼 Kellékek'},
+    {id:'room4', label:'🏠 Babaszoba'},
+    {id:'food4', label:'🥣 Étkezés'},
+    {id:'story4', label:'📖 Napi történet'}
+  ],
+  beallitasok: [
+    {id:'studio4', label:'🎨 Stúdió'},
+    {id:'backup', label:'💾 Mentés'},
+    {id:'cloud', label:'☁️ Felhő'},
+    {id:'exports', label:'📄 PDF / Excel'},
+    {id:'monthly', label:'📈 Statisztika'}
+  ]
+};
+
+function renderSubTabs(cat) {
+  const tabsNav = document.getElementById('tabs');
+  if (!tabsNav) return;
+  const list = CAT_MAP[cat] || [];
+  tabsNav.innerHTML = '';
+  list.forEach((t, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab' + (i === 0 ? ' active' : '');
+    btn.dataset.tab = t.id;
+    btn.textContent = t.label;
+    tabsNav.appendChild(btn);
+  });
+  // Activate first sub-tab
+  if (list.length) {
+    activatePanel(list[0].id);
+  }
+}
+
+function activatePanel(tabId) {
+  document.querySelectorAll('#tabs .tab').forEach(x => x.classList.toggle('active', x.dataset.tab === tabId));
+  document.querySelectorAll('.panel').forEach(x => x.classList.toggle('active', x.id === tabId));
+  // Original render triggers
+  if (tabId === 'events') typeof renderEvents === 'function' && renderEvents();
+  if (tabId === 'trips') typeof renderTrips === 'function' && renderTrips();
+  if (tabId === 'punishments') typeof renderPunishments === 'function' && renderPunishments();
+  if (tabId === 'medical') typeof renderMedical === 'function' && renderMedical();
+  if (tabId === 'stock') typeof renderStock === 'function' && renderStock();
+  if (tabId === 'diaperCalendar') typeof renderDiaperCalendar === 'function' && renderDiaperCalendar();
+  if (tabId === 'lateDiaper') typeof renderLateDiaperLogs === 'function' && renderLateDiaperLogs();
+  if (tabId === 'clothing') typeof renderClothing === 'function' && renderClothing();
+  if (tabId === 'comfort') typeof renderComfort === 'function' && renderComfort();
+}
+
+// Main category clicks
+document.getElementById('mainCats').addEventListener('click', e => {
+  const b = e.target.closest('[data-cat]');
+  if (!b) return;
+  document.querySelectorAll('#mainCats .tab').forEach(x => x.classList.toggle('active', x === b));
+  renderSubTabs(b.dataset.cat);
+});
+
+// Sub-tab clicks
+document.getElementById('tabs').addEventListener('click', e => {
+  const b = e.target.closest('[data-tab]');
+  if (!b) return;
+  activatePanel(b.dataset.tab);
+});
+
+// Initial load
+renderSubTabs('napi');
+
 $('tabs').addEventListener('click',()=>{setTimeout(()=>{const m=document.getElementById('haMenu');if(m&&document.querySelector('.panel.active'))m.value=document.querySelector('.panel.active').id;},0)});
 $('taskRows').addEventListener('change',e=>{const tr=e.target.closest('tr[data-id]');if(tr)collectTaskRow(tr)});$('taskRows').addEventListener('click',e=>{const b=e.target.closest('button[data-action]');if(!b)return;const tr=b.closest('tr'),id=tr.dataset.id;collectTaskRow(tr);if(b.dataset.action==='start')startTask(id);else completeRow(id)});
 document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='daily'));document.querySelectorAll('#tabs .tab').forEach(b=>b.classList.toggle('active',b.dataset.tab==='daily'));$('dayDate').value=today();$('reportDate').value=today();$('monthDate').value=today().slice(0,7);$('pDate').value=today();$('mDate').value=today();$('stockMoveDate').value=today();$('historyDate').value=today();$('ddMonth').value=today().slice(0,7);$('ddDate').value=today();renderTrips();dayData(today());renderAll();for(const date of Object.keys(data.days)){const d=data.days[date];for(const [id] of allTaskDefs()){if(d.tasks?.[id]?.status==='missed')recordMissedTask(date,id,d.tasks[id].missedReason||'A feladat korábban elmaradt.');}}renderMissedBanner();
@@ -333,6 +660,141 @@ setInterval(()=>{if(!activeAlarm)autoScheduleCheck();renderMissedBanner();},1500
 <style>
 #huAssistant{position:fixed;right:14px;bottom:14px;width:min(390px,calc(100vw - 28px));max-height:88vh;overflow:auto;z-index:9999;background:#fffafd;color:#29364a;border:2px solid #8eaed8;border-radius:16px;padding:14px;box-shadow:0 8px 35px #172b4938;font-family:Arial,sans-serif}
 #huAssistant h3{margin:0 0 12px;color:#24466b}#huAssistant label{display:block;margin:9px 0 4px}#huAssistant select,#huAssistant textarea,#huAssistant input{width:100%;box-sizing:border-box;padding:9px;border:1px solid #cbd7e6;border-radius:8px;background:white;color:#29364a}#huAssistant textarea{min-height:75px}#huAssistant button{border:0;border-radius:8px;padding:9px 11px;margin:4px 3px 4px 0;cursor:pointer;font-weight:bold;background:#dceaff;color:#24466b}#huAssistant button.primary{background:#2e5b91;color:white}#huAssistant button.danger{background:#ffe0e4;color:#9b2335}#huAssistant .ha-box{padding:9px;background:#f0f5ff;border-radius:9px;margin:8px 0;overflow-wrap:anywhere}#huAssistant .ha-small{font-size:12px;color:#64748b}
+
+/* ===== Erősebb, egyedi panel témák ===== */
+.panel{
+  border-radius:22px!important;
+  padding:20px 18px!important;
+  box-shadow:0 12px 36px #00000012!important;
+  border:2px solid transparent!important;
+  background-clip:padding-box;
+}
+
+/* --- NAPI (rózsaszín-kék) --- */
+#hub.panel,#daily.panel,#notices.panel,#planner.panel,#timeline.panel,#workmode.panel,#dailyChallenges.panel{
+  background:linear-gradient(165deg,#fff5fb 0%,#f0f7ff 50%,#fce7f3 100%)!important;
+  border-color:#f9a8d4!important;
+}
+#hub.panel h2,#daily.panel h2,#notices.panel h2,#planner.panel h2,#timeline.panel h2,#workmode.panel h2,#dailyChallenges.panel h2{color:#9d4e87!important}
+#hub.panel .card,#daily.panel .card,#notices.panel .card,#planner.panel .card,#timeline.panel .card,#workmode.panel .card,#dailyChallenges.panel .card{
+  background:linear-gradient(145deg,#ffffff,#fff0f7)!important;border:1px solid #fbcfe8!important}
+
+/* --- PELENKA (kék-lila) --- */
+#lateDiaper.panel,#stock.panel,#diaperCalendar.panel,#smart.panel,#trips.panel,#compare.panel,#shops.panel{
+  background:linear-gradient(165deg,#f0f9ff 0%,#e0f2fe 45%,#ede9fe 100%)!important;
+  border-color:#7dd3fc!important;
+}
+#lateDiaper.panel h2,#stock.panel h2,#diaperCalendar.panel h2,#smart.panel h2,#trips.panel h2,#compare.panel h2,#shops.panel h2{color:#0369a1!important}
+#lateDiaper.panel .card,#stock.panel .card,#diaperCalendar.panel .card,#smart.panel .card,#trips.panel .card,#compare.panel .card,#shops.panel .card{
+  background:linear-gradient(145deg,#ffffff,#e0f2fe)!important;border:1px solid #bae6fd!important}
+
+/* --- NAPLÓ (meleg rózsaszín) --- */
+#punishments.panel,#events.panel,#reports.panel,#review.panel,#rules.panel,#history.panel{
+  background:linear-gradient(165deg,#fff1f2 0%,#ffe4e6 50%,#fce7f3 100%)!important;
+  border-color:#fb7185!important;
+}
+#punishments.panel h2,#events.panel h2,#reports.panel h2,#review.panel h2,#rules.panel h2,#history.panel h2{color:#be123c!important}
+#punishments.panel .card,#events.panel .card,#reports.panel .card,#review.panel .card,#rules.panel .card,#history.panel .card{
+  background:linear-gradient(145deg,#ffffff,#ffe4e6)!important;border:1px solid #fecdd3!important}
+
+/* --- RUHÁZAT (meleg narancs) --- */
+#clothing.panel,#wardrobe.panel,#outfits.panel{
+  background:linear-gradient(165deg,#fff7ed 0%,#ffedd5 50%,#fef3c7 100%)!important;
+  border-color:#fb923c!important;
+}
+#clothing.panel h2,#wardrobe.panel h2,#outfits.panel h2{color:#c2410c!important}
+#clothing.panel .card,#wardrobe.panel .card,#outfits.panel .card{
+  background:linear-gradient(145deg,#ffffff,#ffedd5)!important;border:1px solid #fed7aa!important}
+
+/* --- EGÉSZSÉG (zöld) --- */
+#medical.panel,#healthcheck.panel,#comfort.panel{
+  background:linear-gradient(165deg,#f0fdf4 0%,#dcfce7 50%,#ccfbf1 100%)!important;
+  border-color:#4ade80!important;
+}
+#medical.panel h2,#healthcheck.panel h2,#comfort.panel h2{color:#15803d!important}
+#medical.panel .card,#healthcheck.panel .card,#comfort.panel .card{
+  background:linear-gradient(145deg,#ffffff,#dcfce7)!important;border:1px solid #bbf7d0!important}
+
+/* --- BABÁS VILÁG (lila-pink) --- */
+#food4.panel,#toys4.panel,#gear4.panel,#room4.panel,#wish4.panel,#story4.panel,#qr4.panel{
+  background:linear-gradient(165deg,#faf5ff 0%,#f3e8ff 50%,#fce7f3 100%)!important;
+  border-color:#c084fc!important;
+}
+#food4.panel h2,#toys4.panel h2,#gear4.panel h2,#room4.panel h2,#wish4.panel h2,#story4.panel h2,#qr4.panel h2{color:#7e22ce!important}
+#food4.panel .card,#toys4.panel .card,#gear4.panel .card,#room4.panel .card,#wish4.panel .card,#story4.panel .card,#qr4.panel .card{
+  background:linear-gradient(145deg,#ffffff,#f3e8ff)!important;border:1px solid #e9d5ff!important}
+
+/* --- BEÁLLÍTÁSOK (ezüst-szürke) --- */
+#studio4.panel,#themes.panel,#budget.panel,#exports.panel,#voicecontrol.panel,#install.panel,#cloud.panel,#backup.panel,#monthly.panel{
+  background:linear-gradient(165deg,#f8fafc 0%,#f1f5f9 50%,#e2e8f0 100%)!important;
+  border-color:#94a3b8!important;
+}
+#studio4.panel h2,#themes.panel h2,#budget.panel h2,#exports.panel h2,#voicecontrol.panel h2,#install.panel h2,#cloud.panel h2,#backup.panel h2,#monthly.panel h2{color:#334155!important}
+#studio4.panel .card,#themes.panel .card,#budget.panel .card,#exports.panel .card,#voicecontrol.panel .card,#install.panel .card,#cloud.panel .card,#backup.panel .card,#monthly.panel .card{
+  background:linear-gradient(145deg,#ffffff,#f1f5f9)!important;border:1px solid #cbd5e1!important}
+
+/* Inputok és gombok egységesebb, szebb kinézete */
+.panel input,.panel select,.panel textarea{
+  border-radius:12px!important;border:1.5px solid #e2e8f0!important;
+  background:#ffffffee!important;padding:10px 12px!important;
+}
+.panel input:focus,.panel select:focus,.panel textarea:focus{
+  border-color:#c084fc!important;outline:none;box-shadow:0 0 0 3px #c084fc33;
+}
+.panel .btn.primary{border-radius:12px;box-shadow:0 3px 10px #9d4e8730}
+.panel .btn{border-radius:12px}
+
+/* Főoldal kártyák még kiemelkedőbbek */
+#hub .card{transition:transform .2s,box-shadow .2s}
+#hub .card:hover{transform:translateY(-4px);box-shadow:0 10px 28px #9d4e8725}
+
+/* ===== AI Asszisztens ===== */
+/* removed aiFab */ #aiFab_unused{
+  position:fixed;right:18px;bottom:90px;z-index:100010;
+  width:58px;height:58px;border-radius:50%;border:3px solid #f0c4e0;
+  background:linear-gradient(145deg,#fff0f7,#e8f4ff);font-size:28px;
+  box-shadow:0 6px 22px #9d4e8740;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:transform .2s;
+}
+#aiFab:hover{transform:scale(1.08)}
+/* removed aiPanel */ #aiPanel_unused{
+  position:fixed;right:16px;bottom:160px;z-index:100011;
+  width:min(360px,calc(100vw - 24px));max-height:70vh;
+  background:linear-gradient(180deg,#fff9fc,#f0f7ff);border:2px solid #f0c4e0;
+  border-radius:20px;box-shadow:0 12px 40px #9d4e8735;
+  display:none;flex-direction:column;overflow:hidden;
+}
+/* removed */ #aiPanel_unused.open{display:flex}
+#aiHeader{
+  padding:12px 14px;background:linear-gradient(90deg,#9d4e87,#c06a9e);color:#fff;
+  font-weight:800;display:flex;justify-content:space-between;align-items:center;
+}
+#aiMessages{
+  flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;
+  min-height:200px;max-height:45vh;
+}
+.ai-msg{max-width:90%;padding:10px 12px;border-radius:14px;font-size:14px;line-height:1.4}
+.ai-msg.bot{background:#fff;border:1px solid #f0c4e0;align-self:flex-start;color:#4a3560}
+.ai-msg.user{background:linear-gradient(135deg,#9d4e87,#c06a9e);color:#fff;align-self:flex-end}
+#aiInputRow{display:flex;gap:6px;padding:10px;border-top:1px solid #f0c4e0;background:#fffafd}
+#aiInput{flex:1;border:1.5px solid #f0c4e0;border-radius:12px;padding:10px;font-size:14px}
+#aiSend{border:0;border-radius:12px;padding:10px 14px;background:#9d4e87;color:#fff;font-weight:700;cursor:pointer}
+.ai-quick{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 8px}
+.ai-quick button{border:1px solid #f0c4e0;background:#fff;border-radius:20px;padding:6px 10px;font-size:12px;cursor:pointer;color:#6b4a7a}
+
+#aiChat.panel{background:linear-gradient(165deg,#faf5ff 0%,#f3e8ff 50%,#fce7f3 100%)!important;border-color:#c084fc!important}
+#aiChat.panel h2{color:#7e22ce!important}
+#aiChat .ai-msg{max-width:92%;padding:10px 12px;border-radius:14px;font-size:14px;line-height:1.45}
+#aiChat .ai-msg.bot{background:#fff;border:1px solid #e9d5ff;align-self:flex-start;color:#4a3560}
+#aiChat .ai-msg.user{background:linear-gradient(135deg,#9d4e87,#c06a9e);color:#fff;align-self:flex-end}
+#aiChat .aiChatQuick{border:1px solid #e9d5ff;background:#fff;border-radius:20px;padding:7px 12px;font-size:12px;cursor:pointer;color:#6b4a7a;margin:3px}
+
+#aiFab,.aiFab,#aiPanel,.aiPanel{display:none!important;visibility:hidden!important;pointer-events:none!important}
+#v4Bear{display:none!important}
+
+#aiChatInput, #aiChatSend, #aiChatRestart { pointer-events:auto!important; opacity:1!important; }
+#aiChatInput { background:#fff!important; color:#222!important; border:1.5px solid #e9d5ff!important; }
+#aiFab, #aiPanel, #v4Bear { display:none!important; visibility:hidden!important; }
 </style>
 <button id="haDock" type="button" aria-controls="huAssistant" aria-expanded="true">🧸 Hangvezérlés</button>
 <div id="huAssistant">
@@ -576,4 +1038,593 @@ function history(){const box=$('chHistory');box.innerHTML='';records.slice(0,100
 function renderCrossLogs(){for(const [panelId,slotId,title] of [['diaperCalendar','chCalendarLog','🎲 Napi kihívások a naptárban'],['punishments','chPunishmentLog','🎲 Elmaradt és javított kihívások a naplóban']]){const panel=$(panelId);if(!panel)continue;let wrap=$(slotId);if(!wrap){wrap=document.createElement('div');wrap.id=slotId;panel.appendChild(wrap)}wrap.innerHTML='';const h=document.createElement('h3');h.textContent=title;wrap.appendChild(h);const relevant=records.filter(r=>['Elmaradt','Utólag javítva'].includes(r.status)).slice(0,80);if(!relevant.length){wrap.appendChild(document.createTextNode('Nincs rögzített elmaradt kihívás.'));continue}relevant.forEach(r=>{const e=document.createElement('div');e.className='event'+(r.status==='Elmaradt'?' error':'');e.textContent=r.date+' · '+r.status+' · '+r.title+(r.correctedAt?' · Javítás: '+new Date(r.correctedAt).toLocaleString('hu-HU'):'');wrap.appendChild(e)})}}
 $('chDate').value=today();$('chGenerate').onclick=generate;$('chHistoryBtn').onclick=history;generate();history();renderCrossLogs();
 })();
-</script></body></html>
+
+/* ===== Büntetés kiosztás a szabályzatból ===== */
+(function(){
+  const $ = id => document.getElementById(id);
+  const today = () => new Date().toLocaleDateString('sv-SE');
+  const stamp = () => new Date().toISOString();
+
+  function ensureData(){
+    if(typeof data === 'undefined'){
+      window.data = window.data || {};
+    }
+    data.punishments = data.punishments || [];
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const dEl = $('rulePunishDate');
+    if(dEl) dEl.value = today();
+  });
+
+  // Use event delegation in case of dynamic load
+  document.body.addEventListener('click', function(e){
+    if(e.target && e.target.id === 'rulePunishSave'){
+      ensureData();
+      const date = ($('rulePunishDate')?.value) || today();
+      const level = $('rulePunishLevel')?.value || 'enyhe';
+      const reason = ($('rulePunishReason')?.value || '').trim();
+      const details = ($('rulePunishDetails')?.value || '').trim();
+      const levelLabel = {enyhe:'🟢 Enyhe', kozepes:'🟡 Közepes', durva:'🔴 Durva'}[level] || level;
+
+      if(!reason){
+        alert('Írd be a szabályszegés rövid leírását!');
+        return;
+      }
+
+      const entry = {
+        id: 'rp_' + Date.now().toString(36),
+        date,
+        reason: levelLabel + ' – ' + reason,
+        details: details || ('Szabályzat szerinti ' + level + ' büntetés'),
+        status: 'Nyitott',
+        createdAt: stamp(),
+        level
+      };
+
+      data.punishments = data.punishments || [];
+      data.punishments.unshift(entry);
+
+      if(typeof save === 'function') save();
+      if(typeof addEvent === 'function'){
+        addEvent('⚖️ Büntetés kiosztva (' + levelLabel + '): ' + reason, 'error', date);
+      }
+      if(typeof renderPunishments === 'function') renderPunishments();
+
+      const msg = $('rulePunishMsg');
+      if(msg) msg.textContent = '✅ Büntetés mentve a Büntetésnaplóba és az Eseménynaplóba.';
+      if($('rulePunishReason')) $('rulePunishReason').value = '';
+      if($('rulePunishDetails')) $('rulePunishDetails').value = '';
+    }
+  });
+})();
+
+/* ===== Egyszerű nyelvváltó (HU / EN) ===== */
+(function(){
+  const dict = {
+    hu: {
+      siteTitle: 'Macis Pelenkás Napló',
+      siteSubtitle: 'Napi feladatok · külön időzítők · automatikus pelenkakészlet-levonás · eseménynapló · jelentések'
+    },
+    en: {
+      siteTitle: 'Teddy Diaper Diary',
+      siteSubtitle: 'Daily tasks · timers · inventory · event log · reports'
+    }
+  };
+  let current = localStorage.getItem('macisLang') || 'hu';
+
+  function applyLang(lang){
+    current = lang;
+    localStorage.setItem('macisLang', lang);
+    const t = dict[lang] || dict.hu;
+    const title = document.getElementById('siteTitle');
+    const sub = document.getElementById('siteSubtitle');
+    if(title) title.textContent = t.siteTitle;
+    if(sub) sub.textContent = t.siteSubtitle;
+    document.querySelectorAll('#langSwitch button').forEach(b=>{
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+  }
+
+  document.addEventListener('click', e=>{
+    const b = e.target.closest('#langSwitch button[data-lang]');
+    if(!b) return;
+    applyLang(b.dataset.lang);
+  });
+
+  // apply on load
+  setTimeout(()=>applyLang(current), 100);
+})();
+
+/* ===== Élő óra és dátum ===== */
+(function(){
+  function pad(n){return n<10?'0'+n:n}
+  function tick(){
+    const now = new Date();
+    const days = ['Vasárnap','Hétfő','Kedd','Szerda','Csütörtök','Péntek','Szombat'];
+    const d = now.getFullYear() + '.' + pad(now.getMonth()+1) + '.' + pad(now.getDate()) + '. (' + days[now.getDay()] + ')';
+    const t = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+    const de = document.getElementById('liveDate');
+    const te = document.getElementById('liveTime');
+    if(de) de.textContent = d;
+    if(te) te.textContent = t;
+  }
+  setInterval(tick, 1000);
+  tick();
+})();
+
+/* ===== YouTube némítás gomb (egyszerű) ===== */
+(function(){
+  let muted = false;
+  const btn = document.getElementById('ytMuteBtn');
+  if(!btn) return;
+  btn.addEventListener('click', ()=>{
+    muted = !muted;
+    btn.textContent = muted ? '🔊 Hang be' : '🔇 Némítás';
+    // Az iframe-et újratöltjük mute paraméterrel (egyszerű megoldás külső API nélkül)
+    const iframe = document.getElementById('abdlPlayer');
+    if(!iframe) return;
+    const base = 'https://www.youtube.com/embed/videoseries?list=PLn1ukdqc7iPGXGM7tWJtX7z6ZSteNWWl2&index=9&autoplay=1&loop=1&playlist=PLn1ukdqc7iPGXGM7tWJtX7z6ZSteNWWl2&controls=1&modestbranding=1&rel=0';
+    iframe.src = base + (muted ? '&mute=1' : '&mute=0');
+  });
+})();
+
+/* ===== Büntetés mentésekor naptárba is ===== */
+(function(){
+  const origClick = document.body.onclick;
+  document.body.addEventListener('click', function(e){
+    if(e.target && e.target.id === 'rulePunishSave'){
+      // A korábbi mentés után próbáljuk a naptárat is frissíteni
+      setTimeout(()=>{
+        try{
+          if(typeof data !== 'undefined' && data.punishments && data.punishments[0]){
+            const p = data.punishments[0];
+            // Egyszerű jelölés: ha van diaperCalendar render, hívjuk
+            if(typeof renderDiaperCalendar === 'function'){
+              // A naptár a meglévő rule-active / eseményekből dolgozik
+              renderDiaperCalendar();
+            }
+            // Eseménynaplóba már mentettük, a naptár az eseményekből is meríthet
+            if(typeof addEvent === 'function'){
+              // már megtörtént a mentéskor
+            }
+          }
+        }catch(err){}
+      }, 300);
+    }
+  });
+})();
+
+/* ===== Macis AI Asszisztens ===== */
+(function(){
+  const fab = document.getElementById('aiFab');
+  const panel = document.getElementById('aiPanel');
+  const closeBtn = document.getElementById('aiClose');
+  const messages = document.getElementById('aiMessages');
+  const input = document.getElementById('aiInput');
+  const sendBtn = document.getElementById('aiSend');
+  if(!fab || !panel) return;
+
+  fab.onclick = () => panel.classList.toggle('open');
+  closeBtn.onclick = () => panel.classList.remove('open');
+
+  function addMsg(text, who){
+    const d = document.createElement('div');
+    d.className = 'ai-msg ' + who;
+    d.textContent = text;
+    messages.appendChild(d);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function reply(q){
+    const t = (q || '').toLowerCase().trim();
+    if(!t) return 'Írj be valamit, és segítek. 🧸';
+
+    // Szabályzat & büntetések
+    if(t.includes('büntet') || t.includes('buntet') || t.includes('késés') || t.includes('keses') || t.includes('mulaszt')){
+      return 'A Szabályzat 2.0 szerint:\n🟢 Enyhe (15–45 perc): extra ellenőrzés vagy rövid beszámoló\n🟡 Közepes (45–90 perc / látható tele pelus): 2–3 óra extra viselés\n🔴 Durva (90+ perc / szándékos): több órás viselés, szigorúbb rend\n\nBüntetést a Szabályzat fülön tudsz kiosztani – automatikusan bekerül a naplóba.';
+    }
+    if(t.includes('enyhe')){
+      return '🟢 Enyhe szint: 15–45 perces késés, egyszeri elfelejtés, vagy enyhén tele pelus kimenőnél. Büntetés lehet: következő csere későbbre, 1 extra ellenőrzés, rövid beszámoló.';
+    }
+    if(t.includes('közepes') || t.includes('kozepes')){
+      return '🟡 Közepes szint: 45–90 perc késés, többszöri elmaradás, vagy tele/ereszkedett látható pelus. Tipikus büntetés: 2–3 óra extra viselés, feltűnőbb öltözet a következő kimenőn.';
+    }
+    if(t.includes('durva') || t.includes('súlyos') || t.includes('sulyos')){
+      return '🔴 Durva szint: 90+ perc késés, szándékos engedetlenség, nagyon látható tele pelus hosszabb kimenőn. Büntetés: több órás (vagy reggelig) viselés, dupla pelus, szigorúbb ellenőrzés.';
+    }
+    if(t.includes('szabály') || t.includes('szabal')){
+      return 'A teljes szabályzat a Napló → Szabályzat fülön van. A főoldalon is van rövid összefoglaló. Onnan büntetést is kioszthatsz, ami bekerül a Büntetésnaplóba és az Eseménynaplóba.';
+    }
+
+    // Navigáció
+    if(t.includes('kimenő') || t.includes('kimeno') || t.includes('bolt')){
+      return 'Kimenőt a Pelenka → Kimenők fülön rögzíthetsz. Írd be az időpontot és a pelenka állapotát – megjelenik az Eseménynaplóban és a naptárban is.';
+    }
+    if(t.includes('készlet') || t.includes('keszlet') || t.includes('pelenka hol')){
+      return 'A készletet a Pelenka → Készlet (és Okos készlet) fülön találod. Ott rögzítheted a mozgásokat is.';
+    }
+    if(t.includes('ruha') || t.includes('öltöz') || t.includes('oltoz')){
+      return 'Ruházati napló, Ruhásszekrény és Öltöztető a Ruházat fő fül alatt van.';
+    }
+    if(t.includes('orvos') || t.includes('egészség') || t.includes('egeszseg') || t.includes('komfort')){
+      return 'Orvosi napló, Egészségügyi ellenőrző és Komfortnapló az Egészség fő fül alatt találhatók.';
+    }
+    if(t.includes('naptár') || t.includes('naptar')){
+      return 'A Pelenkanaptár a Pelenka fő fül alatt van. Ott látod a cseréket, pisi/kaki jelöléseket és a szabályszegéseket is.';
+    }
+    if(t.includes('főoldal') || t.includes('fooldal') || t.includes('hol vagyok')){
+      return 'A Főoldal a Napi kategória első alfüle. Onnan gyorsan ugorhatsz bármelyik részhez a kártyákkal.';
+    }
+
+    // Általános
+    if(t.includes('szia') || t.includes('hello') || t.includes('heló') || t.includes('helló')){
+      return 'Szia! Miben segíthetek? Kérdezhetsz büntetésről, szabályzatról, vagy hogy hol találsz valamit a naplóban. 🧸';
+    }
+    if(t.includes('köszi') || t.includes('koszi') || t.includes('köszön')){
+      return 'Szívesen! Ha még kell valami, itt vagyok. 🍼';
+    }
+    if(t.includes('mi ez') || t.includes('mit tudsz') || t.includes('segítség') || t.includes('segitseg')){
+      return 'Én a Macis AI Asszisztens vagyok. Ismérem a Szabályzat 2.0-t, segítek büntetés szintekben, és eligazítalak a fülek között (Pelenka, Ruházat, Egészség, Babás világ stb.).';
+    }
+
+    return 'Nem vagyok benne teljesen biztos. Próbáld meg így: „Milyen büntetés jár késésért?”, „Hol a szabályzat?”, „Hogyan rögzítek kimenőt?” – vagy nyisd meg a megfelelő fő fület fent.';
+  }
+
+  function handle(q){
+    addMsg(q, 'user');
+    setTimeout(()=>{
+      addMsg(reply(q), 'bot');
+    }, 280);
+  }
+
+  sendBtn.onclick = ()=>{
+    const q = input.value.trim();
+    if(!q) return;
+    input.value = '';
+    handle(q);
+  };
+  input.addEventListener('keydown', e=>{
+    if(e.key === 'Enter'){ e.preventDefault(); sendBtn.click(); }
+  });
+
+  document.querySelectorAll('.ai-quick button').forEach(b=>{
+    b.onclick = ()=> handle(b.getAttribute('data-q'));
+  });
+})();
+
+/* ===== Macis AI – teljes beszélgetős logika ===== */
+(function(){
+  function addTo(boxId, text, who){
+    const box = document.getElementById(boxId);
+    if(!box) return;
+    const d = document.createElement('div');
+    d.className = 'ai-msg ' + who;
+    d.innerHTML = text.replace(/\n/g,'<br>');
+    box.appendChild(d);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  function smartReply(q){
+    const t = (q||'').toLowerCase().trim();
+    if(!t) return 'Mesélj bármit – pelusról, napról, kimenőről, vagy kérdezz a szabályzatról. 🧸';
+
+    // Érzelmek / állapot
+    if(t.includes('hogy vagy') || t.includes('hogy érz') || t.includes('hogy erz')){
+      return 'Köszönöm, hogy megkérdezed! Én mindig itt vagyok neked. 🍼 Te hogy érzed magad most a pelusban? Kényelmes, tele van, vagy már cserélni kellene?';
+    }
+    if(t.includes('tele') || t.includes('duci') || t.includes('ereszked') || t.includes('nedves') || t.includes('pisis')){
+      return 'Értem, elég tele / duzzadt a pelus. 🧷<br><br>Szerinted még bírja egy darabig, vagy már ideje lenne cserélni? Ha kint voltál / leszel így, mennyire volt / lesz látható a nadrágban?';
+    }
+    if(t.includes('kint') || t.includes('utca') || t.includes('bolt') || t.includes('séta') || t.includes('seta')){
+      if(t.includes('nem') || t.includes('még nem') || t.includes('meg nem')){
+        return 'Rendben, ma még nem voltál kint pelussal. 🚶<br><br>Tervezed, hogy ma kimész? Ha igen, milyen állapotú pelussal mennél, és mennyire szeretnéd, hogy látszódjon vagy épp rejtve maradjon?';
+      }
+      return 'Szóval már voltál kint pelussal. 👀<br><br>Mesélj róla: hol jártál? Szerinted észrevette valaki? Ha igen, mit szólt hozzá, vagy csak nézett? Hogy érezted magad közben?';
+    }
+    if(t.includes('észre') || t.includes('eszre') || t.includes('látták') || t.includes('lattak') || t.includes('néztek') || t.includes('neztek')){
+      return 'Érdekes… 👀 Ha valaki észrevette, mit szólt? Vagy csak nézett, de nem mondott semmit? Te hogy élted meg – izgalmas volt, kellemetlen, vagy inkább jó érzés?';
+    }
+    if(t.includes('szólt') || t.includes('szolt') || t.includes('mondta') || t.includes('reagál') || t.includes('reagal')){
+      return 'Köszi, hogy elmesélted. Az ilyen reakciók sokat elárulnak. Szeretnéd, hogy ezt rögzítsük a naplóban / kimenők között is, vagy csak nekem mesélted el most?';
+    }
+
+    // Szabályzat / büntetés
+    if(t.includes('büntet') || t.includes('buntet') || t.includes('késés') || t.includes('keses') || t.includes('mulaszt')){
+      return 'A Szabályzat 2.0 szerint:<br>🟢 <b>Enyhe</b> (15–45 perc): extra ellenőrzés / rövid beszámoló<br>🟡 <b>Közepes</b> (45–90 perc vagy látható tele pelus): 2–3 óra extra viselés<br>🔴 <b>Durva</b> (90+ perc / szándékos): több órás viselés, szigorúbb rend<br><br>Szeretnéd, hogy segítsék kiosztani egy büntetést a mostani helyzethez?';
+    }
+    if(t.includes('szabály') || t.includes('szabal')){
+      return 'A teljes szabályzat a <b>Napló → Szabályzat</b> fülön van. Onnan büntetést is kioszthatsz, ami bekerül a Büntetésnaplóba, az Eseménynaplóba és a naptárba is.';
+    }
+
+    // Navigáció / rendszer
+    if(t.includes('naptár') || t.includes('naptar')){
+      return 'A <b>Pelenkanaptár</b> a Pelenka fő fül első eleme. Oda kerülnek a cserék, a kimenők és a szabályszegések is. A naplózás után automatikusan frissül.';
+    }
+    if(t.includes('mentés') || t.includes('mentes') || t.includes('automatikus')){
+      return 'A rendszer helyi mentést használ. A fontos események (csere, kimenő, büntetés) bekerülnek a naplóba, onnan a naptárba, és a böngészőben automatikusan megmaradnak. Teljes biztonsági mentés a Beállítások → Mentés fülön van.';
+    }
+    if(t.includes('kimenő') || t.includes('kimeno')){
+      return 'Kimenőt a <b>Pelenka → Kimenők</b> fülön rögzíthetsz. Írd be az időpontot és a pelenka állapotát – megjelenik az Eseménynaplóban és a naptárban.';
+    }
+
+    // Üdvözlés
+    if(t.includes('szia') || t.includes('hello') || t.includes('helló') || t.includes('heló')){
+      return 'Szia ABDL baba! 🧸 Örülök, hogy itt vagy. Hogy vagy ma? Milyen a pelusod most – tiszta, pisis, vagy már tele? Voltál már kint vele?';
+    }
+    if(t.includes('köszi') || t.includes('koszi') || t.includes('köszön')){
+      return 'Szívesen! 🍼 Ha még mesélnél bármit a napról vagy a pelusról, itt vagyok.';
+    }
+
+    // Alapértelmezett – beszélgetős
+    return 'Értem. 🧸 Mesélj még róla nyugodtan: hogyan érzed most a pelust? Voltál már ma kint? Ha igen, szerinted észrevette valaki, és mit szólt hozzá? Vagy inkább a szabályzatról / büntetésről kérdeznél?';
+  }
+
+  // Panel chat
+  const chatBox = 'aiChatBox';
+  const chatInput = document.getElementById('aiChatInput');
+  const chatSend = document.getElementById('aiChatSend');
+
+  function handleChat(q){
+    if(!q.trim()) return;
+    addTo(chatBox, q, 'user');
+    setTimeout(()=> addTo(chatBox, smartReply(q), 'bot'), 300);
+  }
+
+  if(chatSend){
+    chatSend.onclick = ()=>{
+      const q = (chatInput?.value || '').trim();
+      if(!q) return;
+      if(chatInput) chatInput.value = '';
+      handleChat(q);
+    };
+  }
+  if(chatInput){
+    chatInput.addEventListener('keydown', e=>{
+      if(e.key==='Enter'){ e.preventDefault(); chatSend?.click(); }
+    });
+  }
+  document.querySelectorAll('.aiChatQuick').forEach(b=>{
+    b.onclick = ()=> handleChat(b.getAttribute('data-q'));
+  });
+
+  // Floating panel – same brain
+  const fab = document.getElementById('aiFab');
+  const panel = document.getElementById('aiPanel');
+  const closeBtn = document.getElementById('aiClose');
+  const messages = document.getElementById('aiMessages');
+  const input = document.getElementById('aiInput');
+  const sendBtn = document.getElementById('aiSend');
+
+  if(fab && panel){
+    fab.onclick = ()=> panel.classList.toggle('open');
+    if(closeBtn) closeBtn.onclick = ()=> panel.classList.remove('open');
+  }
+  function addFloat(text, who){
+    if(!messages) return;
+    const d = document.createElement('div');
+    d.className = 'ai-msg ' + who;
+    d.innerHTML = text.replace(/\n/g,'<br>');
+    messages.appendChild(d);
+    messages.scrollTop = messages.scrollHeight;
+  }
+  // Update initial floating message
+  if(messages){
+    messages.innerHTML = '<div class="ai-msg bot">Szia ABDL baba! 🧸 Hogy vagy ma? Miben segíthetek?<br><br>Mesélj: milyen a pelusod? Voltál már kint? Észrevette valaki az utcán?</div>';
+  }
+  function handleFloat(q){
+    addFloat(q, 'user');
+    setTimeout(()=> addFloat(smartReply(q), 'bot'), 300);
+  }
+  if(sendBtn){
+    sendBtn.onclick = ()=>{
+      const q = (input?.value || '').trim();
+      if(!q) return;
+      if(input) input.value = '';
+      handleFloat(q);
+    };
+  }
+  if(input){
+    input.addEventListener('keydown', e=>{
+      if(e.key==='Enter'){ e.preventDefault(); sendBtn?.click(); }
+    });
+  }
+  document.querySelectorAll('.ai-quick button').forEach(b=>{
+    b.onclick = ()=> handleFloat(b.getAttribute('data-q'));
+  });
+})();
+
+/* ===== Macis AI – soronkénti kérdezés ===== */
+(function(){
+  const STEPS = [
+    {key:'greeting', bot:'Szia ABDL baba! 🧸 Hogy vagy ma?', store:'mood'},
+    {key:'diaper', bot:'Köszi, hogy megírtad. 🍼 Most milyen a pelusod? (tiszta / pisis / tele / ereszkedett / kellemetlen)', store:'diaper'},
+    {key:'outside', bot:'Értem. Voltál már ma kint ezzel a pelussal? (igen / nem / tervezem)', store:'outside'},
+    {key:'noticed', bot:'Ha voltál kint (vagy ha kimész): szerinted észrevette valaki az utcán vagy a boltban? Ha igen, mit szólt vagy hogyan nézett?', store:'noticed'},
+    {key:'feeling', bot:'Hogy érezted / éreznéd magad közben? (izgalmas, cuki, kellemetlen, mindegy…)', store:'feeling'},
+    {key:'more', bot:'Van még valami, amit mesélnél a mai pelusos napról, vagy kérdeznél a szabályzatról / büntetésről?', store:'more'}
+  ];
+
+  let step = 0;
+  let answers = {};
+  const box = () => document.getElementById('aiChatBox');
+  const input = () => document.getElementById('aiChatInput');
+  const sendBtn = () => document.getElementById('aiChatSend');
+  const restartBtn = () => document.getElementById('aiChatRestart');
+
+  function addMsg(text, who){
+    const b = box();
+    if(!b) return;
+    const d = document.createElement('div');
+    d.className = 'ai-msg ' + who;
+    d.innerHTML = String(text).replace(/\n/g,'<br>');
+    b.appendChild(d);
+    b.scrollTop = b.scrollHeight;
+  }
+
+  function askCurrent(){
+    if(step < STEPS.length){
+      addMsg(STEPS[step].bot, 'bot');
+    } else {
+      // összefoglaló
+      let summary = 'Köszönöm, hogy elmesélted! 🧸 Összefoglalva:<br>';
+      STEPS.forEach(s=>{
+        if(answers[s.store]) summary += '• ' + s.store + ': ' + answers[s.store] + '<br>';
+      });
+      summary += '<br>Ha szeretnéd, ezt később beírhatod a Kimenőkbe vagy a Büntetésnaplóba is. Új beszélgetéshez nyomd az „Új beszélgetés” gombot.';
+      addMsg(summary, 'bot');
+    }
+  }
+
+  function onReply(text){
+    const t = (text||'').trim();
+    if(!t) return;
+    addMsg(t, 'user');
+
+    if(step < STEPS.length){
+      answers[STEPS[step].store] = t;
+      step++;
+      setTimeout(askCurrent, 400);
+    } else {
+      // szabad beszélgetés a végén
+      const low = t.toLowerCase();
+      if(low.includes('büntet') || low.includes('buntet') || low.includes('szabály') || low.includes('szabal')){
+        setTimeout(()=>addMsg('A Szabályzat a Napló → Szabályzat fülön van. 🟢 Enyhe / 🟡 Közepes / 🔴 Durva szintekkel. Onnan büntetést is kioszthatsz.', 'bot'), 350);
+      } else {
+        setTimeout(()=>addMsg('Értem. 🧸 Ha még mesélnél bármit, írd ide – vagy indíts új beszélgetést a gombbal.', 'bot'), 350);
+      }
+    }
+  }
+
+  function start(){
+    step = 0;
+    answers = {};
+    const b = box();
+    if(b) b.innerHTML = '';
+    askCurrent();
+  }
+
+  function bind(){
+    const s = sendBtn();
+    const i = input();
+    const r = restartBtn();
+    if(s) s.onclick = ()=>{
+      const v = (i && i.value || '').trim();
+      if(!v) return;
+      if(i) i.value = '';
+      onReply(v);
+    };
+    if(i) i.onkeydown = (e)=>{
+      if(e.key === 'Enter'){ e.preventDefault(); s && s.click(); }
+    };
+    if(r) r.onclick = start;
+  }
+
+  // Start when panel becomes active or on load
+  function tryStart(){
+    bind();
+    const b = box();
+    if(b && !b.dataset.started){
+      b.dataset.started = '1';
+      start();
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', tryStart);
+  setTimeout(tryStart, 500);
+
+  // When user opens AI tab
+  document.body.addEventListener('click', e=>{
+    const t = e.target.closest('[data-tab="aiChat"]');
+    if(t) setTimeout(()=>{
+      const b = box();
+      if(b && b.children.length === 0) start();
+      bind();
+    }, 100);
+  });
+})();
+
+
+/* ===== Macis AI – tiszta működő soros beszélgetés ===== */
+(function(){
+  const STEPS = [
+    {bot:'Szia ABDL baba! 🧸 Hogy vagy ma?', store:'mood'},
+    {bot:'Köszi! 🍼 Most milyen a pelusod? (tiszta / pisis / tele / ereszkedett / kellemetlen)', store:'diaper'},
+    {bot:'Értem. Voltál már ma kint ezzel a pelussal? (igen / nem / tervezem)', store:'outside'},
+    {bot:'Ha voltál kint vagy kimész: szerinted észrevette valaki? Mit szólt vagy hogyan nézett?', store:'noticed'},
+    {bot:'Hogy érezted / éreznéd magad közben?', store:'feeling'},
+    {bot:'Van még valami a mai napról, vagy kérdeznél a szabályzatról / büntetésről?', store:'more'}
+  ];
+  let step = 0, answers = {}, started = false;
+  function box(){ return document.getElementById('aiChatBox'); }
+  function inp(){ return document.getElementById('aiChatInput'); }
+  function addMsg(text, who){
+    const b = box(); if(!b) return;
+    const d = document.createElement('div');
+    d.className = 'ai-msg ' + who;
+    d.style.cssText = who==='bot'
+      ? 'align-self:flex-start;background:#fff;border:1px solid #e9d5ff;color:#4a3560;padding:10px 12px;border-radius:14px;max-width:92%;font-size:14px;line-height:1.45;margin:4px 0'
+      : 'align-self:flex-end;background:linear-gradient(135deg,#9d4e87,#c06a9e);color:#fff;padding:10px 12px;border-radius:14px;max-width:92%;font-size:14px;line-height:1.45;margin:4px 0';
+    d.textContent = text;
+    b.appendChild(d);
+    b.scrollTop = b.scrollHeight;
+  }
+  function ask(){
+    if(step < STEPS.length) addMsg(STEPS[step].bot, 'bot');
+    else {
+      let s = 'Köszönöm, hogy elmesélted! 🧸 ';
+      STEPS.forEach(st => { if(answers[st.store]) s += '• ' + answers[st.store] + ' '; });
+      s += ' — Új beszélgetéshez nyomd az „Új beszélgetés” gombot.';
+      addMsg(s, 'bot');
+    }
+  }
+  function start(){
+    step = 0; answers = {}; started = true;
+    const b = box(); if(b) b.innerHTML = '';
+    ask();
+    const i = inp(); if(i){ i.disabled = false; try{ i.focus(); }catch(e){} }
+  }
+  function send(){
+    const i = inp(); if(!i) return;
+    const t = (i.value || '').trim(); if(!t) return;
+    i.value = '';
+    addMsg(t, 'user');
+    if(step < STEPS.length){
+      answers[STEPS[step].store] = t;
+      step++;
+      setTimeout(ask, 350);
+    } else {
+      const low = t.toLowerCase();
+      setTimeout(function(){
+        if(low.indexOf('büntet')>=0 || low.indexOf('buntet')>=0 || low.indexOf('szabály')>=0 || low.indexOf('szabal')>=0)
+          addMsg('A Szabályzat a Napló → Szabályzat fülön van. 🟢 Enyhe / 🟡 Közepes / 🔴 Durva.', 'bot');
+        else addMsg('Értem. 🧸 Ha még mesélnél, írd ide.', 'bot');
+      }, 350);
+    }
+  }
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    if(!t) return;
+    if(t.id === 'aiChatSend'){ e.preventDefault(); send(); }
+    if(t.id === 'aiChatRestart'){ e.preventDefault(); start(); }
+    if(t.getAttribute && t.getAttribute('data-tab') === 'aiChat'){
+      setTimeout(function(){ if(!started || (box() && box().children.length===0)) start(); }, 200);
+    }
+    if(t.closest && t.closest('[data-tab="aiChat"]')){
+      setTimeout(function(){ if(!started || (box() && box().children.length===0)) start(); }, 200);
+    }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' && document.activeElement && document.activeElement.id === 'aiChatInput'){
+      e.preventDefault(); send();
+    }
+  });
+  setTimeout(function(){
+    var panel = document.getElementById('aiChat');
+    if(panel && panel.classList.contains('active')) start();
+  }, 800);
+})();
+
+</script>
+
+</body></html>
