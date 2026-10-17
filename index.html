@@ -163,7 +163,69 @@ body.v4-themed{transition:background-color .35s ease}
 <section id="shops" class="panel"><h2>🛒 Felnőttpelenka-boltok és árkereső</h2><p class="hint">A kínálat, ár és nyitvatartás változik. Ez a rész keresési linkeket és budapesti térképet ad, nem állít teljes magyarországi terméklistát vagy ellenőrzött aktuális árakat. Internetkapcsolat kell hozzá.</p><div class="cards"><div class="card"><h3>Termékek és árak keresése</h3><p><a href="https://www.google.com/search?q=Seni+Classic+Plus+M+%C3%A1r" target="_blank" rel="noopener">Seni Classic Plus – aktuális árak</a></p><p><a href="https://www.google.com/search?q=TENA+Slip+feln%C5%91ttpelenka+%C3%A1r" target="_blank" rel="noopener">TENA Slip – árak</a></p><p><a href="https://www.google.com/search?q=Abena+Abri-Form+feln%C5%91ttpelenka+%C3%A1r" target="_blank" rel="noopener">Abena – árak</a></p><p><a href="https://www.google.com/search?q=MoliCare+feln%C5%91ttpelenka+%C3%A1r" target="_blank" rel="noopener">MoliCare – árak</a></p><p><a href="https://www.google.com/search?q=Dailee+feln%C5%91ttpelenka+%C3%A1r" target="_blank" rel="noopener">Dailee – árak</a></p><p><a href="https://www.google.com/search?q=ID+Slip+feln%C5%91ttpelenka+%C3%A1r" target="_blank" rel="noopener">iD Slip – árak</a></p></div><div class="card"><h3>Budapest – boltok, nyitvatartás</h3><p><a href="https://www.google.com/maps/search/gy%C3%B3gy%C3%A1szati+seg%C3%A9deszk%C3%B6z+feln%C5%91ttpelenka+Budapest/" target="_blank" rel="noopener">Bolttérkép megnyitása, nyitvatartás és útvonal</a></p><iframe title="Budapesti térkép" loading="lazy" style="width:100%;height:330px;border:1px solid #ccd6e3;border-radius:10px" src="https://www.openstreetmap.org/export/embed.html?bbox=18.99%2C47.43%2C19.17%2C47.58&amp;layer=mapnik"></iframe><p class="hint">A térkép Budapestet mutatja; a boltokat és az aktuális nyitvatartást a fenti keresőlinken ellenőrizd.</p></div></div></section>
 <section id="dailyChallenges" class="panel"><h2>🎲 Napi véletlenszerű kihívások</h2><p class="hint">Válassz helyszínt és nehézséget. A rendszer naponta 12–14 feladatot sorsol, amelyeket elfogadhatsz vagy elutasíthatsz. Az elutasítás nem szabályszegés. Az elmaradt feladatot később javíthatod, a korábbi állapot megőrzésével. A feladatokat bármikor megszakíthatod.</p><div class="row"><div class="field"><label>Helyszín</label><select id="chPlace"><option value="home">🏠 Otthon</option><option value="street">🚶 Utca / vásárlás</option></select></div><div class="field"><label>Nehézség</label><select id="chLevel"><option value="easy">Könnyű</option><option value="medium">Közepes</option><option value="hard">Erős</option></select></div><div class="field"><label>Dátum</label><input id="chDate" type="date"></div></div><div class="row"><button class="btn primary" id="chGenerate">🎲 Mai feladatok megjelenítése</button><button class="btn" id="chHistoryBtn">📔 Előzmények</button></div><p class="hint">Könnyű utcai feladatnál a pelenka nem látható; közepesnél választható részleges, erősnél teljesebb láthatóság megfelelő ruházattal. Nyilvános helyen is maradjon meg a megfelelő takarás. Otthoni feladatokhoz tiszta, száraz pelenkát használj.</p><div id="chTasks" class="cards" style="margin-top:12px"></div><h3>🗂️ Teljesítési napló</h3><div id="chHistory"></div></section><section id="cloud" class="panel"><h2>☁️ Supabase felhőszinkronizálás</h2><p>A helyi napló továbbra is működik. A PC és iPhone között a mentést a feltöltés és letöltés gombbal viheted át.</p><div class="card"><label>E-mail</label><input id="sbEmail" type="email"><label>Jelszó</label><input id="sbPassword" type="password"><div class="row"><button class="btn primary" id="sbSignup">Regisztráció</button><button class="btn primary" id="sbLogin">Belépés</button><button class="btn" id="sbLogout">Kilépés</button></div><p id="sbStatus" role="status">Nincs bejelentkezve.</p></div><div class="card"><button class="btn good" id="sbUpload">⬆️ Teljes napló feltöltése</button><button class="btn" id="sbDownload">⬇️ Felhőadatok letöltése</button><button class="btn" id="sbBackup">💾 Biztonsági mentés letöltése</button><p class="hint">Mindkét irányban felülírás történhet. Mindig készíts mentést! A felhőadatok felhasználónként elkülönítése Supabase RLS szabályokat igényel.</p></div><p class="hint">A Supabase macis_naplo tábláját használja. A hozzáférést a korábban beállított felhasználónkénti RLS védi.</p></section>
 <section id="backup" class="panel"><h2>Mentés és visszaállítás</h2><div class="card"><h3>🧳 Kibővített teljes mentés</h3><p class="hint">A napló, a ruházat, a ruhásszekrény képei, a munkanapok, a komfortnapló és a helyi beállítások egy JSON-fájlban. A képek miatt nagy lehet a fájl.</p><button class="btn good" id="fullBackup">Teljes mentés (minden rész)</button><label>Teljes mentés visszatöltése</label><input type="file" id="fullBackupFile" accept=".json,application/json"><button class="btn" id="fullRestore">Teljes visszaállítás</button></div><p class="hint">Az adatok ebben a böngészőben, ezen az eszközön tárolódnak. Rendszeres biztonsági mentést érdemes letölteni.</p><div class="row"><button class="btn primary" id="backupDownload">Teljes biztonsági mentés letöltése (JSON)</button><div class="field"><label>Biztonsági mentés visszatöltése</label><input type="file" id="backupFile" accept="application/json,.json"></div><button class="btn" id="restoreBackup">Visszaállítás</button></div><p><button class="btn danger" id="clearAll">Minden helyi adat törlése</button></p></section>
-<section id="rules" class="panel"><h2>📜 Szabályzat és naplózási rend</h2><div class="card" style="border:3px solid #b83245;background:#fff3f3;margin-bottom:14px"><h3>🚨 SZIGORÚ SZABÁLYZAT 5.0 – AUTOMATIKUS NYILVÁNTARTÁS</h3><p><strong>MINDEN EL NEM VÉGZETT FELADATOT RÖGZÍTENI KELL.</strong> A határidő lejártakor a program automatikusan szabályszegésként naplózza a mulasztást a napi táblázatban, az eseménynaplóban, a büntetésnaplóban és a pelenkanaptárban. A jelzés nem jelent kötelező testi vagy nyilvános büntetést.</p><p><strong>1. FOKOZAT – FIGYELMEZTETÉS:</strong> első mulasztás esetén indoklás és feladat-áttekintés.</p><p><strong>2. FOKOZAT – KIEMELT ELLENŐRZÉS:</strong> ugyanazon a napon a második mulasztásnál részletesebb önellenőrzés és a következő feladat megtervezése.</p><p><strong>3. FOKOZAT – SÚLYOS SZABÁLYSZEGÉS:</strong> a harmadik és további mulasztásoknál piros, kiemelt bejegyzés és napi összesítő. A nyitott bejegyzéseket külön át kell tekinteni.</p><p><strong>AZ ADATOK NEM TŰNHETNEK EL ÉSZREVÉTLENÜL:</strong> minden mulasztás külön azonosítót kap; ugyanaz a lejárt feladat nem hozhat létre végtelen számú duplikált bejegyzést. A törlés a felhasználó tudatos döntése marad.</p><p><strong>EGÉSZSÉGÜGYI KIVÉTEL:</strong> nedvesség, szennyeződés, fájdalom, bőrirritáció vagy más szükséglet esetén a higiénia elsőbbséget élvez. Nincs kötelező szennyezett pelenka viselés, cserehalasztás vagy nyilvános megszégyenítés. Öltözködési kihívás kizárólag önkéntes, bármikor megszakítható.</p><p class="hint">Az automatikus határidőfigyelés akkor működik, amikor az oldal fut; a telefon háttérbe helyezésekor a böngésző korlátozhatja a működését. A felhőbe a „Teljes napló feltöltése” gombbal kerülnek át a változások.</p></div>
+<section id="rules" class="panel"><h2>📜 Szabályzat és naplózási rend</h2><div class="card" style="border:3px solid #b83245;background:#fff3f3;margin-bottom:14px">
+<h3>🧸 MACIS PELENKÁS NAPLÓ – SZABÁLYZAT 2.0</h3>
+<p><strong>Alapelvek (minden szinten érvényes):</strong></p>
+<ul>
+<li>Minden elmaradt, késve elvégzett vagy nem őszintén rögzített feladat szabályszegés.</li>
+<li>A pelenka állapotát (pisi/kaki mennyisége, ereszkedés, láthatóság, szivárgás) mindig pontosan be kell írni.</li>
+<li>Egészségügyi okból (irritáció, fájdalom, erős szivárgás) bármikor cserélhető – ez <strong>nem</strong> engedetlenség.</li>
+<li>A büntetés sosem mehet az egészség rovására.</li>
+</ul>
+
+<h3>🟢 ENYHE SZINT (kisebb késés, egyszeri engedetlenség)</h3>
+<p><strong>Mikor jár:</strong></p>
+<ul>
+<li>15–45 perces késés a cserénél / ellenőrzésnél</li>
+<li>Egyszeri „elfelejtettem” rögzítés</li>
+<li>Kimenőnél enyhén tele pelus, de még nem nagyon látható</li>
+</ul>
+<p><strong>Lehetséges büntetések:</strong></p>
+<ul>
+<li>A következő csere 30–60 perccel későbbre tolódik</li>
+<li>1 extra ellenőrzés a nap folyamán</li>
+<li>Rövid írásos beszámoló (3–5 mondat) a mulasztásról</li>
+<li>1 könnyű otthoni feladat pelenkában (pl. 15 perc olvasás / rendszerezés)</li>
+</ul>
+
+<h3>🟡 KÖZEPES SZINT (ismétlődő vagy feltűnőbb engedetlenség)</h3>
+<p><strong>Mikor jár:</strong></p>
+<ul>
+<li>45–90 perces késés</li>
+<li>Többszöri elmaradás egy napon belül</li>
+<li>Tele, ereszkedett pelussal kimenő (látható a nadrágban)</li>
+<li>Nem őszinte rögzítés (pl. kevesebb pisi beírása)</li>
+</ul>
+<p><strong>Lehetséges büntetések:</strong></p>
+<ul>
+<li>A pelus cseréje csak akkor történhet, amikor már nagyon tele / kellemetlen</li>
+<li>2–3 óra extra viselés a tele pelussal</li>
+<li>Következő kimenőnél szándékosan feltűnőbb (de még takart) öltözet</li>
+<li>Részletes beszámoló + fotó (ha a szabályzat engedi)</li>
+<li>1 közepes otthoni vagy utcai kihívás teljesítése</li>
+</ul>
+
+<h3>🔴 DURVA SZINT (súlyos vagy szándékos engedetlenség)</h3>
+<p><strong>Mikor jár:</strong></p>
+<ul>
+<li>90+ perces késés vagy több órás elmaradás</li>
+<li>Szándékos engedetlenség (tudatosan nem cserélt, pedig tudta)</li>
+<li>Nagyon tele, erősen ereszkedett, egyértelműen látható pelussal hosszabb kimenő</li>
+<li>Hamis bejegyzés vagy a napló megkerülése</li>
+</ul>
+<p><strong>Lehetséges büntetések:</strong></p>
+<ul>
+<li>Több órás (vagy másnapi reggelig tartó) viselés a tele / ereszkedett pelussal</li>
+<li>Következő 1–2 csere csak akkor, ha már szinte kibírhatatlan</li>
+<li>Extra vastag vagy dupla pelus a következő időszakra</li>
+<li>Nyilvánosabb / hosszabb kimenő feltűnőbb állapotban (megfelelő takarással)</li>
+<li>Szigorúbb ellenőrzési rend a következő 1–2 napra</li>
+<li>Részletes büntetésnapló-bejegyzés + esetleg fotós dokumentálás</li>
+</ul>
+
+<p><strong>Rögzítési kötelezettség:</strong> Minden szabályszegést be kell írni a napi táblázatba, az Eseménynaplóba, a Büntetésnaplóba, és ha kimenő volt, a Kimenők részbe is.</p>
+<p class="hint">Az automatikus határidőfigyelés akkor működik, amikor az oldal fut. Egészségügyi kivétel mindig elsőbbséget élvez.</p>
+</div>
 <p><strong>⚠️ SZABÁLYSZEGÉS JELZÉSE:</strong> Ha az utólagos felhelyezésnél boxeralsó-viselést jelölsz, a napló figyelmeztet, és automatikus feljegyzést készít a Büntetésnaplóban és a Pelenkanaptárban. A feljegyzés nem jelent kötelező büntetést.</p><p class="hint">Ez a rész a napló használatának és az emlékeztetőknek a szabályait tartalmazza. A napló nem helyettesíti az egészségügyi tanácsot; kényelmetlenség, bőrirritáció vagy más egészségügyi probléma esetén a szükséges csere/ellátás nem halasztható a táblázat időpontja miatt.</p>
 <div class="card"><h3>🕒 Napi feladatok és időkeret</h3><ul><li>09:00 – Reggeli csere</li><li>10:00 – Reggeli ellenőrzés</li><li>11:00 – Ellenőrzés</li><li>12:00 – Déli ellenőrzés</li><li>15:00 – Délutáni ellenőrzés</li><li>18:00 – Esti ellenőrzés</li><li>20:10 – Esti csere</li><li>23:00 – Éjszakai ellenőrzés</li></ul><p>Az egyes feladatokhoz külön időzítő tartozik. Alapértelmezett időkeret: 10 perc. A hang leállítható, de a visszaszámlálás tovább fut. A KÉSZ gomb rögzíti a teljesítés időpontját. Lejáratkor a napló „NINCS ELVÉGEZVE” állapotot és hibabejegyzést rögzít.</p><p>Az időkeret lejárta után is rögzíthető, hogy a feladat később megtörtént, de a késés nem törlődik: a bejegyzés jelzi a tényleges teljesítési időt és a késedelmet.</p></div>
 <div class="card" style="margin-top:12px"><h3>🧷 Pelenkacsere és ellenőrzés rögzítése</h3><ul><li>A megfelelő sorban ellenőrizd a feladat időpontját és típusát.</li><li>A „Pisi” mezőben válaszd ki az IGEN/NEM értéket.</li><li>A „Kaki” mezőben válaszd ki az IGEN/NEM értéket.</li><li>A „Csere / ellenőrzés” mezőben rögzítsd a tényleges eredményt.</li><li>Csere esetén add meg a felhasznált pelenkák darabszámát; a készletlevonás a mentéskor történik.</li><li>A megjegyzés mezőben feljegyezheted a körülményeket. Ha a feladat nem készült el, az „Elmaradás indoka” mezőben írd le az okot.</li><li>A „KÉSZ” állapotot csak akkor jelöld, ha a feladat ténylegesen megtörtént.</li></ul></div>
