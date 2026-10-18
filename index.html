@@ -1691,13 +1691,424 @@ chat:{keys:['szia','hello','beszelget','hogy vagy','kerdezz','unalom','koszi'],b
 };
 function say(t,who){const d=document.createElement('div');d.className='ai-msg '+who;d.textContent=t;box.append(d);box.scrollTop=box.scrollHeight}
 function followups(arr){follow.replaceChildren();if(!arr)return;const lab=document.createElement('span');lab.textContent='💡 Ezt is megkérdezheted:';lab.style.width='100%';follow.append(lab);arr.forEach(q=>{const b=document.createElement('button');b.type='button';b.textContent=q;b.onclick=()=>reply(q);follow.append(b)})}
-function reply(q){q=(q||'').trim();if(!q)return;say(q,'user');const t=clean(q);let id=null;for(const [key,d] of Object.entries(data)){if(d.keys.some(w=>t.includes(clean(w)))){id=key;break}}
+function reply(q){q=(q||'').trim();if(!q)return;say(q,'user');const t=clean(q);
+const greet=()=>{const h=Number(new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Budapest',hour:'2-digit',hourCycle:'h23'}).format(new Date()));return h<7?'Jó reggelt, ABDL baba! 🧸':h<12?'Szia, ABDL baba! 🧸':h<18?'Szia! 🧸':'Jó estét, ABDL baba! 🌙🧸'};
+if(/^(szia|szio|hali|hello|hello+|helo|szervusz|csao)[!?. ,]*(mizu|mi ujsag|hogy vagy|hogy vagy ma|mi a helyzet)?[!?. ]*$/.test(t)){
+ const answer=/(mizu|mi ujsag|hogy vagy|mi a helyzet)/.test(t)?greet()+' Köszi, jól vagyok, itt vagyok és beszélgetek veled! 😊 Nálad mi újság? Ma lazítasz, boltba mész vagy más a terv?':greet()+' Hogy vagy ma? Pihenős napod lesz, boltba mész, vagy van valami más terved?';say(answer,'bot');followups(['Ma pihenek','Boltba megyek','Beszélgessünk']);topic='chat';return;
+}
+if(/^(mizu|mi ujsag|mi a helyzet|hogy vagy)[!?. ]*$/.test(t)){say('🧸 Köszi, jól vagyok! Örülök, hogy írtál. 😊 Veled mi újság? Mi a mai terved?','bot');topic='chat';followups(['Ma pihenek','Boltba megyek','Beszélgessünk']);return;}
+// Természetes magyar társalgás: rövid válaszok, napi tervek, érzések, folytató kérdések.
+const chatAnswer=(message,options)=>{topic='chat';say('🧸 '+message,'bot');followups(options||['És nálad mi újság?','Beszélgessünk a napomról','Mi legyen a mai terv?'])};
+if(/(jol vagyok|jol vagyok koszi|remekul|szuperul|nagyon jol|minden rendben|meg vagyok|elvagyok)/.test(t)){chatAnswer('Ennek örülök! 😊 Mit tervezel mára: pihenést, bevásárlást, sétát vagy valami mást?',['Ma pihenek','Boltba megyek','Ma dolgozom']);return;}
+if(/(rosszul vagyok|nem vagyok jol|szomoru|faradt vagyok|kimerult|ideges vagyok|rossz napom)/.test(t)){chatAnswer('Sajnálom, hogy nehéz napod van. ❤️ Inkább mesélnél róla, vagy keressünk valami nyugodt, egyszerű programot?',['Mesélek a napomról','Pihenni szeretnék','Beszélgessünk']);return;}
+if(/(napomrol|napomrol beszel|meselnek a napomrol|mai napom|mi tortent ma|beszelgessunk|beszelgetni szeretnek|csak beszelget)/.test(t)){chatAnswer('Persze, mesélj! 😊 Hogy indult a napod? Volt már valami jó vagy bosszantó benne?',['Jól indult a napom','Fáradt vagyok','Ma boltba megyek']);return;}
+if(/(ma pihen|pihenek|lazitok|itthon leszek|otthon maradok|filmet nezek|jatekkal jatszom)/.test(t)){chatAnswer('Az jól hangzik! 🛋️ Inkább filmezés, játék vagy egy kis csendes pihenés lesz?',['Filmet nézek','Játszom','Csak pihenek']);return;}
+if(/(boltba megyek|vasarolni megyek|bevasarolni|megyek a boltba)/.test(t)){chatAnswer('Rendben! 🛒 Mit szeretnél venni? Segíthetek bevásárlólistát összeállítani.',['Pelenkát veszek','Élelmiszert veszek','Segíts bevásárlólistát írni']);return;}
+if(/(dolgozom|munkaba megyek|meloba megyek|melozom)/.test(t)){chatAnswer('Értem, akkor munkás napod lesz. 💼 Hány órára mész, és marad időd pihenni utána?',['Reggel megyek','Este végzek','Fáradt vagyok']);return;}
+if(/(setalni|setalok|kutyat setaltat|kirandul)/.test(t)){chatAnswer('Jól hangzik a séta! 🐾 Rövidebb kör lesz vagy hosszabb program?',['Rövid séta','Hosszabb séta','Utána pihenek']);return;}
+if(/(mi a terv|mit csinaljak ma|tervezzuk meg|mai terv|mit ajanlasz ma)/.test(t)){chatAnswer('Nézzük a mai napot! 😊 Inkább laza pihenés, bolt, séta vagy munka legyen a fő program?',['Ma pihenek','Boltba megyek','Ma dolgozom']);return;}
+if(/(koszi|koszonom|halas vagyok)/.test(t)){chatAnswer('Nagyon szívesen! 💛 Van még valami, amiről beszélgetnél?',['Mesélek a napomról','Mi legyen a mai terv?']);return;}
+if(/(jo reggelt|jo estet|jo ejszakat|szep napot)/.test(t)){chatAnswer(greet()+' Hogy érzed magad ma?',['Jól vagyok','Fáradt vagyok','Mesélek a napomról']);return;}
+if(/(pelusom|pelenkam|nedves a pelus|bepisiltem|kakis|kaki van|pisi van)/.test(t)){chatAnswer('Értem. 🧷 Mennyire nedves vagy szennyezett, és kényelmes még? Ha széklet van benne, szivárog vagy irritál, érdemes mielőbb tisztálkodni és tisztára cserélni.',['Hogyan kell higiénikusan pelenkát cserélni?','Hogyan tisztálkodjak csere előtt?']);return;}
+let id=null;for(const [key,d] of Object.entries(data)){if(d.keys.some(w=>t.includes(clean(w)))){id=key;break}}
 if(!id&&['igen','nem','tovabb','reszletesebben','ertem','oke','ok','jo'].some(w=>t===w))id=topic||'chat';
-if(!id){say('🧸 Ezt még nem tudom pontosan értelmezni. Próbáld rövidebben megfogalmazni, például: „Hogyan tisztítsam meg a bőrt csere előtt?” vagy válassz egy témagombot.\n\nTudok segíteni pelenkacserében, tisztálkodásban, ruházatban, vásárlásban, naplózásban és mentésben.','bot');followups(groups.slice(0,4).map(x=>x[1]));return}
+if(!id){chatAnswer('Mesélj még egy kicsit! 😊 Mit szeretnél erről elmondani, vagy mi történt pontosan?',['Mesélek a napomról','Ma pihenek','Boltba megyek']);return}
 topic=id;say(data[id].body,'bot');followups(data[id].next)}
 send.addEventListener('click',e=>{e.stopImmediatePropagation();const q=input.value;input.value='';reply(q)},true);
 input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();e.stopImmediatePropagation();send.click()}},true);
 restart?.addEventListener('click',e=>{e.stopImmediatePropagation();box.replaceChildren();topic='';follow.replaceChildren();say('🧸 Szia! Válassz egy témát, vagy írd le egyszerűen, miben segítsek.','bot')},true);
 if(!box.children.length)say('🧸 Szia! Kérdezz bátran, vagy válassz egy témát a gombok közül.','bot');
+})();
+</script>
+<style>
+#macisSmart{margin:12px 0;padding:12px;border:2px solid #e9a5ce;border-radius:16px;background:#fff4fb;color:#29364a}
+#macisSmart .smartlog{max-height:250px;overflow:auto;background:white;border-radius:10px;padding:10px;margin:8px 0;white-space:pre-wrap;line-height:1.5}
+#macisSmart .smartentry{margin:6px 0;padding:7px;border-radius:8px;background:#f2f6ff}
+#macisSmart .smartentry.mine{background:#ffe8f5}
+#macisSmart .smartbuttons{display:flex;flex-wrap:wrap;gap:6px}
+#macisSmart .smartbuttons button{flex:1 1 120px;min-height:42px}
+#macisSmart input{width:100%;min-height:44px}
+</style>
+<script>
+(function(){
+'use strict';
+function boot(){
+ const host=document.getElementById('huAssistant');if(!host||document.getElementById('macisSmart'))return;
+ const el=document.createElement('section');el.id='macisSmart';
+ el.innerHTML='<h3>🧸 Macis AI 4.0 – Napi beszélgetés</h3><div id="macisClock" aria-live="polite"></div><div class="smartlog" id="macisLog" aria-live="polite"></div><label for="macisInput">Írj a Macis AI-nak</label><input id="macisInput" placeholder="Például: Jó reggelt! Hogy áll a napom?" autocomplete="off"><div class="smartbuttons"><button id="macisSend" type="button">💬 Küldés</button><button id="macisTasks" type="button">📅 Mai feladataim</button><button id="macisCheck" type="button">🧷 Pelenka ellenőrzése</button><button id="macisEvening" type="button">🌙 Esti rutin</button></div><p class="ha-small">Az idő a készülék órájából származik. Az asszisztens a napló látható napi feladatait olvassa; a válaszai előre megírtak. A beszélgetés nem kerül felhőbe.</p>';
+ const anchor=document.getElementById('haStatus');if(anchor)anchor.parentNode.insertBefore(el,anchor);else host.appendChild(el);
+ const $=id=>document.getElementById(id);
+ const clock=()=>new Date().toLocaleString('hu-HU',{timeZone:'Europe/Budapest',dateStyle:'medium',timeStyle:'short'});
+ const hour=()=>Number(new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Budapest',hour:'2-digit',hourCycle:'h23'}).format(new Date()));
+ const greeting=()=>{let h=hour();return h<7?'Jó reggelt, ABDL baba! 🧸':h<12?'Szia, ABDL baba! 🧸':h<18?'Szia! Szép délutánt, ABDL baba! 🧸':'Jó estét, ABDL baba! 🌙🧸'};
+ function say(t,mine=false){const line=document.createElement('div');line.className='smartentry'+(mine?' mine':'');line.textContent=(mine?'Te: ':'Macis AI: ')+t;$('macisLog').appendChild(line);$('macisLog').scrollTop=$('macisLog').scrollHeight;}
+ function tasks(){const day=$('dayDate')?.value||'a kiválasztott nap';const trs=[...document.querySelectorAll('#taskRows tr[data-id]')];if(!trs.length)return 'A napi feladatokat még nem látom. Nyisd meg a Napi táblázatot, és töltsd be a napot.';const lines=trs.slice(0,15).map(tr=>{const title=tr.querySelector('td strong')?.textContent?.trim()||tr.dataset.id;const time=tr.querySelector('[data-field="time"]')?.value||tr.querySelector('input[type="time"]')?.value||tr.cells?.[1]?.textContent?.trim()||'időpont nélkül';const done=tr.querySelector('.status.done')?' – kész':tr.querySelector('.status.missed')?' – elmulasztva':'';return '• '+time+' '+title+done});return 'A naplóban szereplő feladatok ('+day+'):
+'+lines.join('
+')+'
+A csere és az ellenőrzés időpontja módosítható; szükség esetén korábban is cserélj.';}
+ function check(){return 'Mesélj a pelusodról! 🧷 Száraz, kicsit nedves vagy nagyon nedves? Volt széklet is? Ha igen, kevés vagy sok? Kényelmes még, vagy szivárog, irritál? Széklet, szivárgás vagy irritáció esetén cserélj mielőbb, és tisztítsd meg a bőrt.';}
+ function evening(){return '🌙 Esti rutin: nézd meg a napló esti csereidőpontját, készíts elő tiszta pelenkát, alátétet, langyos vizet vagy megfelelő tisztítókendőt, törölközőt és szükség esetén bőrvédő krémet. Vedd le a használt pelenkát, alaposan tisztítsd meg és szárítsd meg a bőrt, majd helyezd fel a tiszta pelenkát. Ha minden kényelmes, jó éjszakát, ABDL baba! 🧸';}
+ function reply(raw){let t=raw.toLocaleLowerCase('hu-HU').trim();const simple=t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[!?.,]/g,'').trim();
+if(/^(szia|szio|hali|hello|helo|csao)\s+(mizu|mi ujsag|mi a helyzet|hogy vagy)$/.test(simple))return greeting()+' Köszi, jól vagyok! 😊 Nálad mi újság? Ma pihenés, bolt vagy valami más a terv?';
+if(/^(mizu|mi ujsag|mi a helyzet|hogy vagy)$/.test(simple))return '🧸 Köszi, jól vagyok, és örülök, hogy írtál! Nálad mi újság? Mi a terved mára?';
+if(/^(szia|szio|hali|hello|helo|csao)$/.test(simple))return greeting()+' Hogy vagy ma? Lazítasz, boltba mész vagy van más programod?';
+if(/jó reggelt|szia|helló|hello|jó estét|jó napot/.test(t))return greeting()+' Hogy vagy ma? Mi a mai terved?';if(/idő|óra|hány óra|mennyi az idő/.test(t))return 'Most Budapesten '+clock()+'.';if(/feladat|terv|napirend|időpont|mikor.*cser|reggeli csere|ellenőrzés/.test(t))return tasks();if(/este|alvás|lefeksz|lefekv|jó éjt|fürdés/.test(t))return evening();if(/pisi|kaki|nedves|száraz|pelus|pelenka|csere/.test(t))return check();if(/ruha|nadrág|öltöz/.test(t))return '👕 Milyen programod lesz? Otthonra puha, kényelmes nadrágot, kimenőhöz megfelelő méretű, nem szorító ruhát ajánlok. A fontos, hogy ne dörzsölje a bőrödet.';if(/bolt|vásárl|készlet/.test(t))return '🛍️ Megnézheted a Pelenkaboltok és Készlet füleket. Szeretnéd összeírni, miből mennyi van még?';if(/fáj|viszket|piros|irrit|szivárog/.test(t))return 'Ha fáj, kipirosodott vagy szivárog, ellenőrizd a bőrödet, és cserélj tiszta pelenkára. Tartós vagy erős panasszal fordulj egészségügyi szakemberhez.';return '🧸 Figyelek rád! A napi feladatokról, reggeli és esti cseréről, ellenőrzésről, ruházatról és vásárlásról tudunk beszélni. '+check();}
+ function send(t){t=String(t||'').trim();if(!t)return;say(t,true);say(reply(t));$('macisInput').value='';}
+ $('macisSend').onclick=()=>send($('macisInput').value);$('macisInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();send($('macisInput').value)}});
+ $('macisTasks').onclick=()=>send('Mai feladataim');$('macisCheck').onclick=()=>send('Pelenka ellenőrzése');$('macisEvening').onclick=()=>send('Esti rutin');
+ function tick(){$('macisClock').textContent='🕒 Magyarországi idő: '+clock()};tick();setInterval(tick,60000);say(greeting()+' Mit szeretnél ma megbeszélni?');
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();
+</script>
+<script>
+/* Macis AI 4.3: contextual offline Hungarian dialogue */
+(()=>{'use strict';
+const state={topic:'',stage:'',wet:null,stool:null,amount:'',since:'',comfort:'',plan:'',last:'',turn:0};
+const $=id=>document.getElementById(id);
+const norm=x=>String(x||'').toLocaleLowerCase('hu-HU').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
+const has=(t,re)=>re.test(t);
+const pick=(arr)=>arr[state.turn%arr.length];
+function hour(){return Number(new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Budapest',hour:'2-digit',hourCycle:'h23'}).format(new Date()));}
+function greet(){const h=hour();return h<7?'Jó reggelt, ABDL baba! 🧸':h<12?'Szia, ABDL baba! 🧸':h<18?'Szia, ABDL baba! ☀️':'Jó estét, ABDL baba! 🌙🧸';}
+function question(){state.topic='diaper';state.stage='status';return '🧷 Hogy áll most a pelusod? Száraz, van benne pisi, vagy kaki is?';}
+function safety(){return 'Ha széklet van benne, szivárog, fáj vagy irritál, érdemes mielőbb tisztára cserélni, függetlenül a napló időpontjától.';}
+function log(text,mine){let e=document.createElement('div');e.className='smartentry'+(mine?' mine':'');e.textContent=(mine?'Te: ':'Macis AI: ')+text;$('macisLog').appendChild(e);$('macisLog').scrollTop=$('macisLog').scrollHeight;}
+function respond(raw){const t=norm(raw);state.turn++;if(!t)return '';
+const positive=/^(igen|aha|ja|persze|oke|ok|rendben|jo|jo van|igy van|bizony|az)$/;
+const negative=/^(nem|nem igazan|meg nem|megsem|dehogy|nincs|semmi|nem tudom)$/;
+const wet=/\b(pisi|pisil|pisis|vizelet|nedves|beaz|be pisil|bepisil|pisit)\b/;
+const poop=/\b(kaki|kakis|szeklet|bekakil|kakilt|kakilas)\b/;
+const dry=/\b(szaraz|tiszta|ures)\b/;
+const time=/\b(tegnap|tegnap este|ma reggel|reggel ota|este ota|oraja|ora ota|perce|perce van|most vettem|most raktam|ma delutan|ma este)\b|\d+\s*(ora|perc|nap)/;
+const amounts=/\b(egy|ket|harom|negy|ot|hat|het|nyolc|kilenc|tiz|1|2|3|4|5|6|7|8|9|10)\s*(adag|pisi|alkalom)|\b(keves|sok|nagyon sok|kicsi|kozepes|felig|tele|at azott|csurom|majdnem tele)\b/;
+const uncomfortable=/\b(kenyelmetlen|szorit|faj|csip|viszket|piros|irrital|szivarog|at azott|kid orzsol|dorzsol)\b/;
+const comfortable=/\b(kenyelmes|jol|jo|remek|szuper|rendben|kellemes)\b/;
+const plans=/\b(bolt|vasarl|bevasarl|seta|setal|pihen|lazul|laza|alud|munka|dolgoz|jatek|jatsz|gepez|foz|takarit|utaz|filme|sorozat|otthon|kirandul|barat|csalad)\b/;
+if(has(t,/\b(hany ora|mennyi az ido|pontos ido|most hany|milyen napszak)\b/))return '🕒 Magyarországi idő: '+new Date().toLocaleString('hu-HU',{timeZone:'Europe/Budapest',dateStyle:'medium',timeStyle:'short'})+'. '+(hour()<12?'Hogy indult a reggeled?':hour()<18?'Milyen a délutánod?':'Milyen volt a napod?');
+if(has(t,/\b(koszi|koszonom|halas vagyok)\b/))return pick(['Nagyon szívesen! 🧸 Van még valami, amiről beszélgetnél?','Örömmel! 😊 Hogy alakul a napod?']);
+if(has(t,/\b(viszlat|szia majd|jo ejt|jo ejszakat|aludni megyek|lefekszem)\b/))return 'Jó éjszakát, ABDL baba! 🌙🧸 Lefekvés előtt ellenőrizd, hogy tiszta, száraz és kényelmes-e a pelenkád. Szép álmokat!';
+if(has(t,/\b(segits|segitseg|mit csinaljak|tanacs|kerdesem van)\b/))return 'Persze, segítek! 🧸 Meséld el, miben akadtál el. A napi tervekről, pelusról, cseréről, tisztálkodásról és vásárlásról is kérdezhetsz.';
+if(has(t,/\b(naplo|feladat|napirend|ellenorzes|idopont|mikor csereljek|csere idopont|reggeli csere|esti csere)\b/)){
+ const rows=[...document.querySelectorAll('#taskRows tr[data-id]')];const tasks=rows.slice(0,10).map(r=>(r.querySelector('[data-field="time"]')?.value||r.querySelector('input[type="time"]')?.value||'időpont nélkül')+' '+(r.querySelector('td strong')?.textContent?.trim()||r.dataset.id));return tasks.length?'📅 A naplóban ezek a feladatok szerepelnek:\n'+tasks.join('\n')+'\nMelyiket szeretnéd megbeszélni?':'📅 Most nem látok kitöltött napi feladatokat. Megnyitod a napi táblázatot, és beírod a reggeli és esti ellenőrzést?';}
+if(has(t,/\b(csereljem|le kell cserelni|kell e cserelni|cserelni szeretnem|pelenkacsere hogyan|hogyan cserel|hogyan tisztits)\b/))return '🧼 Csere előtt készíts elő tiszta pelust, alátétet és tisztálkodószereket. Vedd le a használtat, tisztítsd és szárítsd meg a bőröd, majd vedd fel a tisztát. Ha széklet van benne, szivárog vagy irritál, ne halogasd a cserét. Szeretnéd lépésenként?';
+if(has(t,/\b(szia|hali|hello|helo|csao|jo reggelt|jo estet|jo napot)\b/) && t.length<35)return greet()+' '+pick(['Mizu, hogy vagy? Ma lazulás, bolt, pihenés vagy valami más a terv?','Hogy indult a napod? Pihenés vagy valami program vár rád?']);
+if(has(t,/\b(mizu|mi ujsag|mi a helyzet|hogy vagy|hogy vagyunk)\b/))return 'Köszi, jól vagyok! 😊 Nálad mi újság? Mi a mai terv?';
+if(has(t,/\b(beszelgess|napomrol|a napomrol|meselnek a napomrol|napom|hogy telt a nap)\b/)){state.topic='day';state.stage='start';return 'Persze, mesélj! 😊 Hogy indult a napod? Történt már valami érdekes?';}
+if(has(t,/\b(rosszul|szomoru|ideges|faradt|kimerult|unalmas|rossz nap|szarul|nem vagyok jol)\b/))return 'Sajnálom, hogy így érzed. 🧸 Mi történt? Inkább beszélgetnél róla, vagy valami könnyed programot tervezzünk?';
+if(has(t,/\b(jol vagyok|nagyon jol|minden rendben|szuperul|remekul|jo kedvem|tok jol|meg vagyok)\b/) && state.stage!=='comfort') {state.topic='day';state.stage='plan';return 'Ennek örülök! 😊 Mit tervezel mára: pihenést, bevásárlást, sétát, játékot vagy valami mást?';}
+if(has(t,/\b(most keltem|most ebredtem|felkeltem|reggeliztem|kavezom|kaveztam)\b/)){state.topic='day';state.stage='start';return 'Jó kis napindítás! ☀️ Van ma valami dolgod, vagy inkább pihenős nap lesz?';}
+if(has(t,/\b(nem tortent|semmi kulonos|meg nem|semmi extra)\b/) && (state.topic==='day'||state.stage==='start'))return 'Az is teljesen rendben van, ha még nyugis a nap. 🧸 '+question();
+if(has(t,plans) && !has(t,/\b(pelus|pelenka)\b/)){state.topic='day';state.stage='plan';state.plan=raw;return pick(['Jól hangzik! 😊 Mikor indulsz, és mennyi időre tervezed?','Értem! 🧸 Egyedül mész, vagy valakivel együtt?','Szuper! Van valami, amit előtte még el kell intézned?']);}
+// Diaper status takes precedence over generic affirmations.
+if(has(t,poop)){state.topic='diaper';state.stage='since';state.stool=true;state.wet=has(t,wet)||state.wet;return 'Értem, van benne kaki. 🧷 Kevés vagy sok? Széklet után érdemes mielőbb tisztára cserélni, és alaposan megtisztítani, megszárítani a bőrt. Segítsek a cserében?';}
+if(has(t,wet)){state.topic='diaper';state.stage='since';state.wet=true;const a=t.match(amounts);if(a)state.amount=a[0];const tm=t.match(time);if(tm)state.since=tm[0];if(tm||a){state.stage='comfort';return 'Értem, '+(state.since?'már '+state.since+' óta':'egy ideje')+' rajtad van, és '+(state.amount||'pisi')+' van benne. 🧸 Hogy érzed magad benne? Kényelmes, vagy már nedves, szorít, esetleg szivárog?';}return 'Értem, már van benne pisi. 🧷 Mióta van rajtad a pelus, és körülbelül mennyi vizelet van benne: egy-két adag vagy több?';}
+if(has(t,dry) && (state.topic==='diaper'||has(t,/\b(pelus|pelenka)\b/))){state.topic='diaper';state.stage='comfort';state.wet=false;return 'Rendben, most még száraz és tiszta. 🧸 Kényelmesen érzed magad benne? Mi a mai programod?';}
+if(has(t,/\b(pelus|pelenka|pelusom|pelenkam|allapota|pelenkaban)\b/))return question();
+if(state.topic==='diaper'){
+ if(state.stage==='since'&&(has(t,time)||has(t,amounts))){let a=t.match(amounts),tm=t.match(time);if(a)state.amount=a[0];if(tm)state.since=tm[0];state.stage='comfort';return 'Értem! '+(state.since?'Már '+state.since+' óta van rajtad. ':'')+(state.amount?'Kb. '+state.amount+' van benne. ':'')+'🧸 Kényelmes még, vagy zavar a nedvesség?';}
+ if(state.stage==='comfort'&&(has(t,comfortable)||has(t,uncomfortable))){state.comfort=raw;state.stage='change';return has(t,uncomfortable)?'Ha kellemetlen, szorít vagy irritál, jobb most ellenőrizni és szükség szerint cserélni. Segítsek a cserében?':'Örülök, hogy kényelmes! 🧸 Úgy érzed, most kell cserélni, vagy egyelőre még rendben van?';}
+ if(state.stage==='change'&&(has(t,negative)||has(t,/\b(nem kell|meg jo|raer|kesobb)\b/))){state.stage='plan';return 'Rendben. 🧸 Ha átázik, szivárog, irritál vagy széklet kerül bele, cseréld ki mielőbb. Mit tervezel ma csinálni? Pihenés, bolt, séta vagy valami más?';}
+ if(state.stage==='change'&&(has(t,positive)||has(t,/\b(igen kell|most cserel|cserelni fogom)\b/))){state.stage='plan';return 'Akkor készíts elő egy tiszta pelenkát, és tisztítsd, szárítsd meg a bőrödet. 🧼 Utána szeretnéd beírni a cserét a naplóba?';}
+ if(state.stage==='plan'&&has(t,plans)){state.topic='day';state.stage='plan';return 'Értem, ez a mai terv! 😊 Mikor szeretnéd elkezdeni?';}
+ if(state.stage==='status'&&has(t,negative))return 'Rendben, akkor most még nincs benne pisi vagy kaki? Kényelmes a pelusod?';
+ if(state.stage==='status'&&has(t,positive))return 'Értem! 🧷 Pisi van benne, kaki, vagy mindkettő?';
+ }
+if(has(t,/\b(igen|aha|persze|jo|oke)\b/) && state.stage==='start')return 'Értem! 😊 Mesélj még, mi történt?';
+if(has(t,/\b(igen|aha|persze|jo|oke)\b/) && state.stage==='plan')return 'Szuper! 🧸 Milyen időpontra gondoltál?';
+if(has(t,/\b(nem tudom|tal an|majd meglatom|nem biztos)\b/))return 'Semmi gond, nem kell most eldönteni. 🧸 Inkább pihenésre vágysz, vagy beszélgessünk valami másról?';
+if(has(t,/\b(ruha|nadrag|oltozek|felvegyek|miben menjek)\b/))return '👕 Milyen programra készülsz? Otthonra kényelmes, puha ruha, kimenőhöz pedig olyan nadrág jó, ami nem szorít és nem dörzsöl.';
+if(has(t,/\b(venni|vasarolni|hol kapok|mennyibe kerul|boltban|ar|keszlet)\b/))return '🛍️ Mit keresel pontosan: pelenkát, betegalátétet, tisztítókendőt vagy valami mást?';
+if(has(t,/\b(mit fozzek|ebed|vacsora|reggeli|ehes vagyok)\b/))return '🍽️ Mit ennél szívesen? Van otthon alapanyag, vagy bevásárlást is tervezzünk?';
+if(has(t,/\b(szeretlek|cuki vagy|aranyos vagy)\b/))return 'De kedves vagy! 🧸 Örülök, hogy itt beszélgetünk. Milyen a hangulatod ma?';
+if(has(t,/\b(unatkozom|unalom|nem tudok mit csinalni)\b/))return 'Találjunk ki valamit! 🎮 Játék, film, séta, zene vagy egy kis beszélgetés érdekelne?';
+if(has(t,/\b(mit tudsz|ki vagy|hogy hivnak)\b/))return 'Macis AI vagyok 🧸, a naplód ingyenes, offline beszélgetősegédje. A magyar mondatok egy részét felismerem, és emlékszem a beszélgetésünk néhány előző válaszára. Mit szeretnél megbeszélni?';
+if(has(t,/\b(az jo|klassz|szuper|oke|rendben|jo)\b/))return 'Örülök! 😊 Mesélsz még róla egy kicsit?';
+return 'Sajnos erre most nem tudok pontosan válaszolni. 🧸 Le tudnád írni másképp, hogy jobban megértsem?';
+}
+function send(){const inp=$('macisInput');if(!inp)return;const val=inp.value.trim();if(!val)return;log(val,true);log(respond(val),false);inp.value='';}
+function attach(){const sendBtn=$('macisSend'),inp=$('macisInput');if(!sendBtn||!inp)return;sendBtn.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();send();},true);inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.stopImmediatePropagation();send();}},true);
+const logEl=$('macisLog');if(logEl){let note=document.createElement('p');note.className='ha-small';note.textContent='🧸 Macis AI 4.3: kibővített magyar beszélgetés és a korábbi válaszokra emlékező párbeszéd. Internet nélkül működik; nem valódi generatív AI.';logEl.parentElement.insertBefore(note,logEl);}
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',attach);else attach();
+})();
+</script>
+<style>
+#aiChat .macis-v5{background:linear-gradient(135deg,#fff6fc,#f5f0ff);border-radius:18px;padding:16px;color:#45304d}#aiChat .mv-log{height:390px;overflow-y:auto;background:white;border:1px solid #e8d4ee;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px}#aiChat .mv-msg{max-width:88%;padding:11px 14px;border-radius:15px;white-space:pre-wrap;line-height:1.45}#aiChat .mv-ai{align-self:flex-start;background:#f1e7ff}#aiChat .mv-user{align-self:flex-end;background:#dceefc}#aiChat .mv-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}#aiChat .mv-controls input{flex:1;min-width:160px;padding:12px;border:1px solid #d5b9dc;border-radius:12px}#aiChat .mv-controls button,#aiChat .mv-controls select{padding:9px;border:1px solid #d7b5dc;border-radius:12px;background:white;color:#493653;cursor:pointer}#aiChat .mv-controls button{background:#f0d9fa}#aiChat .mv-chips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}#aiChat .mv-chips button{border-radius:999px;border:1px solid #e1c6e7;background:white;padding:7px 10px;cursor:pointer}#aiChat .mv-small{font-size:.85em;opacity:.78}
+</style>
+<script>
+(function(){'use strict';
+const $=id=>document.getElementById(id);
+const norm=s=>String(s||'').toLocaleLowerCase('hu-HU').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
+const any=(s,arr)=>arr.some(x=>s.includes(norm(x)));
+const s={topic:'start',step:'',wet:false,poop:false,since:'',amount:'',plan:'',lastQuestion:'',turn:0,previous:'',history:[]};
+const random=(arr)=>arr[s.turn%arr.length];
+const greeting=()=>{let h=Number(new Intl.DateTimeFormat('hu-HU',{timeZone:'Europe/Budapest',hour:'2-digit',hourCycle:'h23'}).format(new Date()));return h<7?'Jó reggelt, ABDL baba! 🧸':h<18?'Szia, ABDL baba! 🧸':'Jó estét, ABDL baba! 🧸'};
+const has=(t,...w)=>any(t,w);
+const answers={
+ greetings:['Szia! 😊 Hogy telik a napod?','Szia! 🧸 Mi újság veled?','Szia! 😊 Ma mihez lenne kedved?'],
+ feelingGood:['Ennek örülök! 😊 Mit tervezel mára?','De jó! 🧸 Ma inkább pihensz, vagy lesz valami programod?','Örülök neki! Mi volt eddig a napod legjobb része?'],
+ feelingBad:['Sajnálom, hogy nehéz napod van. 🧸 Szeretnél mesélni róla?','Itt vagyok, meghallgatlak. Mi bánt most a legjobban?','Mi történt? Inkább beszélgetnél, vagy kitaláljunk valami megnyugtató programot?'],
+ plan:['Ez jól hangzik! 😊 Mikorra tervezed?','Rendben! Egyedül mész, vagy valakivel?','Jó terv! Van valami, amit előtte még el kell intézned?'],
+ neutral:['Értem. 😊 És utána mi történt?','Mesélj még róla egy kicsit!','Aha, figyelek. És te mit gondolsz erről?','Érdekes! Ez inkább jó érzés volt, vagy bosszantott?']
+};
+function reply(raw){const t=norm(raw);s.turn++;s.previous=t;if(!t)return 'Írj nyugodtan valamit! 😊';
+const yes=/^(igen|aha|ja|persze|oke|ok|rendben|jo|bizony|az)$/;const no=/^(nem|meg nem|nem igazan|nincs|dehogy)$/;
+const wet=has(t,'pisi','pisil','pisis','vizelet','nedves','beazott','bepisil');const poop=has(t,'kaki','kakis','szeklet','bekakil');
+const status=has(t,'pelus','pelenka','pelusom','pelenkam','allapot','csere','nedvesseg');
+const duration=has(t,'tegnap','tegnap este','ma reggel','reggel ota','ora ota','oraja','perce','del ota','este ota','napja','ejszaka ota');
+const amount=has(t,'adag','sok','keves','kicsi','ketto','harom','negy','1 ','2 ','3 ','4 ','tele','felig');
+const uncomfortable=has(t,'kenyelmetlen','szorit','csip','faj','irrital','viszket','szivarog','atazott','kiut');
+const comfortable=has(t,'kenyelmes','jol erzem','jo benne','semmi baj','rendben van','teljesen jo');
+if(has(t,'hany ora','mennyi az ido','pontos ido','milyen nap van','mai datum')){return 'Most Magyarországon '+new Intl.DateTimeFormat('hu-HU',{timeZone:'Europe/Budapest',dateStyle:'full',timeStyle:'short'}).format(new Date())+'. 🕒 Milyen programot terveztél?';}
+if(has(t,'hogy hivnak','ki vagy','mit tudsz','te ai vagy'))return 'Macis AI vagyok 🧸. Magyarul beszélgetek, kérdezek, segítek a napod tervezésében és a napló használatában. Nem vagyok internetes, mindentudó AI. Miről beszélgessünk?';
+if(has(t,'koszonom','koszi','halas vagyok'))return random(['Nagyon szívesen! 🧸 Van még valami, amiben segítsek?','Örülök, ha segíthettem! 😊 Miről beszélgessünk tovább?']);
+if(has(t,'viszlat','szia majd','jo ejszakat','megyek aludni','lefekszem'))return 'Jó éjszakát, ABDL baba! 🌙 Lefekvés előtt érdemes ellenőrizni a pelenkát, és ha nedves, szennyezett vagy kényelmetlen, tisztára cserélni. Aludj jól! 🧸';
+if(has(t,'jo reggelt','jo estet','szia','hello','hali','szevasz','csao','mizu','mi ujsag','hogy vagy') && t.length<45){s.topic='day';s.step='feeling';return greeting()+' '+random(['Hogy vagy ma?','Mi újság veled?','Hogy indult a napod?']);}
+if(has(t,'jol vagyok','jol vagyok koszi','nagyon jol','remekul','szuperul','jol erzem magam','minden oke','egesz jol')){s.topic='day';s.step='plan';return random(answers.feelingGood);}
+if(has(t,'rosszul vagyok','szomoru','faradt vagyok','nem vagyok jol','szarul','rossz napom','ideges','szorongok','maganyos')){s.topic='day';s.step='support';return random(answers.feelingBad);}
+if(has(t,'beszelgessunk a napomrol','napomrol','mai napomrol','meseljek a napomrol')){s.topic='day';s.step='morning';return 'Persze! 🧸 Hogy indult a napod? Történt már valami érdekes?';}
+if(has(t,'meg nem tortent semmi','meg semmi','semmi kulonos','semmi extra','meg nem','nem sok minden') && s.topic==='day'){s.topic='diaper';s.step='status';return 'A nyugis nap is jó. 😊 Hogy áll most a pelusod: száraz, van benne pisi, vagy kaki is?';}
+if(has(t,'hogy all a pelus','milyen a pelenka','ellenorizzuk a pelust','pelenka ellenorzes')){s.topic='diaper';s.step='status';return 'Rendben, nézzük meg együtt! 🧷 Száraz még, van benne pisi, vagy kaki is?';}
+if(poop){s.topic='diaper';s.step='change';s.poop=true;return 'Értem, kaki is van benne. 🧷 Ilyenkor érdemes mielőbb tisztára cserélni és gyengéden megtisztítani, megszárítani a bőrt. Készítsünk elő egy tiszta pelenkát?';}
+if(wet){s.topic='diaper';s.wet=true; if(duration||amount){s.step='comfort';s.since=duration?raw:s.since;s.amount=amount?raw:s.amount;return 'Értem, már van benne pisi. 🧸 Kényelmes még, vagy érzed, hogy nedves, esetleg szivárog?';}s.step='duration';return 'Értem, van benne pisi. 🧷 Mióta van rajtad, és körülbelül mennyi vizelet van benne?';}
+if(s.topic==='diaper'&&s.step==='duration'&&(duration||amount)){s.step='comfort';if(duration)s.since=raw;if(amount)s.amount=raw;return 'Értem, köszönöm, hogy elmondtad. 🧸 Hogy érzed magad benne? Kényelmes még, vagy zavar a nedvesség?';}
+if(s.topic==='diaper'&&s.step==='comfort'&&(comfortable||uncomfortable||yes.test(t))){s.step='change';return uncomfortable?'Ha szorít, csíp, szivárog vagy irritál, inkább cseréld ki most. Segítsek a lépésekben?':'Értem, hogy kényelmes. 😊 Szerinted most szükséges cserélni, vagy előbb ellenőrzöd a nedvességét?';}
+if(s.topic==='diaper'&&s.step==='change'&&(no.test(t)||has(t,'nem kell','meg nem','kesobb','most nem'))){s.step='plan';return 'Rendben. 🧸 Ha nedves, átázik, irritál vagy széklet kerül bele, ne halogasd a cserét. Mit tervezel mára: pihenés, bolt, séta vagy valami más?';}
+if(s.topic==='diaper'&&s.step==='change'&&(yes.test(t)||has(t,'cserelni kell','most cserel','kicserel'))){s.step='after';return 'Rendben! 🧼 Készíts elő tiszta pelenkát, tisztítsd és szárítsd meg a bőrt, majd cserélj. Szeretnéd utána beírni a naplóba?';}
+if(s.topic==='diaper'&&s.step==='status'&&no.test(t)){s.step='comfort';return 'Akkor még száraz a pelus? Kényelmesen érzed magad benne?';}
+if(s.topic==='diaper'&&s.step==='status'&&yes.test(t)){s.step='type';return 'Értem! 🧷 Pisi van benne, kaki, vagy mindkettő?';}
+if(status&&has(t,'szaraz','tiszta','ures')){s.topic='diaper';s.step='comfort';s.wet=false;s.poop=false;return 'Rendben, tiszta és száraz. 😊 Kényelmes most? Mikor volt az utolsó csere?';}
+if(status){s.topic='diaper';s.step='status';return 'Nézzük meg a pelenka állapotát! 🧷 Száraz, nedves, vagy szennyezett? Mióta viseled?';}
+if(has(t,'csere idopont','mikor csereljek','napi ellenorzes','esti csere','reggeli csere','napirend'))return 'A naplódban rögzített időpontokat érdemes követni, de a nedves, szennyezett, szivárgó vagy irritáló pelenkát szükség esetén korábban is cserélni kell. 🧷 Reggeli vagy esti rutint tervezzünk?';
+if(has(t,'naplo','rogzit','beir','mentes','export','import','adatok'))return 'A naplóban felírhatod az ellenőrzés idejét, a pisi/kaki állapotot és a cserét. 📝 Mit szeretnél most rögzíteni?';
+if(has(t,'bolt','vasarlas','bevasarlas','shop','aruhaz','venni szeretnek','boltba megyek')){s.topic='day';s.step='plan';return 'Bevásárlás lesz! 🛍️ Mit szeretnél venni, és mikor indulsz?';}
+if(has(t,'seta','setalni','kutya','kutyaval','kimegyek')){s.topic='day';s.step='plan';return 'Egy séta jól hangzik! 🐾 Merre mennél, és mennyi időre?';}
+if(has(t,'pihen','lazul','aludni','fekszem','film','sorozat')){s.topic='day';s.step='plan';return 'Jól hangzik egy kis pihenés. 😊 Filmet nézel, zenét hallgatsz, vagy csak lazítasz?';}
+if(has(t,'dolgozni','munka','melo','munkaba')){s.topic='day';s.step='plan';return 'Munka vár rád? 🧸 Hány órára mész, és milyen napra számítasz?';}
+if(has(t,'jatek','jatszani','valorant','minecraft','omsi','gta')){s.topic='day';s.step='plan';return 'Játékidő! 🎮 Mivel játszol ma, és egyedül vagy barátokkal?';}
+if(has(t,'mit fozzek','fozes','ebed','vacsora','ehes','reggeli'))return '🍽️ Mit ennél szívesen? Van otthon alapanyag, vagy vásárolni kell hozzá?';
+if(has(t,'milyen ruha','mit vegyek fel','oltozzek','nadrag','pol o','pulover','ruha'))return '👕 Milyen programra készülsz? Olyan ruhát érdemes választani, ami kényelmes, nem szorít és nem dörzsöl.';
+if(has(t,'vicc','meselj viccet'))return 'Miért vitt a maci órát az erdőbe? 🧸 Hogy tudja, mikor van maci-idő! 😄 Kérsz még egyet?';
+if(has(t,'unatkozom','unalmas','nincs otletem'))return 'Találjunk ki valamit! 🎲 Séta, játék, film, zene vagy közös napitervezés érdekel?';
+if(has(t,'igen','persze','aha')&&s.step==='plan')return 'Szuper! 😊 Mi legyen az első lépés?';
+if(has(t,'nem tudom','majd meglatom','bizonytalan'))return 'Semmi gond. 😊 Mihez lenne most a leginkább kedved?';
+if(s.topic==='day'&&s.step==='morning'){s.step='day-detail';return 'Értem! 😊 És ez hogy érintett téged? Mi történt utána?';}
+if(s.topic==='day'&&s.step==='day-detail'){s.step='plan';return 'Köszi, hogy elmesélted. 🧸 Mi lesz a következő programod ma?';}
+if(s.topic==='day'&&s.step==='plan'){s.step='followup';return random(answers.plan);}
+if(s.topic==='day'&&s.step==='followup'){s.step='plan';return 'Értem! 😊 És van valami, amit még szeretnél ma megcsinálni?';}
+if(t.length>12)return random(answers.neutral);
+return 'Sajnos erre most nem tudok biztosan válaszolni. 🧸 Meg tudod fogalmazni egy kicsit másképp?';
+}
+function init(){const panel=$('aiChat');if(!panel)return;const old=$('macisSmart');if(old)old.style.display='none';panel.innerHTML='<h2>🧸 Macis AI 5.0 – Magyar beszélgetés és hang</h2><div class="macis-v5"><div class="mv-small">Magyarországi idő szerint köszönök. Beszélgetek veled és emlékszem az előző kérdésre. Az asszisztens offline, szabályalapú; a hangfunkció a böngésző támogatásától függ.</div><div class="mv-log" id="mvLog" aria-live="polite"></div><div class="mv-chips" id="mvChips"></div><div class="mv-controls"><input id="mvInput" placeholder="Írj ide, például: Szia, mizu?" aria-label="Üzenet"><button id="mvSend" type="button">Küldés</button><button id="mvMic" type="button">🎙️ Beszéd</button><button id="mvVoiceToggle" type="button">🔊 Hang: ki</button></div><div class="mv-controls"><label for="mvVoice">Magyar AI-hang:</label><select id="mvVoice"><option value="">Alapértelmezett</option></select><button id="mvRestart" type="button">🔄 Új beszélgetés</button></div><p class="mv-small" id="mvInfo">A beszédfelismerés egyes böngészőkben internetet igényelhet.</p></div>';
+let speaking=false;let voices=[];const log=(message,user)=>{let d=document.createElement('div');d.className='mv-msg '+(user?'mv-user':'mv-ai');d.textContent=message;$('mvLog').appendChild(d);$('mvLog').scrollTop=$('mvLog').scrollHeight;};
+function loadVoices(){if(!('speechSynthesis' in window))return;voices=window.speechSynthesis.getVoices().filter(v=>/^hu/i.test(v.lang));let select=$('mvVoice'),prev=select.value;select.innerHTML='<option value="">Alapértelmezett magyar</option>';voices.forEach((v,i)=>{let o=document.createElement('option');o.value=String(i);o.textContent=v.name+' ('+v.lang+')';select.appendChild(o);});select.value=prev||'';}
+function say(message){if(!speaking||!('speechSynthesis' in window))return;window.speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(message);u.lang='hu-HU';u.rate=.95;let n=$('mvVoice').value;if(n!==''&&voices[Number(n)])u.voice=voices[Number(n)];else if(voices[0])u.voice=voices[0];window.speechSynthesis.speak(u);}
+function send(text){text=String(text||'').trim();if(!text)return;log(text,true);let response=reply(text);log(response,false);say(response);$('mvInput').value='';}
+$('mvSend').addEventListener('click',()=>send($('mvInput').value));$('mvInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();send($('mvInput').value);}});
+$('mvVoiceToggle').addEventListener('click',()=>{speaking=!speaking;$('mvVoiceToggle').textContent=speaking?'🔊 Hang: be':'🔇 Hang: ki';if(!speaking&&'speechSynthesis' in window)window.speechSynthesis.cancel();});
+$('mvRestart').addEventListener('click',()=>{Object.assign(s,{topic:'start',step:'',wet:false,poop:false,since:'',amount:'',turn:0});$('mvLog').innerHTML='';log(greeting()+' Hogy vagy ma?',false);});
+const chip=['Beszélgessünk a napomról','Hogy áll a pelusom?','Ma boltba megyek','Reggeli csere','Esti csere','Mit játsszak?'];chip.forEach(v=>{let b=document.createElement('button');b.textContent=v;b.addEventListener('click',()=>send(v));$('mvChips').appendChild(b);});
+let Rec=window.SpeechRecognition||window.webkitSpeechRecognition;if(Rec){$('mvMic').addEventListener('click',()=>{try{let r=new Rec();r.lang='hu-HU';r.interimResults=false;r.maxAlternatives=1;r.onresult=e=>send(e.results[0][0].transcript);r.onerror=e=>{$('mvInfo').textContent='A mikrofon nem működött: '+e.error+'. Engedélyezd a mikrofont, vagy írj üzenetet.'};r.start();$('mvInfo').textContent='🎙️ Figyelek, beszélj magyarul!';}catch(e){$('mvInfo').textContent='Nem sikerült elindítani a mikrofont.';}});}else{$('mvMic').disabled=true;$('mvInfo').textContent='Ez a böngésző nem támogatja a beszédfelismerést. Chrome vagy Edge böngészővel próbáld, HTTPS oldalon.';}
+if('speechSynthesis' in window){loadVoices();window.speechSynthesis.addEventListener('voiceschanged',loadVoices);}else{$('mvVoiceToggle').disabled=true;$('mvVoice').disabled=true;}
+log(greeting()+' Hogy vagy ma?',false);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+<style>
+#topBar{position:sticky!important;top:0!important;z-index:5000!important;min-height:0!important;padding:5px 12px!important;box-shadow:0 3px 10px #8a628044}#topBar iframe#abdlPlayer{height:72px!important}#topBar>div:nth-child(2){max-width:430px!important}#topBar #liveClock{min-width:125px!important}#aiChat{display:none!important}#macisLauncher{position:fixed;top:48%;bottom:auto;right:18px;transform:translateY(-50%);z-index:999990;background:#fff3fc;border:3px solid #bc77db;border-radius:50%;width:92px;height:92px;font-size:53px;cursor:pointer;box-shadow:0 5px 25px #743b9d66}#macisWindow{position:fixed;inset:3vh 3vw;z-index:999991;display:none;background:#fff9ff;border:2px solid #c991dc;border-radius:18px;box-shadow:0 10px 50px #25203877;overflow:hidden;font-family:Arial,sans-serif;color:#34243d}#macisWindow.open{display:flex}#macisSide{width:235px;background:#f1e5fa;padding:14px;overflow:auto;border-right:1px solid #d9b9e9;flex-shrink:0}#macisMain{flex:1;min-width:0;display:flex;flex-direction:column}#macisHeader{padding:12px 16px;background:#f5e9ff;display:flex;align-items:center;justify-content:space-between;gap:8px}#macisMessages{flex:1;overflow:auto;padding:20px;display:flex;flex-direction:column;gap:13px;background:#fff}#macisInputBar{padding:12px;display:flex;gap:6px;flex-wrap:wrap;background:#f9f1ff}#macisText{flex:1;min-width:180px;padding:12px;border:1px solid #cbb5d8;border-radius:12px}#macisWindow button,#macisWindow select{padding:9px;border:1px solid #b987d2;border-radius:10px;background:#fff;cursor:pointer;color:#442457}#macisWindow button:hover{background:#e8d3f9}.macisMsg{max-width:82%;padding:12px 15px;border-radius:16px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}.macisMsg.user{align-self:flex-end;background:#dcefff}.macisMsg.bot{align-self:flex-start;background:#f1e5ff}.macisConv{display:block!important;width:100%;text-align:left;margin:7px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.macisConv.active{background:#dbc1ef!important;font-weight:bold}#macisWelcome{margin:auto;text-align:center;max-width:550px;padding:20px}#macisWelcome .bear{font-size:110px}#macisWelcome p{line-height:1.6}#macisVoiceRow{display:flex;gap:8px;align-items:center;padding:5px 12px;background:#f9f1ff;flex-wrap:wrap}#macisVoiceRow select{max-width:270px}@media(max-width:650px){#macisWindow{inset:1vh 1vw}#macisSide{width:112px;padding:6px;font-size:12px}#macisHeader{padding:7px}#macisLauncher{width:70px;height:70px;font-size:40px;top:48%}#macisMessages{padding:9px}.macisMsg{max-width:94%}#topBar iframe#abdlPlayer{height:48px!important}#topBar>div:nth-child(2){min-width:130px!important}}
+</style>
+<button id="macisLauncher" title="Macis AI megnyitása" aria-label="Macis AI megnyitása">🧸</button>
+<div id="macisWindow" role="dialog" aria-label="Macis AI beszélgetések">
+<aside id="macisSide"><button id="macisNew">＋ Új beszélgetés</button><h4>Korábbi beszélgetések</h4><div id="macisHistory"></div></aside>
+<div id="macisMain"><div id="macisHeader"><strong>🧸 Macis AI 8.1</strong><span><button id="macisSearch">🔎 ABDL keresés</button> <button id="macisClose">✕ Bezárás</button></span></div><div id="macisMessages"></div><div id="macisVoiceRow"><label for="macisVoice">Magyar hang:</label><select id="macisVoice"></select><button id="macisRead">🔊 Felolvasás: ki</button><span id="macisMicInfo" style="font-size:12px"></span></div><div id="macisInputBar"><input id="macisText" placeholder="Írj bármit magyarul…" autocomplete="off"><button id="macisMic">🎙️ Beszéd</button><button id="macisSend">Küldés</button></div></div></div>
+<script>
+(function(){'use strict';
+const $=id=>document.getElementById(id),KEY='macis_ai_v6_chats',CURRENT='macis_ai_v6_current';
+let chats=[],active=null,readAloud=false,voices=[],recognition=null;
+try{chats=JSON.parse(localStorage.getItem(KEY)||'[]');if(!Array.isArray(chats))chats=[];}catch(e){chats=[];}
+const norm=x=>String(x||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
+const any=(t,...a)=>a.some(x=>t.includes(norm(x)));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const time=()=>Number(new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Budapest',hour:'2-digit',hour12:false}).format(new Date()));
+const hello=()=>time()<7?'Jó reggelt, ABDL baba! 🧸':time()<12?'Szia, ABDL baba! 🧸':time()<18?'Szia! 🧸':'Jó estét, ABDL baba! 🌙';
+function save(){try{localStorage.setItem(KEY,JSON.stringify(chats));localStorage.setItem(CURRENT,active?.id||'');}catch(e){console.warn('Nem sikerült menteni',e)}}
+function newChat(){const c={id:String(Date.now())+Math.random().toString(36).slice(2,5),title:'Új beszélgetés',messages:[],state:{topic:'start',step:'',wet:false,poop:false}};chats.unshift(c);active=c;save();render();}
+function add(role,text){active.messages.push({role,text,at:new Date().toISOString()});if(role==='user'&&active.title==='Új beszélgetés')active.title=text.slice(0,38);save();renderMessages();renderHistory();if(role==='bot'&&readAloud)speak(text);}
+function renderHistory(){const e=$('macisHistory');e.innerHTML='';chats.forEach(c=>{const b=document.createElement('button');b.className='macisConv'+(c===active?' active':'');b.textContent='💬 '+c.title;b.onclick=()=>{active=c;save();render();};e.appendChild(b);});}
+function renderMessages(){const e=$('macisMessages');e.innerHTML='';if(!active.messages.length){const w=document.createElement('div');w.id='macisWelcome';w.innerHTML='<div class="bear">🧸</div><h2>Szia! Én egy ABDL AI vagyok!</h2><p>Azért jöttem létre, hogy beszélgessek veled, segítsek a napod megtervezésében, a napló használatában, és tanácsot adjak különféle dolgokban. Magyarul kérdezhetsz tőlem. Az oldalt a Macis Napló készítője állította össze.</p><p><small>Offline, előre megírt válaszokkal működöm; nem vagyok ChatGPT. A beszélgetéseket ez a böngésző menti.</small></p>';e.appendChild(w);}else active.messages.forEach(m=>{const d=document.createElement('div');d.className='macisMsg '+m.role;d.textContent=m.text;e.appendChild(d);});e.scrollTop=e.scrollHeight;}
+function render(){renderHistory();renderMessages();}
+function respond(raw){
+ const t=norm(raw), st=active.state||(active.state={topic:'start',step:''});
+ const words=t.split(' '), has=(...xs)=>xs.some(x=>t.includes(norm(x)));
+ const exact=(...xs)=>xs.some(x=>t===norm(x));
+ const reply=(topic,step,msg)=>{st.topic=topic;st.step=step;return msg};
+ const choices=(arr)=>pick(arr);
+ const recent=active.messages.filter(m=>m.role==='bot').slice(-2).map(m=>norm(m.text)).join(' ');
+ const fresh=(arr)=>{const a=arr.filter(v=>!recent.includes(norm(v).slice(0,28)));return choices(a.length?a:arr)};
+ const greeting=()=>time()<7?'Jó reggelt, ABDL baba! 🧸':time()<12?'Szia, ABDL baba! 🧸':time()<18?'Szia! 🧸':'Jó estét, ABDL baba! 🌙';
+ if(!t)return 'Írj nekem egy mondatot, és válaszolok! 🧸';
+ if(has('ki keszitett','ki csinalt','ki fejlesztett','ki alkotott','ki a keszitod','ki irt teged','ki hozott letre','ki a fejlesztod'))return 'A Macis Napló készítője állított össze, programozási segítséggel. 🧸 Szabályalapú magyar asszisztens vagyok, nem önállóan tanuló mesterséges intelligencia. Miben segítsek?';
+ if(has('mi a neved','hogy hivnak','ki vagy te','mit tudsz','mi vagy te','meselj magadrol'))return 'Macis AI vagyok! 🧸 Beszélgethetünk a napodról, munkáról, főzésről, játékokról, ruházatról, naplózásról és a pelenkád állapotáról. Mit szeretnél megbeszélni?';
+ if(has('mennyi az ido','hany ora','milyen nap van','ma hanyadika','milyen datum'))return 'Magyarországon most '+new Intl.DateTimeFormat('hu-HU',{timeZone:'Europe/Budapest',dateStyle:'full',timeStyle:'short'}).format(new Date())+'. ⏰';
+ if(has('keress ra','keress nekem','kereses','hol vehetek','hol lehet venni','hol kapok','mennyibe kerul','webshop','vasarolni szeretnek pelenkat'))return reply('search','query','Szívesen segítek terméket keresni! 🔎 Mit keresel pontosan? A keresést külön böngészőlapon tudom megnyitni, élő árakat nem látok.');
+ if(has('jo ejszakat','megyek aludni','lefekszem','aludni megyek','almos vagyok','megyek aludni'))return reply('sleep','rest','Jó éjszakát! 🌙 Alvás előtt nézd meg, hogy a pelenka tiszta és kényelmes-e; a nedves vagy szennyezett pelenkát cseréld le. Szép álmokat! 🧸');
+ if(has('koszonom','koszi','nagyon koszi','koszike','halas vagyok'))return fresh(['Nagyon szívesen! 😊 Mihez lenne még kedved?','Örülök, hogy segíthettem! 🧸 Van még valami, amiről beszélgessünk?','Bármikor! 💜 Mit csinálsz most?']);
+ if(exact('szia','szioka','hello','helo','hali','csao','szevasz','szervusz','udv','jo reggelt','jo napot','jo estet','szia mizu','mizu','mi ujsag','helloka')|| (has('szia mizu','szia hogy vagy','hello mizu')&&t.length<40))return reply('day','feeling',greeting()+' '+fresh(['Hogy vagy ma?','Mi újság veled?','Milyen a hangulatod ma?']));
+ // 8.1: valódi társalgási állapot szerinti rövid, elgépelhető magyar válaszok.
+ const positive=exact('minden jo','minden jol','minden rendben','minden ok','minden oke','minden kiraly','minden fasza','minden szuper','jol vagyok','jol','jo','tok jo','egesz jo','rendben vagyok','meg vagyok','koszi jol','koszi minden jo','teljesen jol','klassz','szuper','remek','nagyon jo','jo vagyok','oke vagyok')||has('minden jo nal am','minden jo nalam','minden rendben van','minden szuper','tok jol vagyok','nagyon jol vagyok');
+ const nothing=exact('semmi','semi','semmi se','semmi sem','semmi kulonos','semmi extra','semmi erdekes','meg semmi','meg semi','semmi nincs','nem sok','nem tortent semmi','semmi nem tortent','semmi uj','semmi ujsag','nincs semmi','nem csinalok semmit','semmit','hat semmi','semmi meg','meg nem','nem igazan','passz');
+ const negative=exact('rossz','nem jo','nem vagyok jol','rosszul','szarul','szar','nem oke','nem minden jo','nem tul jol','nem igazan jol','faradt','szomoru','unalmas','unalom');
+ if(positive){
+   if(st.topic==='diaper'&&['comfort','feel','changecheck'].includes(st.step))return reply('diaper','changecheck','Örülök, hogy kényelmes! 🧸 Mikor ellenőrizted utoljára? Ha nedves vagy szennyezett, érdemes tisztára cserélni.');
+   return reply('day','plan',fresh(['Ennek örülök! 😊 Mi a mai terved: pihenés, bolt, séta vagy valami más?','De jó, örülök neki! 🧸 Mit csinálsz ma?','Szuper! 😊 Történt ma már valami érdekes, vagy még csak most indul a nap?']));
+ }
+ if(nothing){
+   if(st.topic==='diaper'){
+     if(st.step==='status')return reply('diaper','amount','Értem, akkor egyelőre nincs benne semmi. 🧸 Mikor vetted fel a tiszta pelenkát?');
+     if(st.step==='changecheck')return reply('diaper','check','Rendben. 🧷 Figyeld a kényelmet és a nedvességet, szükség esetén cserélj. Mi a következő programod?');
+   }
+   if(st.step==='feeling')return reply('day','plan','Értem, nincs semmi különös. 😊 Hogy érzed magad ma, és mit tervezel?');
+   return reply('day','plan',fresh(['A nyugis nap is jó! 🧸 Pihenni szeretnél, vagy kitaláljunk valami programot?','Értem, még nem történt semmi. 😊 Mit lenne kedved csinálni?','Rendben, semmi különös. 🧸 Otthon maradsz, vagy elindulsz valahová?']));
+ }
+ if(negative)return reply('day','support','Sajnálom, hogy nem alakul jól. 💜 Szeretnél mesélni róla, vagy inkább tereljük el a figyelmed valamivel?');
+ if(exact('te','es te','nalad','veled','es veled','te hogy vagy','nalad mi ujsag'))return reply('day','feeling','Köszi, hogy kérdezed! 🧸 Itt vagyok és szívesen beszélgetek veled. Mihez lenne most kedved?');
+ if(exact('igen','aha','ja','persze','oke','ok','rendben','johet','naná')){
+   if(st.step==='plan')return reply('day','detail','Rendben! 😊 Mit választasz: pihenés, bevásárlás, séta vagy beszélgetés?');
+   if(st.topic==='diaper')return reply('diaper','detail','Értem. 🧷 Meséld el, milyen állapotban van most a pelenkád.');
+   return reply('day','detail','Rendben! 😊 Mesélj, mi jár most a fejedben?');
+ }
+ if(exact('nem','dehogy','nem akarom','inkabb nem','most nem')){
+   if(st.topic==='diaper')return reply('day','plan','Rendben. 🧸 A szükséges tisztálkodást azért ne halogasd. Miről beszélgessünk inkább?');
+   return reply('day','plan','Semmi gond! 😊 Akkor mit csinálnál szívesen?');
+ }
+ // A rövid válaszok a beszélgetés előzményétől függnek, nem kerülnek hibásan az ismeretlen ágba.
+ if(exact('jol','jo','nagyon jol','remek','szuper','klassz','meg vagyok','jol vagyok','koszi jol','egesz jol','tok jol','egesz jol vagyok','nagyon jol vagyok')||has('jol vagyok','jol erzem magam','minden rendben','minden oke','szuperul vagyok','remekul vagyok')){
+   if(st.topic==='diaper'&&['comfort','changecheck','feel'].includes(st.step))return reply('diaper','changecheck','Örülök, hogy kényelmes. 🧸 Szerinted most szükséges a csere? Ha már átázott, szennyezett vagy régóta nedves, érdemes tisztára cserélni.');
+   return reply('day','plan',fresh(['Ennek örülök! 😊 Mit tervezel ma: pihenést, boltot, sétát vagy valami mást?','De jó! 🧸 Mihez lenne ma kedved?','Szuper! 😊 Mesélj, van valami programod mára?']));
+ }
+ if(exact('nem jol','rosszul','faradt','szomoru','ideges','unalmas','szar','rossz')||has('rosszul vagyok','rossz kedvem','szomoru vagyok','maganyos vagyok','ideges vagyok','faradt vagyok','szorongok','nem vagyok jol','rossz napom'))return reply('day','support','Sajnálom, hogy így érzed magad. 💜 Mi bánt most leginkább? Ha szeretnéd, csak meghallgatlak.');
+ if(has('beszelgessunk a napomrol','napomrol beszelni','meselnek a napomrol','hogy telt a napom','beszelgessunk','beszelgetni szeretnek','dumalgassunk'))return reply('day','morning','Persze, mesélj! 🧸 Hogy indult a napod? Történt már valami érdekes?');
+ if(has('mit csinalsz','mit csinaltal','hogy vagy te','te hogy vagy','mizu veled'))return reply('day','feeling','Köszönöm, itt vagyok és figyelek rád! 🧸 Veled mi újság, hogy telik a napod?');
+ if(has('jo reggelem volt','jol indult','semmi nem tortent','nem tortent semmi','meg nem tortent','meg semmi','semmi kulonos','semmi extra','semmi erdekes','meg nem','semmi')&&st.topic==='day')return reply('diaper','status',fresh(['A nyugodt nap is jó. 😊 És hogy áll a pelusod: száraz, van benne pisi vagy kaki?','Értem, még nyugis a nap. 🧸 Hogy érzed magad, és milyen állapotban van most a pelenkád?']));
+ // A pelenkával kapcsolatos állítások elsőbbséget élveznek a laza témákkal szemben.
+ const poop=has('kaki','kakis','bekakiltam','szeklet','nagydolog','nagydolgom');
+ const pee=has('pisi','pisis','bepisiltem','vizelet','nedves','at azott','atazott','pisiltem','be van pisilve');
+ if(has('pelenka csere','pelenkacsere','reggeli csere','esti csere','csereljem','cserelni kell','pelenkat cserelni','cserelni szeretnek'))return reply('diaper','change','Segítek a cserében! 🧷 Készíts elő tiszta pelenkát, tisztításhoz szükséges eszközöket és alátétet. Nedves vagy szennyezett most a pelenkád?');
+ if(has('hogy all a pelusom','hogy van a pelusom','pelusom allapota','pelenkam allapota','pelenka allapota','pelenka ellenorzes','ellenorizzuk a pelust','milyen a pelusom'))return reply('diaper','status','Nézzük meg együtt! 🧷 Száraz a pelus, van benne pisi, vagy kaki is?');
+ if(poop){st.poop=true;return reply('diaper','change','Értem, kaki is van a pelenkában. 🧼 Ezt a bőr védelmében érdemes mielőbb lecserélni, utána gyengéden megtisztítani és megszárítani a bőrt. Van kéznél tiszta pelenka?');}
+ if(pee){st.wet=true;return reply('diaper','amount',fresh(['Értem, van benne pisi. 🧷 Mióta viseled a pelenkát, és körülbelül mennyire nedves?','Rendben, köszönöm, hogy elmondtad. 🧸 Körülbelül hány adag pisi van benne, és mikor vetted fel?']));}
+ if(st.topic==='diaper'&&(has('tegnap este','tegnap ota','ejszaka ota','ma reggel ota','reggel ota','ora ota','ket adag','2 adag','harom adag','3 adag','egy adag','1 adag','negy adag','4 adag','sok van benne','keves van benne','tele van','felig van','alig van benne')||/\b\d+\s*(adag|ora|oraja|oraja|nap)\b/.test(t)))return reply('diaper','comfort','Értem, köszönöm! 🧸 Ha már több órája nedves, vagy tegnap óta viseled, célszerű tisztára cserélni és ellenőrizni a bőröd. Kényelmes most, vagy zavar a nedvesség?');
+ if(st.topic==='diaper'&&(has('kenyelmes','nem zavar','jo benne','jol erzem magam benne','szaraz meg','szaraz','meg jo')||exact('jo','jol','igen')))return reply('diaper','changecheck','Örülök, hogy kényelmes. 🧸 Szerinted ideje tisztára cserélni? A nedvességet és a bőr állapotát is érdemes figyelni.');
+ if(st.topic==='diaper'&&(has('nem kell meg','nem akarom cserelni','kesobb cserelem','meg nem cserelem','most nem','meg nem')||exact('nem','meg nem')))return reply('diaper','check','Értem. 🧸 Ha nedves vagy szennyezett, ne várj sokáig a cserével, mert irritációt okozhat. Van most lehetőséged tiszta pelenkát felvenni?');
+ if(has('piros','kipirosodott','viszket','csip','faj a borom','kiutes','irritacio','kidorges','sebes'))return reply('diaper','skin','Ez bőrirritáció jele lehet. 🧼 Finoman tisztítsd és szárítsd meg a bőrt, cserélj tisztára. Ha nem múlik, fáj vagy romlik, kérj egészségügyi tanácsot. Mióta tart?');
+ if(has('hogyan vegyem fel','hogyan csereljem','hogyan kell pelenkat','pelenka felvetele'))return reply('diaper','change','Először készíts elő mindent. Vedd le a használt pelenkát, tisztítsd meg a bőrt, hagyd megszáradni, majd helyezd fel a tiszta pelenkát úgy, hogy kényelmes legyen. Szeretnéd részletesen, lépésenként?');
+ if(has('milyen pelenkat','melyik pelenka','milyen meret','m es meret','m meret','7 csepp','seni classic','pelenka ajanlas'))return reply('diaper','product','A jó méret a csípő- és derékbőségtől függ, nem csak a ruhamérettől. 🧷 Milyen márkát vagy nedvszívást keresel?');
+ if(has('reggeli ellenorzes','esti ellenorzes','naplo ellenorzes','napi ellenorzes','napirend','napi tabla'))return reply('diaper','schedule','Segítek megtervezni! 📅 Reggel és este nézd meg a pelenka állapotát, és írd be a naplóba a tényleges ellenőrzést és cserét. Nedves vagy szennyezett pelenkát a tervezett időpont előtt is cserélhetsz. Melyik időponttal kezdjük?');
+ if(has('boltba megyek','bevasarolni megyek','vasarolni megyek','boltba','bevasarlas','vasarolok','bolt'))return reply('day','shopping',fresh(['Jó ötlet! 🛒 Mit szeretnél venni, és mikor indulsz?','Melyik boltba készülsz? 🧸 Összeírjunk egy bevásárlólistát?']));
+ if(has('setalni','seta','kutyat viszem','kutyasetaltatas','kimegyek setalni'))return reply('day','walking','Egy séta jóleshet! 🐾 Merre mennél, és mennyi időre?');
+ if(has('dolgozni','munkaba','munkahely','dolgozom','meloba','melozni','munka','fizetes','fonokom','szabadsag'))return reply('day','work','Értem, a munkáról beszélgetnél. 😊 Mi történt, vagy miben szeretnél segítséget: beosztás, fáradtság vagy valami más?');
+ if(has('pihenni','pihenek','laza nap','lazulok','semmit nem tervezek','otthon maradok','pihi'))return reply('day','relax','Jól hangzik egy nyugis nap! 🧸 Filmet néznél, játszanál, zenét hallgatnál, vagy csak pihennél?');
+ if(has('jatszani','jatekkal','valorant','minecraft','gta','omsi','phasmophobia','cs2','fortnite','ark','roblox','lol','league of legends','stream'))return reply('day','game','Jó szórakozást! 🎮 Melyik játékkal játszol most, és miben segítsek vele kapcsolatban?');
+ if(has('film','sorozat','youtube','zenet hallgatok','zene','netflix','mozi','tiktok'))return reply('day','entertainment','Jól hangzik! 🎬 Milyen műfajt szeretsz, vagy van már valami, amit néznél vagy hallgatnál?');
+ if(has('mit egyek','fozzek','reggeli','ebed','vacsora','ehezes','ehes vagyok','mit fozzek','kaja','etel','fozes','szendvics','teszta'))return reply('day','food','Mit ennél szívesen? 🥣 Inkább gyors, olcsó ételt készítenél, vagy valami különlegeset?');
+ if(has('idojaras','esik az eso','sut a nap','hideg van','meleg van','vihar'))return reply('day','weather','Az aktuális időjárást nem látom élőben. 🌦️ Ha elmondod, milyen az idő nálad, segítek megtervezni a napodat.');
+ if(has('telefon','szamitogep','laptop','windows','internet','wifi','program','alkalmazas','hiba','nem mukodik'))return reply('day','tech','Megpróbálok segíteni a technikai problémában. 💻 Pontosan melyik eszközről vagy programról van szó, és mi a hibaüzenet?');
+ if(has('ruha','nadrag','polo','pulover','kabat','oltozkodes','mit vegyek fel','mit hordjak'))return reply('day','clothes','Segítek öltözéket választani! 👕 Otthonra, sétához vagy boltba keresel kényelmes ruhát?');
+ if(has('unalom','unatkozom','mit csinaljak','nincs otletem','nem tudom mit csinaljak'))return reply('day','ideas','Találjunk ki valamit! 🧸 Van kedved játszani, sétálni, filmet nézni, főzni vagy beszélgetni?');
+ if(has('barat','baratno','csalad','anya','apa','teso','kapcsolat','veszekedes','egyedul vagyok'))return reply('day','relationships','Szívesen meghallgatlak. 💜 Mi történt, és hogyan érzed magad miatta?');
+ if(has('szulinap','unnep','karacsony','ajandek','meglepetes','buli'))return reply('day','celebration','De jó téma! 🎁 Kinek vagy milyen alkalomra készülsz? Segítsek ötleteket gyűjteni?');
+ if(has('penz','sporol','olcso','draga','koltseg','ar','forint','ft'))return reply('day','budget','Segítek átgondolni a költségeket. 💰 Mire szeretnél költeni, és mekkora a kereted?');
+ if(has('mentes','elmentetted','beszelgetes mentese','uj beszelgetes','regi beszelgetes','elozmeny'))return 'A beszélgetéseket automatikusan mentem ebben a böngészőben. 💾 A bal oldali listában visszanyithatod őket, vagy kezdhetsz újat. Másik eszközön nem szinkronizálódnak.';
+ if(exact('igen','aha','persze','oke','ok','jo','rendben','ugy van','naná','hat persze')){
+   if(st.topic==='diaper')return reply('diaper','followup','Rendben! 🧷 Szeretnéd, hogy segítsek a pelenka ellenőrzésében vagy a cserében?');
+   if(st.topic==='day'&&st.step==='shopping')return reply('day','shopping_detail','Remek! 🛒 Mit tegyünk a bevásárlólistára?');
+   return reply('day','detail',fresh(['Rendben! 😊 Mesélsz róla egy kicsit bővebben?','Szuper! 🧸 Mi legyen a következő lépés?']));
+ }
+ if(exact('nem','dehogy','nem igazan','nem tudom','passz','nincs','semmi')){
+   if(st.topic==='diaper')return reply('diaper','followup','Értem. 🧸 Ha szükséges a csere, ne halogasd. Beszélgessünk inkább a mai terveidről?');
+   return reply('day','plan','Semmi gond! 😊 Akkor legyen egy nyugis nap, vagy találjunk ki közösen valami programot?');
+ }
+ if(st.topic==='search'&&st.step==='query'){openSearch(raw);return reply('search','done','Megpróbáltam megnyitni a célzott webes keresést új lapon. 🔎 Ha nem nyílt meg, kattints az „ABDL keresés” gombra.');}
+ if(st.topic==='day'&&st.step==='morning')return reply('day','detail',fresh(['Értem! 😊 És mi történt utána?','Mesélj még! 🧸 Hogyan érezted magad közben?','És most hogy alakul a napod? 😊']));
+ if(st.topic==='day'&&['plan','shopping','walking','work','relax','game','food','ideas','clothes'].includes(st.step))return reply('day','detail',fresh(['Értem! 🧸 Mikor szeretnéd ezt megcsinálni?','Jól hangzik! 😊 Miért ezt választottad?','És van hozzá minden, amire szükséged lesz?']));
+ if(st.topic==='day'&&st.step==='detail')return reply('day','plan',fresh(['Köszönöm, hogy elmesélted! 😊 Mi lesz a következő programod?','Értem! 🧸 Van még valami, amiről szívesen beszélnél?']));
+ if(st.topic==='diaper'&&st.step==='amount')return reply('diaper','comfort','Értem. 🧷 Kényelmes még, vagy zavar a nedvesség? Ha régóta nedves, érdemes tisztára cserélni.');
+ if(st.topic==='diaper'&&st.step==='status')return reply('diaper','amount','Értem. 🧸 Mikor vetted fel a pelenkát, és mennyire nedves most?');
+ // Macis AI 8.1: kibővített magyar mondatértelmezés, helyesírási és társalgási változatok.
+ const groups=[
+  {keys:['mit csinalsz','mivel foglalkozol','itt vagy','figyelsz ram','beszelgetsz velem','raersz','mit csinalnal'],answers:['Itt vagyok, és figyelek rád! 🧸 Mi jár most a fejedben?','Most veled beszélgetek. 😊 Mesélj, mi történt ma veled?']},
+  {keys:['hogy vagy','hogy erzed magad','mizu veled','mi van veled','minden oke nalad'],answers:['Köszi, jól működöm! 🧸 És veled mi újság?','Köszönöm, itt vagyok és szívesen beszélgetek. 😊 Neked milyen a napod?']},
+  {keys:['jo reggelt','jo napot','jo estet','szep napot','szep estet','szep reggelt'],answers:[greeting()+' Milyen napod lesz ma?']},
+  {keys:['miert','miert kerdezed','minek','miert fontos','miert mondod'],answers:['Azért kérdeztem, hogy jobban értsem, mire van szükséged. 🧸 Ha szeretnéd, válthatunk témát.']},
+  {keys:['nem ertem','mit jelent','magyarazd el','egyszerubben','mondd el maskepp','nem vilagos'],answers:['Persze! 😊 Megpróbálom egyszerűbben elmagyarázni. Melyik részt nem értetted?']},
+  {keys:['segits','segitseg kell','tudsz segiteni','segits nekem','tanacsot kerek','mit javasolsz'],answers:['Szívesen segítek! 🧸 Írd le, mit szeretnél megoldani, és együtt végigvesszük.']},
+  {keys:['beszelgessunk','beszelgetni szeretnek','meselj valamit','mondj valamit','beszeljunk'],answers:['Persze! 😊 Mesélj, mi volt ma a legérdekesebb dolog, ami történt veled?','Beszélgessünk! 🧸 Inkább a mai napodról, a terveidről vagy valami vicces témáról legyen szó?']},
+  {keys:['mi tortent ma','ma meg semmi','meg nem tortent semmi','semmi nem tortent','meg nem','semmi kulonos','ugyanaz mint tegnap'],answers:['Értem, még nyugodtan indul a nap. 😊 Van már terved délutánra, vagy majd alakul?','A csendes napok is jók. 🧸 Mit szeretnél ma mindenképpen megcsinálni?']},
+  {keys:['most keltem','felkeltem','most ebredtem','ebredtem','aludtam','jot aludtam','rosszul aludtam','nem aludtam'],answers:['Jó reggelt! 🧸 Kipihented magad, vagy még álmos vagy?']},
+  {keys:['kavet iszom','kaveztam','kave','teat iszom','teazom','reggelizek','reggeliztem'],answers:['Jól hangzik! ☕ Mi lesz még a mai reggeli programod?']},
+  {keys:['indulok','mindjart megyek','elmegyek','uton vagyok','megerkeztem','hazajottem','hazaertem'],answers:['Rendben! 😊 Hová készülsz, vagy honnan érkeztél?']},
+  {keys:['faraszto nap','sok dolgom van','elfaradtam','kimerultem','nagyon faradt vagyok','kialvatlan'],answers:['Elég megterhelőnek hangzik. 💜 Tudsz egy kicsit pihenni, vagy még van dolgod?']},
+  {keys:['orulok','boldog vagyok','jo kedvem van','nagyon boldog','szuper napom van','izgatott vagyok'],answers:['De jó ezt hallani! 😊 Mi történt, amitől ilyen jó kedved lett?']},
+  {keys:['duhos vagyok','merges vagyok','felidegesitettek','bosszankodom','felhuztak','idegesit'],answers:['Értem, ez bosszantó lehet. 💜 Elmondod, mi történt?']},
+  {keys:['felek','aggodom','parazok','stresszelek','szorongas','aggaszt'],answers:['Sajnálom, hogy ez nyomaszt. 💜 Mi miatt aggódsz most leginkább?']},
+  {keys:['unatkozok','unatkozom','unalom van','unalmas a nap','nincs mit csinalni'],answers:['Találjunk ki valamit! 🧸 Inkább játék, film, séta vagy egy kis beszélgetés érdekel?']},
+  {keys:['mit csinaljak ma','mi legyen ma','milyen program','tervezzunk','tervezz meg','mai terv','mit tervezzek'],answers:['Tervezzünk! 📅 Mennyi szabadidőd van, és inkább otthon maradnál vagy kimozdulnál?']},
+  {keys:['holnap','holnapra','hetvegen','hetvege','jovo heten','kovetkezo heten'],answers:['Rendben, előre tervezünk! 📅 Mit szeretnél akkor csinálni, és van már fix időpontod?']},
+  {keys:['mennyi ido van meg','mikor induljak','mikor kezdodik','mikor erjek oda'],answers:['Segítek kiszámolni, ha megadod a kezdési időpontot és azt, honnan indulsz. ⏰']},
+  {keys:['mit vegyek','bevasarlolista','vasarlolista','lista kell','mit vasaroljak','mit hozzak'],answers:['Írjunk listát! 🛒 Élelmiszert, tisztálkodási szereket vagy pelenkás termékeket keresel?']},
+  {keys:['mennyi penzem','penzt sporolni','hogyan sporoljak','sporolas','olcson szeretnem'],answers:['Segítek költségkeretet tervezni. 💰 Mennyi pénzből szeretnéd megoldani?']},
+  {keys:['mit fozzek','mit egyunk','ebed otlet','vacsora otlet','receptet','recept kell'],answers:['Kitalálunk valami finomat! 🍲 Hány főre főznél, és milyen alapanyag van otthon?']},
+  {keys:['elegem van','nincs kedvem','nincs motivaciom','nincs energi am','nincs energiam'],answers:['Értem. 💜 Kezdjük valami egészen kicsivel: mi az az egy dolog, amit ma jó lenne elintézni?']},
+  {keys:['szeretsz','kedvenc','mit szeretsz','mi a kedvenced'],answers:['Nincsenek saját emberi kedvenceim, de szívesen beszélgetek róla! 🧸 Neked mi a kedvenced?']},
+  {keys:['viccet','mondj viccet','vicceset','nevettess meg'],answers:['Miért vitt a maci létrát a boltba? 🧸 Mert magasak voltak az árak! 😄 Mondjak még egyet?']},
+  {keys:['bocsi','bocsanat','ne haragudj','elnezest'],answers:['Semmi gond! 😊 Folytassuk nyugodtan. Miről beszélgessünk?']},
+  {keys:['viszlat','szia majd','kesobb jovok','megyek most','elkoszonok'],answers:['Rendben, vigyázz magadra! 🧸 Itt leszek, ha újra beszélgetnél.']},
+  {keys:['ki vagyok','mit tudsz rolam','emlekszel ram','emlekszel mit mondtam'],answers:['A mostani beszélgetés üzeneteit látom, és ezeket a böngésző megőrzi. 🧸 Nincs saját, internetes személyes memóriám. Mit szeretnél felidézni?']},
+  {keys:['torold a beszelgetest','torles','hogyan toroljem','adatvedelem','biztonsagos az adatom'],answers:['A beszélgetéseket helyben, a böngésződ tárhelyén menti az oldal. 💾 Másik eszközön nem látszanak automatikusan. A böngésző webhelyadatainak törlése eltávolíthatja őket.']},
+  {keys:['mikrofon nem megy','nem hallasz','hang nem mukodik','nem beszel','nem olvas fel'],answers:['Nézd meg a böngésző mikrofonengedélyét, a magyar hang kiválasztását és a Felolvasás kapcsolót. 🎙️ Melyik nem működik: a beszédfelismerés vagy a felolvasás?']},
+  {keys:['milyen pelenka','milyen pelus','pelus meret','pelenka meret','mekkora pelus','milyen markat'],answers:['A mérethez a derék- és csípőbőség számít. 🧷 Milyen méretet és nedvszívást keresel?']},
+  {keys:['pisis','bepisiltem','be pisiltem','pisiltem','pisi van','van pisi','nedves a pelus','nedves lett','vizes lett'],answers:['Értem, nedves lett a pelenkád. 🧷 Mióta van rajtad, mennyire nedves, és kényelmes még? Ha átázott vagy irritál, cseréld le.']},
+  {keys:['kakis','bekakiltam','be kakiltam','kaki van','szeklet van','szekletes','koszos a pelus'],answers:['Értem, széklet került a pelenkába. 🧼 Ezt érdemes mielőbb lecserélni, a bőrt alaposan megtisztítani és megszárítani. Van kéznél tiszta pelenka és törlőkendő?']},
+  {keys:['szaraz a pelus','szaraz meg','meg szaraz','tiszta a pelenka','semmi nincs benne'],answers:['Rendben, akkor most száraz. 🧸 Mikor vetted fel, és mikorra tervezed a következő ellenőrzést?']},
+  {keys:['at azott','atazott','szivarog','kifolyt','atfolyt','csopog'],answers:['Ha átázott vagy szivárog, cseréld le mielőbb. 🧷 Ellenőrizd a méretet és az illeszkedést is. Szükséged van egy rövid csereútmutatóra?']},
+  {keys:['kipirosodott','piros a borom','viszket','csip','eg','faj a borom','kiutes','irritacio'],answers:['Ez bőrirritációra utalhat. 🧼 Cseréld le a nedves pelenkát, finoman tisztítsd és szárítsd meg a bőrt. Tartós vagy súlyos panasz esetén fordulj egészségügyi szakemberhez.']},
+  {keys:['kicsereltem','lecsereltem','uj pelus','tiszta pelust vettem','friss pelenka','csere kesz'],answers:['Ügyes, hogy gondoskodtál a tisztaságról! 🧸 Beírjuk a naplóba a csere idejét és a pelenka állapotát?']},
+  {keys:['mikor csereljem','kell cserelni','most csereljek','meddig maradhat','mikor kell cserelni'],answers:['A cserét az állapothoz igazítsd: széklet, átázás, kellemetlenség vagy irritáció esetén ne várj a tervezett időpontig. 🧷 Most milyen állapotban van?']},
+  {keys:['reggeli csere','esti csere','lefekves elott','alvas elott','reggeli ellenorzes','esti ellenorzes'],answers:['Nézzük meg a naplóban a tervezett időpontot. 📅 Először ellenőrizd az állapotot, és szükség esetén cserélj tisztára. Mikor volt az utolsó csere?']},
+  {keys:['mikor vettem fel','tegnap este ota','tegnap ota','reggel ota','orak ota','egesz nap'],answers:['Köszönöm, hogy elmondtad. 🧷 Ha a pelenka hosszabb ideje nedves, érdemes most tisztára cserélni. Van bármilyen kellemetlenséged?']},
+  {keys:['ket adag','2 adag','harom adag','3 adag','egy adag','1 adag','sok pisi','keves pisi'],answers:['Értem a mennyiséget. 🧷 Inkább az számít, mennyire nedves és kényelmes most, illetve mióta viseled. Érzed, hogy ideje lenne cserélni?']},
+  {keys:['hogy all a pelusom','kerdezz a pelusrol','ellenorizzuk a pelust','pelenka allapot','pelus allapot'],answers:['Nézzük meg együtt! 🧸 Száraz, nedves vagy székletes? Mióta viseled, és kényelmes még?']},
+  {keys:['milyen ruhat vegyek','milyen nadrag','latszik a pelenka','kirajzolodik','mit vegyek fel'],answers:['Válassz kényelmes, megfelelő méretű ruhát, ami nem szorít. 👕 Otthonra, munkába vagy sétához szeretnél ötletet?']},
+  {keys:['nem tudok valasztani','donts helyettem','segits donteni','melyik legyen','melyiket valasszam'],answers:['Segítek mérlegelni! 😊 Melyik két lehetőség között vacillálsz, és mi a legfontosabb szempontod?']},
+  {keys:['forditsd le','angolul','nemetul','romanul','forditas'],answers:['Szívesen segítek egyszerű fordításban. 🌍 Írd le a mondatot, és hogy melyik nyelvre szeretnéd. A válaszom nem mindig lesz pontos.']},
+  {keys:['szamold ki','mennyi lesz','szamolas','osszeadas','kivonas','szorzas'],answers:['Megpróbálok segíteni a számolásban. 🔢 Írd le pontosan a számokat és a műveletet.']}
+ ];
+ for(const g of groups){if(g.keys.some(k=>t.includes(norm(k))))return reply('day','detail',fresh(g.answers));}
+ // A rövid válaszok értelmezése az előző kérdés szerint.
+ if(exact('jol','jol vagyok','meg nem','nem','igen','persze','ketto','kettot','sokat','keveset','tegnap','ma','most','este','reggel','delutan')){
+   if(st.topic==='diaper')return reply('diaper','comfort','Értem. 🧷 És most kényelmes a pelenka, vagy inkább cserélni szeretnéd?');
+   return reply('day','detail','Értem! 😊 Mesélsz róla egy kicsit bővebben?');
+ }
+ // Ismeretlen mondatnál a beszélgetés folytatása, ne mindig ugyanaz a hibaüzenet.
+ if(t.split(' ').length>=3 && !/[?]/.test(raw))return reply('day','detail',fresh([
+  'Értem, amit mesélsz. 🧸 És mi történt utána?',
+  'Mesélj még egy kicsit! 😊 Neked mi volt ebben a legfontosabb?',
+  'Köszönöm, hogy elmondtad. 💜 Hogyan érzed magad ezzel kapcsolatban?',
+  'Érdekes! 🧸 Mit szeretnél most tenni ezzel kapcsolatban?'
+ ]));
+ if(t.length>5)return 'Ezt még nem értem biztosan. 🧸 Sajnos erre most nem tudok pontosan válaszolni. Megfogalmaznád másképp, vagy mondanál róla egy kicsit többet?';
+ return 'Sajnos ezt most nem értem pontosan. 🧸 Megpróbálod másképp leírni?';
+}
+function send(){const input=$('macisText'),msg=input.value.trim();if(!msg)return;input.value='';add('user',msg);add('bot',respond(msg));save();}
+function openSearch(q){const term=prompt('Mit keressünk az interneten? (ABDL termékek, felnőtt pelenka, cumi, cumisüveg, kezeslábas stb.)',q||'felnőtt pelenka M méret');if(!term)return;const clean=norm(term);const allowed=/(pelenka|pelus|abdl|cumi|cumisuveg|kezeslabas|babaruha|baba etel|babaetel|baba kaja|betegalatet|betet|tiszta|torlokendo|felnott)/;if(!allowed.test(clean)){alert('A kereső csak ABDL és kapcsolódó ápolási termékekre használható.');return;}window.open('https://www.google.com/search?q='+encodeURIComponent(term+' ABDL vásárlás Magyarország'),'_blank','noopener,noreferrer');}
+function speak(txt){if(!('speechSynthesis'in window))return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(txt);u.lang='hu-HU';u.rate=.95;const ix=Number($('macisVoice').value);if(voices[ix])u.voice=voices[ix];window.speechSynthesis.speak(u);}
+function loadVoices(){if(!('speechSynthesis'in window))return;voices=window.speechSynthesis.getVoices().filter(v=>v.lang.toLowerCase().startsWith('hu'));const el=$('macisVoice');el.innerHTML='';if(!voices.length){const o=document.createElement('option');o.textContent='Nincs telepített magyar hang';el.appendChild(o);}else voices.forEach((v,i)=>{const o=document.createElement('option');o.value=i;o.textContent=v.name+' ('+v.lang+')';el.appendChild(o);});}
+function init(){if(!$('macisLauncher'))return;const saved=localStorage.getItem(CURRENT);active=chats.find(c=>c.id===saved)||chats[0];if(!active)newChat();render();$('macisLauncher').onclick=()=>{$('macisWindow').classList.add('open');render();$('macisText').focus()};$('macisClose').onclick=()=>{$('macisWindow').classList.remove('open');if('speechSynthesis'in window)window.speechSynthesis.cancel();};$('macisNew').onclick=newChat;$('macisSend').onclick=send;$('macisText').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();send();}};$('macisSearch').onclick=()=>openSearch('');$('macisRead').onclick=()=>{readAloud=!readAloud;$('macisRead').textContent=readAloud?'🔊 Felolvasás: be':'🔊 Felolvasás: ki';};loadVoices();if('speechSynthesis'in window)window.speechSynthesis.onvoiceschanged=loadVoices;
+$('macisMic').onclick=()=>{const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R){$('macisMicInfo').textContent='A böngésző nem támogatja a beszédfelismerést.';return;}if(recognition){recognition.stop();recognition=null;return;}recognition=new R();recognition.lang='hu-HU';recognition.interimResults=false;recognition.onresult=e=>{$('macisText').value=e.results[0][0].transcript;send();};recognition.onerror=e=>{$('macisMicInfo').textContent='Mikrofonhiba: '+e.error;};recognition.onend=()=>{recognition=null;$('macisMicInfo').textContent='';};$('macisMicInfo').textContent='Hallgatlak…';recognition.start();};
+// Régi AI felület teljes elrejtése: nincs dupla kezdő kérdés.
+const old=$('aiChat');if(old)old.style.setProperty('display','none','important');const oldBear=$('v4Bear');if(oldBear)oldBear.style.setProperty('display','none','important');}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 </script></body></html>
