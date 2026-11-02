@@ -1705,6 +1705,8 @@ if(!box.children.length)say('🧸 Szia! Több témáról tudunk beszélgetni. Mi
 .macis-photo img{width:100%;height:180px;object-fit:contain;border-radius:12px;background:#faf5ff}
 #macisPhotoGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
 #macisHeroPhoto{max-height:180px;max-width:100%;border-radius:14px;object-fit:contain}
+#topBar{position:sticky!important;top:0!important;z-index:10050!important;background:linear-gradient(110deg,#fff0f8,#e0f2fe)!important;box-shadow:0 3px 12px #0002}
+header{position:sticky!important;top:0!important;z-index:10040!important}
 </style>
 <script>
 (function(){
@@ -1715,26 +1717,46 @@ const chat=wrap.querySelector('#macisPlusChat'),inp=wrap.querySelector('#macisPl
 const state={step:'hello',last:'',awaitingPhoto:false};
 function say(t,me=false,img=null){const el=document.createElement('div');el.className='macis-bubble'+(me?' me':'');el.append(document.createTextNode(t));if(img){let im=document.createElement('img');im.src=img;el.append(im)}chat.append(el);chat.scrollTop=chat.scrollHeight}
 const norm=x=>x.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
-function answer(raw){const t=norm(raw);if(!t)return;
-if(/^(szia|hello|helo|csa|csao|hali|sziasztok)/.test(t))return 'Szia! 🧸 Hogy vagy ma? Hogy érzed magad, és mi a mai terved?';
-if(/mizu|hogy vagy|mi ujsag|minden jo/.test(t))return 'Köszi, itt vagyok és figyelek rád! 💜 Nálad minden rendben? Pihenés, naplózás vagy öltözékötletek legyenek ma?';
-if(/mi lesz ma|mi a terv|mai terv/.test(t))return 'A mai terv lehet egy kis pihenés, naplóbejegyzés, kényelmes öltözék vagy fotónapló. Melyiket szeretnéd?';
-if(/semmi|pihenes|pihenek|atlagos/.test(t))return 'A pihenés is teljesen jó program. 🧸 Beszélgessünk, vagy szeretnél egy kis naplózást?';
-if(/talan|hat igen|oke|ok[eé]s|rendben|mehet|igen|koszi/.test(t)&&t.length<35)return 'Rendben! 💜 Mesélj még: hogyan érzed magad, és mi legyen a következő lépés?';
-if(/pelus|pelenka/.test(t)&&/hogy van|hogy all|allapot/.test(t))return 'Hogy érzed, kényelmes még a pelusod? Száraz, nedves vagy cserére szorul?';
-if(/pisi|kaki|nedves|tele van|pisiltem|kakiltam/.test(t)){state.step='change';return 'Értem. 🧸 Ha nedves vagy szennyezett, a bőröd védelme miatt érdemes mielőbb tisztára cserélni, különösen széklet után. Segítsek a csere lépéseiben vagy készítsünk naplóbejegyzést?'}
-if(/varunk|varok meg|kakilast varom/.test(t))return 'Értem, de a szennyezett pelenkában várakozás irritációt okozhat. Ha már szennyezett, inkább cserélj, és közben beszélgethetünk tovább. 💜';
-if(/cserel|csere|tisztit/.test(t))return 'Csere: készíts elő tiszta pelenkát, tisztítsd meg finoman a bőrt, szárítsd meg, szükség esetén használj bőrvédő krémet, majd vegyél fel tiszta pelenkát. Készítsünk róla naplóbejegyzést?';
-if(/ki megyek|kimegyek|eszreveheto|latszodjon|ruha|polo|leggings|nadrag|otlet|erosebb|durvabb/.test(t))return 'Adhatok öltözékötleteket: például kényelmes leggings, rövidebb felső vagy réteges utcai szett. Te döntöd el, mennyire legyen feltűnő. Ügyelj a helyzethez illő öltözékre és mások határaira. Szeretnél elölről vagy hátulról készült, nem intim öltözékfotót a saját naplódba menteni?';
-if(/foto|fenykep|kepet|feltolt|galeria/.test(t))return 'A fotófeltöltő itt van közvetlenül a beszélgetés alatt. 📷 Válassz saját képet, add meg a típusát, majd nyomd meg a „Kép mentése a naplóba” gombot. A képet nem elemzem automatikusan.';
-if(/naplo|mentes|bejegyzes/.test(t))return 'Nyisd meg a napló részt, és rögzítsd a dátumot, időpontot és a megjegyzést. A privát fotógalériát itt, a beszélgetés alatt találod.';
-if(/feladat|kovetkezo|kezdjuk/.test(t))return 'Kezdhetjük egy egyszerű, biztonságos feladattal: válassz kényelmes öltözéket, és ha szeretnéd, készíts róla saját fotót a privát galériába. A feltöltés mindig önkéntes.';
-return 'Értem, mesélj még! 🧸 Inkább beszélgetnél, naplóznál, pelenkacseréről kérdeznél, vagy öltözékötleteket szeretnél?';}
+function answer(raw){
+ const t=norm(raw); if(!t)return '';
+ const yes=/^(igen|aha|ja|jo|jol|rendben|oke|okes|mehet|persze|hat igen|kesz|megvan|kinyitottam|nyitom|ertem|koszi|rendben kuldom|elkuldtem)$/.test(t);
+ const no=/^(nem|nm|n|nincs|dehogy|nem szeretnem)$/.test(t);
+ const photo=/foto|fenykep|kepet|feltolt|galeria|kuldom a kepet|elkuldtem a kepet/.test(t);
+ const diaper=/pelus|pelenka/.test(t);
+ const wet=/pisi|pisil|nedves/.test(t), dirty=/kaki|kakil|szeklet/.test(t);
+ const outdoor=/kimegy|ki megy|kint|utca|eszreveheto|latszod|masok is|polo ba|poloba/.test(t);
+ const stronger=/eros|durv|gyenge|jobbat|feltunobb/.test(t);
+ if(/ujrakezd|elejerol|kezdjuk elorol/.test(t)){state.step='well';return 'Kezdjük elölről! 🧸 Hogy vagy ma?';}
+ if(/^(szia|hello|helo|csa|csao|hali|sziasztok)/.test(t)){state.step='well';return 'Szia! 🧸 Hogy vagy ma?';}
+ if(/mizu|hogy vagy|mi ujsag/.test(t)){state.step='well';return 'Szia! 💜 Jól vagyok, köszi. Te hogy vagy?';}
+ if(/mi lesz ma|mi a terv|mai terv/.test(t)){state.step='plan';return 'Mi a mai terved? Pihenés, naplózás, öltözködés vagy valami más?';}
+ if(/cserel|csere|tisztit/.test(t)&&!(/varunk|varok/.test(t))){state.step='afterChange';return 'Segítek a cserében. Készíts elő tiszta pelenkát, tisztítsd meg és szárítsd meg a bőröd, majd vegyél fel tisztát. Szeretnéd ezt naplózni?';}
+ if(photo){state.step='photoWaiting';return 'Rendben! 📷 A beszélgetés alatti fotófeltöltővel mentheted a képet a privát galériába. A képet nem tudom automatikusan megvizsgálni; ha leírod, mi látszik rajta, segítek az öltözék értékelésében.';}
+ if(diaper && /hogy van|hogy all|allapot/.test(t)){state.step='contents';return 'Hogy van a pelusod? 🧸 Kényelmes még? Mi van benne: pisi, kaki vagy tiszta?';}
+ if(stronger){state.step='outfit';return 'Rendben, legyen feltűnőbb, de maradjon kényelmes és a helyzethez illő. 💜 Például rövidebb felső és testhezálló nadrág, vagy otthon egy lazább összeállítás. Melyik tetszik?';}
+ if(outdoor){state.step='outfit';return 'Értem, azt szeretnéd, hogy látszódjon a pelusod. 💜 Öltözékötleteket szívesen adok, de nyilvános helyen figyelj mások komfortjára is. Inkább egy rövidebb pólós vagy egy leggingses szettet szeretnél?';}
+ if(/otlet|ruha|nadrag|leggings|oltozek|polo/.test(t)){state.step='outfit';return 'Két ötlet: 1. Testhezálló leggings és rövid, kényelmes póló. 2. Laza rövidnadrág és derékig érő felső. Kipróbálod valamelyiket?';}
+ if(wet||dirty){state.step='changeChoice';return 'Értem, '+(dirty?'kaki is van benne.':'pisi van benne.')+' 🧸 Szeretnél most tisztára cserélni, vagy még beszélgessünk róla? A nedves, különösen a szennyezett pelenkát érdemes hamar cserélni a bőröd miatt.';}
+ if(/varunk|varok meg|kesobb/.test(t)){state.step='whyWait';return 'Rendben, értem. 🧸 Miért szeretnél még várni? Ha már szennyezett a pelenka, a bőröd védelmében jobb mielőbb cserélni.';}
+ if(/kakilast varom|kakilni szeretnek|mert kakil/.test(t)){state.step='afterWait';return 'Értem. 💜 Ha szükséged van rá, nyugodtan menj mosdóba, és utána tisztálkodj. Mi a terved ezután?';}
+ if(/semmi|pihenes|pihenek|atlagos/.test(t)){state.step='diaperCheck';return 'A pihenés is jó terv! 🧸 És hogy van most a pelusod?';}
+ if(no){if(state.step==='changeChoice'){state.step='plan';return 'Rendben, nem erőltetem. 💜 Mi legyen akkor a következő terved?';} if(state.step==='photoWaiting'){state.step='plan';return 'Semmi gond, fotó nélkül is folytathatjuk. Mi legyen a következő lépés?';}state.step='plan';return 'Rendben, értem, hogy nem. 🧸 Akkor mit szeretnél helyette csinálni?';}
+ if(state.step==='well'){state.step='diaperCheck';return 'Örülök, hogy írtál! 🧸 És hogy van a pelusod?';}
+ if(state.step==='diaperCheck'){state.step='contents';return 'Mesélj róla: tiszta, pisis vagy kakis most a pelusod?';}
+ if(state.step==='contents'){state.step='changeChoice';return 'Értem. 🧸 Szeretnéd, hogy segítsek a cserében, vagy előbb beszélgessünk még?';}
+ if(state.step==='changeChoice'&&yes){state.step='afterChange';return 'Rendben, kezdjük a tiszta pelenkával és a gyengéd tisztálkodással. 🧸 Megvan minden a cseréhez?';}
+ if(state.step==='whyWait'){state.step='plan';return 'Értem. 💜 Utána mi a terved?';}
+ if(state.step==='afterWait'||state.step==='plan'){state.step='diaperCheck';return 'Értem! 🧸 Mesélsz még a tervedről? És hogy érzed magad most?';}
+ if(state.step==='outfit'&&yes){state.step='photoWaiting';return 'Szuper! 💜 Ha szeretnéd, készíthetsz saját, nem intim öltözékfotót a privát galériába. Fotó nélkül is folytathatjuk.';}
+ if(state.step==='photoWaiting'&&yes){state.step='plan';return 'Rendben! 🧸 Ha elmentetted a képet, meséld el, mi látható rajta, és segítek a következő ötletben.';}
+ if(yes){state.step='plan';return 'Rendben! 🧸 Mi legyen a következő lépés?';}
+ state.step='plan';return 'Értem, köszi, hogy elmesélted. 💜 És utána mit szeretnél csinálni?';
+}
 function send(){const t=inp.value.trim();if(!t)return;inp.value='';say(t,true);setTimeout(()=>say(answer(t)),150)}
 wrap.querySelector('#macisPlusSend').onclick=send;inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();send()}});
-wrap.querySelector('#macisPlusReset').onclick=()=>{chat.replaceChildren();say('Szia! 🧸 Hogy vagy? Mi lesz ma a terv?')};
+wrap.querySelector('#macisPlusReset').onclick=()=>{state.step='well';chat.replaceChildren();say('Szia! 🧸 Hogy vagy ma?')};
 ['Szia','Mizu?','Mi lesz ma a terv?','Pihenés','Hogy van a pelusom?','Pisi van benne','Segíts a cserében','Öltözékötletek','Fotó feltöltése','Naplózás'].forEach(t=>{const b=document.createElement('button');b.type='button';b.className='btn small';b.textContent=t;b.onclick=()=>{inp.value=t;send()};wrap.querySelector('#macisTopics').append(b)});
-say('Szia! 🧸 Hogy vagy? Mi lesz ma a terv?');
+say('Szia! 🧸 Hogy vagy ma?');
 let dbPromise=new Promise((resolve,reject)=>{let req=indexedDB.open('macisPrivatFotoNaploV1',1);req.onupgradeneeded=()=>{req.result.createObjectStore('photos',{keyPath:'id',autoIncrement:true})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)});
 async function records(){let db=await dbPromise;return new Promise((res,rej)=>{let r=db.transaction('photos','readonly').objectStore('photos').getAll();r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
 async function save(photo){let db=await dbPromise;return new Promise((res,rej)=>{let r=db.transaction('photos','readwrite').objectStore('photos').add(photo);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
