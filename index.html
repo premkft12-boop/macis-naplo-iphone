@@ -245,6 +245,18 @@ function macisUtterance(text){
  return u;
 }
 </script>
+
+<style id="macis-normal-scroll-fix">
+/* A felső blokk az oldal része, nem követi a görgetést. */
+html, body {height:auto!important;min-height:100%!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior-y:auto!important;}
+body {position:static!important;min-height:100vh!important;}
+#abdlFixedTop {position:static!important;inset:auto!important;top:auto!important;left:auto!important;right:auto!important;transform:none!important;translate:none!important;width:100%!important;max-height:none!important;overflow:visible!important;box-shadow:none!important;}
+#abdlFixedTop #topBar, #topBar {position:static!important;top:auto!important;z-index:auto!important;}
+#abdlFixedTop header, header {position:static!important;top:auto!important;z-index:auto!important;}
+#abdlFixedTopSpacer {display:none!important;height:0!important;}
+body > main {position:static!important;inset:auto!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;height:auto!important;max-height:none!important;overflow:visible!important;overscroll-behavior-y:auto!important;}
+#langSwitch {position:absolute!important;top:10px!important;right:14px!important;}
+</style>
 </head><body>
 <div id="abdlFixedTop"><div id="topBar" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 14px;background:linear-gradient(90deg,#fce7f3,#e0f2fe);border-bottom:2px solid #f0c4e0;flex-wrap:wrap">
 <div id="liveClock" style="font-weight:800;color:#9d4e87;font-size:15px;min-width:160px;line-height:1.3">
