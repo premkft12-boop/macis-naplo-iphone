@@ -213,7 +213,39 @@ body.v4-themed{transition:background-color .35s ease}
 #abdlFixedTopSpacer{height:435px;}
 html{scroll-padding-top:24px;}
 @media(max-width:650px){#abdlFixedTop #topBar{gap:5px!important;padding:5px 10px!important;}#abdlFixedTop #abdlPlayer{height:105px!important;}#abdlFixedTop #topBar>div:nth-child(2){min-width:0!important;max-width:none!important;}#abdlFixedTop header{padding:10px 12px!important;}#abdlFixedTop #liveTime{font-size:18px!important;}}
-</style></head><body>
+</style><style>
+/* 2026-11-02: stabil fejléc és felesleges jobb oldali asszisztens eltávolítása */
+#huAssistant,#haDock{display:none!important;visibility:hidden!important;pointer-events:none!important}
+html,body{height:100%;overflow:hidden!important;overscroll-behavior:none}
+body{position:relative;min-height:0!important}
+#abdlFixedTop{position:fixed!important;inset:0 0 auto 0!important;transform:none!important;translate:none!important;z-index:99990!important;will-change:auto!important}
+#abdlFixedTopSpacer{display:none!important}
+body>main{position:fixed!important;left:0;right:0;bottom:0;top:var(--abdl-header-height,470px);height:auto!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden;overscroll-behavior-y:contain;scrollbar-gutter:stable}
+/* Figyelmeztetés csak akkor jelenjen meg, ha ténylegesen aktív */
+#missedBanner:not(.show):not(.active){display:none}
+@media(max-width:650px){body>main{padding:10px}}
+</style>
+<script>
+/* A felolvasó csak a szöveget mondja ki; az emojikat és piktogramokat kihagyja. */
+function macisCleanSpeech(value){
+ return String(value||'').replace(/[\p{Extended_Pictographic}\p{Emoji_Presentation}\uFE0E\uFE0F\u200D\u20E3]/gu,' ').replace(/[★☆♥♡♪♫✓✔✘➜→•]/g,' ').replace(/\s+/g,' ').trim();
+}
+function macisPreferredVoice(){
+ if(!('speechSynthesis' in window))return null;
+ const voices=window.speechSynthesis.getVoices();
+ const hungarian=voices.filter(v=>/^hu([_-]|$)/i.test(v.lang));
+ const rank=v=> (/noemi|noémi|nóra|nora|eszter|anna|female|woman|google magyar|google hungarian/i.test(v.name)?100:0)+(/google|online|natural|neural|microsoft/i.test(v.name)?30:0)+(v.localService===false?20:0)-(/szabolcs/i.test(v.name)?200:0);
+ return hungarian.sort((a,b)=>rank(b)-rank(a))[0]||null;
+}
+function macisUtterance(text){
+ const u=new SpeechSynthesisUtterance(macisCleanSpeech(text));
+ const voice=macisPreferredVoice();
+ if(voice){u.voice=voice;u.lang=voice.lang;}else u.lang='hu-HU';
+ u.rate=1;u.pitch=1.08;
+ return u;
+}
+</script>
+</head><body>
 <div id="abdlFixedTop"><div id="topBar" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 14px;background:linear-gradient(90deg,#fce7f3,#e0f2fe);border-bottom:2px solid #f0c4e0;flex-wrap:wrap">
 <div id="liveClock" style="font-weight:800;color:#9d4e87;font-size:15px;min-width:160px;line-height:1.3">
 <div id="liveDate">—</div>
@@ -231,7 +263,25 @@ html{scroll-padding-top:24px;}
 </div>
 </div>
 <header><div class="row"><span class="bear">🧸</span><div><h1 id="siteTitle">Macis Pelenkás Napló</h1><p id="siteSubtitle">Napi feladatok · külön időzítők · automatikus pelenkakészlet-levonás · eseménynapló · jelentések</p></div>
-<div id="langSwitch"><button class="active" data-lang="hu" type="button">HU</button><button data-lang="en" type="button">EN</button></div><span aria-label="ABDL 3D felirat, színes 3D-ben mozgó képkerettel" class="abdl-badge"><span>ABDL</span></span></div></header></div><div id="abdlFixedTopSpacer" aria-hidden="true"></div><script>
+<div id="langSwitch"><button class="active" data-lang="hu" type="button">HU</button><button data-lang="en" type="button">EN</button></div><span aria-label="ABDL 3D felirat, színes 3D-ben mozgó képkerettel" class="abdl-badge"><span>ABDL</span></span></div></header></div><div id="abdlFixedTopSpacer" aria-hidden="true"></div>
+<script>
+(function(){
+  const head=document.getElementById('abdlFixedTop');
+  const main=document.querySelector('body > main');
+  if(!head||!main)return;
+  function adjust(){
+    const h=Math.ceil(head.getBoundingClientRect().height);
+    document.documentElement.style.setProperty('--abdl-header-height',h+'px');
+    // A kis képernyőn se takarja el teljesen a tartalmat a fejléc.
+    if(h>window.innerHeight*.75){head.style.maxHeight='75dvh';head.style.overflowY='auto';}
+    else{head.style.maxHeight='';head.style.overflowY='';}
+  }
+  adjust();window.addEventListener('resize',adjust,{passive:true});
+  window.addEventListener('load',adjust);
+  if(window.ResizeObserver)new ResizeObserver(adjust).observe(head);
+})();
+</script>
+<script>
 (function(){
   const fixed=document.getElementById('abdlFixedTop');
   const spacer=document.getElementById('abdlFixedTopSpacer');
@@ -889,8 +939,8 @@ function selectedRow(){return rows().find(r=>r.dataset.id===$h('haTask').value);
 function refreshTaskList(){const old=$h('haTask').value, list=$h('haTask');list.innerHTML='';let currentRows=rows();if(!currentRows.length){const refreshButton=$h('newDay');if(refreshButton)refreshButton.click();currentRows=rows();}currentRows.forEach(r=>{const o=document.createElement('option');o.value=r.dataset.id;o.textContent=r.querySelector('td strong')?.textContent||r.dataset.id;list.appendChild(o)});if(!currentRows.length){[['morning','REGGELI CSERE'],['check10','Reggeli ellenőrzés'],['check11','Ellenőrzés'],['noon','Déli ellenőrzés'],['afternoon','Délutáni ellenőrzés'],['eveningCheck','Esti ellenőrzés'],['evening','ESTI CSERE'],['night','Éjszakai ellenőrzés']].forEach(([id,name])=>{const o=document.createElement('option');o.value=id;o.textContent=name;list.appendChild(o)});$h('haSelected').textContent='A feladatlista betöltése folyamatban van. Válassz feladatot, majd frissítsd a listát.';}if([...list.options].some(o=>o.value===old))list.value=old;updateTaskInfo();} 
 function updateTaskInfo(){const r=selectedRow();if(!r){$h('haSelected').textContent='Nincs feladat. Nyisd meg a Napi táblázat fület, majd frissítsd a listát.';return;}const name=r.querySelector('td strong')?.textContent||r.dataset.id;const time=r.querySelector('[data-field="time"]')?.value||'nincs időpont';const status=r.querySelector('.status')?.textContent||'Nincs kész';$h('haSelected').textContent=name+' · Időpont: '+time+' · Állapot: '+status;}
 const voiceSelect=$h('haVoice');
-function loadVoices(){if(!('speechSynthesis' in window)){voiceSelect.innerHTML='<option>Ez a böngésző nem támogatja a hangokat</option>';return;}const vs=speechSynthesis.getVoices(),old=voiceSelect.value;voiceSelect.innerHTML='';vs.forEach((v,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=v.name+' ('+v.lang+')'+(v.default?' — alapértelmezett':'');voiceSelect.appendChild(o)});if(!vs.length){voiceSelect.innerHTML='<option value="">Nincs elérhető hang</option>';return;}if([...voiceSelect.options].some(o=>o.value===old))voiceSelect.value=old;else{const hu=vs.findIndex(v=>(v.lang||'').toLowerCase().startsWith('hu'));if(hu>=0)voiceSelect.value=String(hu);}}
-function speak(text){if(!text||!text.trim()){ $h('haAnswer').textContent='Előbb adj meg szöveget.';return;}if(!('speechSynthesis'in window)){$h('haStatus').textContent='A böngésző nem támogatja a felolvasást.';return;}speechSynthesis.cancel();const vs=speechSynthesis.getVoices(),v=vs[Number(voiceSelect.value)];const u=new SpeechSynthesisUtterance(text);u.lang=v?.lang||'hu-HU';u.rate=Number($h('haRate').value)||.9;if(v)u.voice=v;u.onstart=()=>{$h('haStatus').textContent='🔊 Felolvasás folyamatban…'};u.onend=()=>{$h('haStatus').textContent=listening?'🎙️ Hallgatlak…':'Készen áll'};u.onerror=e=>{$h('haStatus').textContent='Felolvasási hiba: '+e.error};$h('haAnswer').textContent=text;speechSynthesis.speak(u);}
+function loadVoices(){if(!('speechSynthesis' in window)){voiceSelect.innerHTML='<option>Ez a böngésző nem támogatja a hangokat</option>';return;}const vs=speechSynthesis.getVoices(),old=voiceSelect.value;voiceSelect.innerHTML='';vs.forEach((v,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=v.name+' ('+v.lang+')'+(v.default?' — alapértelmezett':'');voiceSelect.appendChild(o)});if(!vs.length){voiceSelect.innerHTML='<option value="">Nincs elérhető hang</option>';return;}if([...voiceSelect.options].some(o=>o.value===old))voiceSelect.value=old;else{const hu=vs.findIndex(v=>(v.lang||'').toLowerCase().startsWith('hu')&&/noemi|n[oó]ra|eszter|anna|female|woman|google magyar/i.test(v.name));const anyHu=vs.findIndex(v=>(v.lang||'').toLowerCase().startsWith('hu'));if(hu>=0)voiceSelect.value=String(hu);else if(anyHu>=0)voiceSelect.value=String(anyHu);}}
+function speak(text){if(!text||!text.trim()){ $h('haAnswer').textContent='Előbb adj meg szöveget.';return;}if(!('speechSynthesis'in window)){$h('haStatus').textContent='A böngésző nem támogatja a felolvasást.';return;}speechSynthesis.cancel();const vs=speechSynthesis.getVoices(),v=vs[Number(voiceSelect.value)];const u=macisUtterance(text);u.lang=v?.lang||'hu-HU';u.rate=Number($h('haRate').value)||.9;if(v && !/szabolcs/i.test(v.name) && !macisPreferredVoice())u.voice=v;u.onstart=()=>{$h('haStatus').textContent='🔊 Felolvasás folyamatban…'};u.onend=()=>{$h('haStatus').textContent=listening?'🎙️ Hallgatlak…':'Készen áll'};u.onerror=e=>{$h('haStatus').textContent='Felolvasási hiba: '+e.error};$h('haAnswer').textContent=text;speechSynthesis.speak(u);}
 function speakLong(text){
  if(!text||!text.trim())return;
  if(!('speechSynthesis'in window)){ $h('haStatus').textContent='A böngésző nem támogatja a felolvasást.';return; }
@@ -900,7 +950,7 @@ function speakLong(text){
  const clean=text.replace(/\s+/g,' ').trim(),chunks=[];let rest=clean;
  while(rest.length){let cut=Math.min(220,rest.length);if(cut<rest.length){let stop=Math.max(rest.lastIndexOf('. ',cut),rest.lastIndexOf(': ',cut),rest.lastIndexOf('; ',cut),rest.lastIndexOf(', ',cut),rest.lastIndexOf(' ',cut));if(stop>90)cut=stop+1;}chunks.push(rest.slice(0,cut).trim());rest=rest.slice(cut).trim();}
  $h('haAnswer').textContent=clean.slice(0,1200)+(clean.length>1200?'…':'');$h('haStatus').textContent='🔊 Hosszú szöveg felolvasása…';
- chunks.forEach((part,i)=>{const u=new SpeechSynthesisUtterance(part);u.lang=v?.lang||'hu-HU';u.rate=rate;if(v)u.voice=v;if(i===chunks.length-1){u.onend=()=>{$h('haStatus').textContent=listening?'🎙️ Hallgatlak…':'A felolvasás befejeződött.'};u.onerror=e=>{$h('haStatus').textContent='Felolvasási hiba: '+e.error};}speechSynthesis.speak(u);});
+ chunks.forEach((part,i)=>{const u=macisUtterance(part);u.lang=v?.lang||'hu-HU';u.rate=rate;if(v && !/szabolcs/i.test(v.name) && !macisPreferredVoice())u.voice=v;if(i===chunks.length-1){u.onend=()=>{$h('haStatus').textContent=listening?'🎙️ Hallgatlak…':'A felolvasás befejeződött.'};u.onerror=e=>{$h('haStatus').textContent='Felolvasási hiba: '+e.error};}speechSynthesis.speak(u);});
 }
 function menuOptions(){return [...document.querySelectorAll('#tabs [data-tab]')].map(b=>({id:b.dataset.tab,label:b.textContent.trim()}));}
 function refreshMenuList(){const list=$h('haMenu'),old=list.value;list.innerHTML='';menuOptions().forEach(m=>{const o=document.createElement('option');o.value=m.id;o.textContent=m.label;list.appendChild(o)});if([...list.options].some(o=>o.value===old))list.value=old;else if(document.querySelector('.panel.active'))list.value=document.querySelector('.panel.active').id;}
@@ -971,7 +1021,7 @@ function download(obj){const blob=new Blob([JSON.stringify(obj,null,2)],{type:'a
 $('fullBackup').onclick=()=>{const keys=['pelenkasNaploCompleteV5','pelenkasClothingEntriesV1','macisExtraV2','macisStudioV3','macisBabyWorldV4','macisDailyChallengesV1'];const other={};for(const k of keys)other[k]=localStorage.getItem(k);download({format:'macis-complete-backup-v4',createdAt:new Date().toISOString(),local:other})};
 $('fullRestore').onclick=async()=>{const file=$('fullBackupFile').files[0];if(!file)return alert('Válassz egy mentésfájlt.');try{const obj=JSON.parse(await file.text());if(!['macis-complete-backup-v2','macis-complete-backup-v3','macis-complete-backup-v4'].includes(obj.format)||!obj.local||typeof obj.local!=='object')throw Error('Nem megfelelő teljes mentés.');if(!confirm('A teljes visszaállítás felülírja a napló helyi adatait. Folytatod?'))return;for(const k of ['pelenkasNaploCompleteV5','pelenkasClothingEntriesV1','macisExtraV2','macisStudioV3','macisBabyWorldV4','macisDailyChallengesV1']){const v=obj.local[k];if(v!==null&&v!==undefined){JSON.parse(v);localStorage.setItem(k,v)}}alert('Visszaállítva. Az oldal újratöltődik.');location.reload()}catch(e){alert('Visszaállítási hiba: '+e.message)}};
 // Narrátor: külön gomb a kiválasztott panelhez, nem olvassa fel automatikusan a teljes oldalt.
-const b=document.createElement('button');b.className='btn';b.textContent='🔊 Csak ennek a menüpontnak a felolvasása';b.style.marginBottom='10px';b.onclick=()=>{const panel=document.querySelector('.panel.active');if(!panel||!('speechSynthesis'in window))return alert('Nincs elérhető felolvasás.');const txt=[...panel.querySelectorAll('h2,h3,p.hint')].map(x=>x.textContent.trim()).filter(Boolean).slice(0,12).join('. ');speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(txt);u.lang='hu-HU';speechSynthesis.speak(u)};document.querySelector('main').insertBefore(b,document.querySelector('#tabs').nextSibling);
+const b=document.createElement('button');b.className='btn';b.textContent='🔊 Csak ennek a menüpontnak a felolvasása';b.style.marginBottom='10px';b.onclick=()=>{const panel=document.querySelector('.panel.active');if(!panel||!('speechSynthesis'in window))return alert('Nincs elérhető felolvasás.');const txt=[...panel.querySelectorAll('h2,h3,p.hint')].map(x=>x.textContent.trim()).filter(Boolean).slice(0,12).join('. ');speechSynthesis.cancel();const u=macisUtterance(txt);u.lang='hu-HU';speechSynthesis.speak(u)};document.querySelector('main').insertBefore(b,document.querySelector('#tabs').nextSibling);
 })();
 </script><div class="v3-print" id="v3Print"></div><script>
 (()=>{'use strict';
@@ -1015,7 +1065,7 @@ $('exportPDF').onclick=()=>{$('v3Print').innerHTML='<h1>Macis Pelenkás Napló �
 function applyTheme(){document.body.dataset.theme=d.theme;document.body.classList.toggle('no-motion',!d.motion);$('themeChoice').value=d.theme;$('themeMotion').checked=d.motion}
 $('themeSave').onclick=()=>{d.theme=get('themeChoice');d.motion=$('themeMotion').checked;save();applyTheme()};applyTheme();
 let rec=null;const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-$('voiceStart').onclick=()=>{if(!SR)return $('voiceStatus').textContent='Ez a böngésző nem támogatja a beszédfelismerést.';rec=new SR();rec.lang='hu-HU';rec.interimResults=false;rec.onresult=e=>{const t=e.results[0][0].transcript.toLowerCase();$('voiceStatus').textContent='Felismert parancs: '+t;const routes=[['naptár','diaperCalendar'],['készlet','stock'],['főoldal','hub'],['statisztika','monthly'],['ruha','wardrobe'],['jelentés','reports'],['komfort','comfort']];const found=routes.find(x=>t.includes(x[0]));if(found){document.querySelector(`[data-tab="${found[1]}"]`)?.click();if(t.includes('olvasd fel')&&'speechSynthesis'in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(document.querySelector('#'+found[1]+' h2')?.textContent||'');u.lang='hu-HU';speechSynthesis.speak(u)}}else $('voiceStatus').textContent+=' – nincs ilyen parancs'};rec.onerror=e=>$('voiceStatus').textContent='Beszédfelismerési hiba: '+e.error;try{rec.start();$('voiceStatus').textContent='Figyelek…'}catch(e){$('voiceStatus').textContent=e.message}};
+$('voiceStart').onclick=()=>{if(!SR)return $('voiceStatus').textContent='Ez a böngésző nem támogatja a beszédfelismerést.';rec=new SR();rec.lang='hu-HU';rec.interimResults=false;rec.onresult=e=>{const t=e.results[0][0].transcript.toLowerCase();$('voiceStatus').textContent='Felismert parancs: '+t;const routes=[['naptár','diaperCalendar'],['készlet','stock'],['főoldal','hub'],['statisztika','monthly'],['ruha','wardrobe'],['jelentés','reports'],['komfort','comfort']];const found=routes.find(x=>t.includes(x[0]));if(found){document.querySelector(`[data-tab="${found[1]}"]`)?.click();if(t.includes('olvasd fel')&&'speechSynthesis'in window){speechSynthesis.cancel();const u=macisUtterance(document.querySelector('#'+found[1]+' h2')?.textContent||'');u.lang='hu-HU';speechSynthesis.speak(u)}}else $('voiceStatus').textContent+=' – nincs ilyen parancs'};rec.onerror=e=>$('voiceStatus').textContent='Beszédfelismerési hiba: '+e.error;try{rec.start();$('voiceStatus').textContent='Figyelek…'}catch(e){$('voiceStatus').textContent=e.message}};
 $('voiceStop').onclick=()=>{rec?.stop();$('voiceStatus').textContent='Leállítva.'};
 window.addEventListener('storage',render);document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>setTimeout(render,20)));render();
 })();
@@ -1054,9 +1104,9 @@ function renderQrSelect(){let sel=$('v4QrSelect');sel.innerHTML='';for(const k o
 $('v4QrMake').onclick=()=>{let id=$('v4QrSelect').value;if(!id)return alert('Előbb vegyél fel egy tárgyat.');const box=$('v4QrResult');box.innerHTML='';let p=document.createElement('p');p.textContent='Tárgyazonosító: '+id;box.appendChild(p);let img=document.createElement('img');img.alt='QR-kód a tárgy azonosítójával';img.width=220;img.height=220;img.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent(id);img.onerror=()=>{img.replaceWith(document.createTextNode('A QR-kép nem tölthető be internet nélkül. Az azonosító fent látható.'))};box.appendChild(img)};
 function read(k){try{return JSON.parse(localStorage.getItem(k)||'{}')}catch(e){return {}}}
 function story(){const date=$('v4StoryDate').value,core=read('pelenkasNaploCompleteV5'),cloth=read('pelenkasClothingEntriesV1'),extra=read('macisExtraV2'),studio=read('macisStudioV3');let lines=[`📖 ${date} – ${d.title}`,`Ma egy újabb napot örökítettél meg a saját Macis Naplódban.`];let foods=d.food.filter(x=>x.date===date);if(foods.length)lines.push('Ételek és italok: '+foods.map(x=>x.name).join(', ')+'.');let clothes=Array.isArray(cloth)?cloth.filter(x=>x.date===date):[];if(clothes.length)lines.push('Ruházat: '+clothes.map(x=>x.outfit).filter(Boolean).join('; ')+'.');let outfits=(studio.outfits||[]).filter(x=>x.date===date);if(outfits.length)lines.push('Elmentett öltözékek: '+outfits.length+' db.');let comforts=(extra.comfort||[]).filter(x=>x.date===date);if(comforts.length)lines.push('Komfortbejegyzések: '+comforts.length+' db.');let day=core.days?.[date];if(day)lines.push('A napi naplóhoz is tartozik bejegyzés.');if(lines.length===2)lines.push('Ehhez a naphoz még kevés bejegyzés tartozik.');lines.push('A következő napra is elmentheted az élményeidet.');$('v4StoryOutput').textContent=lines.join('\n\n');$('v4StoryOutput').style.whiteSpace='pre-line'}
-$('v4StoryBuild').onclick=story;$('v4StoryRead').onclick=()=>{if(!('speechSynthesis'in window))return alert('Ez a böngésző nem támogatja a felolvasást.');speechSynthesis.cancel();let u=new SpeechSynthesisUtterance($('v4StoryOutput').textContent);u.lang='hu-HU';speechSynthesis.speak(u)};story();
+$('v4StoryBuild').onclick=story;$('v4StoryRead').onclick=()=>{if(!('speechSynthesis'in window))return alert('Ez a böngésző nem támogatja a felolvasást.');speechSynthesis.cancel();let u=macisUtterance($('v4StoryOutput').textContent);u.lang='hu-HU';speechSynthesis.speak(u)};story();
 // Animated assistant: click to read only the current panel's heading.
-let bear=document.createElement('button');bear.id='v4Bear';bear.type='button';bear.title='Macis asszisztens: az aktuális menüpont neve';bear.textContent='🧸';bear.setAttribute('aria-label','Macis asszisztens');bear.onclick=()=>{let panel=document.querySelector('main .panel.active');let title=panel?.querySelector('h2')?.textContent||'Macis Pelenkás Napló';if(!('speechSynthesis'in window))return alert(title);speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(title);u.lang='hu-HU';speechSynthesis.speak(u)};document.body.appendChild(bear);
+let bear=document.createElement('button');bear.id='v4Bear';bear.type='button';bear.title='Macis asszisztens: az aktuális menüpont neve';bear.textContent='🧸';bear.setAttribute('aria-label','Macis asszisztens');bear.onclick=()=>{let panel=document.querySelector('main .panel.active');let title=panel?.querySelector('h2')?.textContent||'Macis Pelenkás Napló';if(!('speechSynthesis'in window))return alert(title);speechSynthesis.cancel();let u=macisUtterance(title);u.lang='hu-HU';speechSynthesis.speak(u)};document.body.appendChild(bear);
 })();
 </script><script>
 (()=>{'use strict';
